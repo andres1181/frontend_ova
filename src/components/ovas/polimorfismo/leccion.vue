@@ -8,7 +8,7 @@
 	import Polimorficas from '@/components/ovas/polimorfismo/polimorficas.vue'
 	import Sobrecarga from '@/components/ovas/polimorfismo/sobrecarga.vue'
 	import Sobreescritura from '@/components/ovas/polimorfismo/sobrescritura.vue'
-	import Evaluacion from '@/components/ovas/polimorfismo/evaluacion.vue'
+	import EvaluacionPolimorfirmo from '@/components/ovas/polimorfismo/evaluacion.vue'
 
 	export default {
 		name: 'Polimorfismo',
@@ -19,7 +19,7 @@
 			Polimorficas,
 			Sobrecarga,
 			Sobreescritura,
-			Evaluacion
+			EvaluacionPolimorfirmo
 		},
 		data: () => ({
 			e1: 1,
@@ -27,15 +27,21 @@
 			tab: null,
 			avance: [],
 			lista: [],
-
+			contenido: 'Introduccion',
 			temas: [
-				{ _id: '1', titulo: 'Introducción', terminado: false, contenido: 'Introduccion', unidad:'polimorfismo' },
-				{ _id: '2', titulo: 'Conceptos', terminado: false, contenido: 'Conceptos', unidad:'polimorfismo' },
-				{ _id: '3', titulo: 'Sobrecarga', terminado: false, contenido: 'Sobrecarga', unidad:'polimorfismo' },
-				{ _id: '4', titulo: 'Sobrescritura', terminado: false, contenido: 'Sobrescritura', unidad:'polimorfismo' },
-				{ _id: '5', titulo: 'Genericidad', terminado: false, contenido: 'Genericidad', unidad:'polimorfismo' },
-				{ _id: '6', titulo: 'Variables polimorficas', terminado: false, contenido: 'Polimorficas', unidad:'polimorfismo' },
-				{ _id: '7', titulo: 'Evaluación', terminado: false, contenido: 'Evaluacion', unidad:'polimorfismo' }
+				{ _id: '1', titulo: 'Introducción', terminado: false, contenido: 'Introduccion', unidad: 'polimorfismo' },
+				{ _id: '2', titulo: 'Conceptos', terminado: false, contenido: 'Conceptos', unidad: 'polimorfismo' },
+				{ _id: '3', titulo: 'Sobrecarga', terminado: false, contenido: 'Sobrecarga', unidad: 'polimorfismo' },
+				{ _id: '4', titulo: 'Sobrescritura', terminado: false, contenido: 'Sobrescritura', unidad: 'polimorfismo' },
+				{ _id: '5', titulo: 'Genericidad', terminado: false, contenido: 'Genericidad', unidad: 'polimorfismo' },
+				{
+					_id: '6',
+					titulo: 'Variables polimorficas',
+					terminado: false,
+					contenido: 'Polimorficas',
+					unidad: 'polimorfismo'
+				},
+				{ _id: '7', titulo: 'Evaluación', terminado: false, contenido: 'EvaluacionPolimorfirmo', unidad: 'polimorfismo' }
 			]
 		}),
 		watch: {
@@ -45,7 +51,7 @@
 		},
 		mixins: [misMixins],
 		methods: {
-			buscarAvance(){
+			buscarAvance() {
 				var token = String(localStorage.getItem('tokenUser'))
 				var id_ = this.obtenerDatos().id
 				var id_unidad = '5e1351e0327cef0c5c97312e'
@@ -61,21 +67,18 @@
 					.then(response => {
 						this.lista = response.data
 						for (var i = 0; i < this.lista.length; i++) {
-
-							if ((this.lista[i].id_estudiante == id_) && (this.lista[i].id_tema.id_unidad == id_unidad)) {
+							if (this.lista[i].id_estudiante == id_ && this.lista[i].id_tema.id_unidad == id_unidad) {
 								this.avance.push(this.lista[i])
 							}
 						}
-
 					})
 					.catch(e => {
 						this.error = `Error:  ${e}`
 					})
-					//	eslint-disable-next-line no-console
-					console.log('Avance')
-					//	eslint-disable-next-line no-console
-					console.log(this.avance)
-
+				//	eslint-disable-next-line no-console
+				console.log('Avance')
+				//	eslint-disable-next-line no-console
+				console.log(this.avance)
 			},
 			siguienteTema(n) {
 				if (n === this.steps) {
@@ -94,7 +97,7 @@
 		},
 		created() {
 			this.steps = this.temas.length
-			this.buscarAvance()
+			//this.buscarAvance()
 			// eslint-disable-next-line no-console
 			//console.log(this.steps)
 			// eslint-disable-next-line no-console
@@ -107,36 +110,66 @@
 <template >
 
 	<v-card outlined flat>
-		<v-toolbar color="color-2" dark fixed flat dense class="px-4">
+		<!-- <v-toolbar color="color-2" dark fixed flat dense class="px-4">
 
-			<v-toolbar-title class="text-center justify-center">
-				<h3>Polimorfismo</h3>
-			</v-toolbar-title>
+				<v-toolbar-title class="text-center justify-center">
+					<h3>Polimorfismo</h3>
+				</v-toolbar-title>
 
-			<v-spacer></v-spacer>
-			<template v-slot:extension>
-					<v-tabs v-model="tab" dark centered
-					        show-arrows
-					        slider-color="yellow"
-									dense
-					        background-color="transparent">
+				<v-spacer></v-spacer>
+				<template v-slot:extension>
+						<v-tabs v-model="tab" dark centered
+						        show-arrows
+						        slider-color="yellow"
+										dense
+						        background-color="transparent">
+							<v-tab v-for="(tema, i) in temas" :key="i">
+								{{tema.titulo}}
+							</v-tab>
+						</v-tabs>
+						</template>
+			</v-toolbar>
+			<v-tabs-items v-model="tab">
+				<v-tab-item v-for="(tema, i) in temas" :key="i">
+					<v-container fluid>
 
-						<v-tab v-for="(a, i) in avance" :key="i">
-							{{a.id_tema.titulo}}
-						</v-tab>
-					</v-tabs>
-					</template>
-		</v-toolbar>
-		<v-tabs-items v-model="tab">
-			<v-tab-item v-for="(a, i) in avance" :key="i">
-				<v-container fluid>
+						<component :is="tema.contenido"></component>
 
-					<component :is="a.id_tema.componente" :terminado="a.terminado"></component>
+					</v-container>
+				</v-tab-item>
+			</v-tabs-items> -->
+		<v-row>
+			<v-col cols="3" sm="3">
+				<v-card class="mx-auto"
+				        max-width="100%"
+				        outlined>
+					<!-- <v-row align="center">
+					<v-col v-for="(tema, i) in temas" :key="i" class="text-left" cols="6" sm="6">
+						<div class="my-1" 	max-width="100%" width="100%">
+							<v-btn  outlined  large @click="contenido=tema.titulo" max-width="100%" width="100%"> <h1>Lección {{i+1}}: </h1>{{tema.titulo}}</v-btn>
+						</div>
+					</v-col>
+				</v-row> -->
+					<ul id="listaLecciones">
+						<li v-for="(tema, i) in temas" :key="i" class="text-left">
+							<v-btn class="my-1" outlined large @click="contenido=tema.contenido" max-width="100%" width="100%" color="success"> {{tema.titulo}}</v-btn>
+						</li>
+					</ul>
+				</v-card>
+			</v-col>
+			<v-col cols="9" sm="9">
+				<v-card class="mx-auto"
+				        max-width="800"
+				        outlined>
+					<v-container fluid>
+						
+						<component :is="contenido"></component>
 
-				</v-container>
-			</v-tab-item>
-		</v-tabs-items>
+					</v-container>
 
+				</v-card>
+			</v-col>
+		</v-row>
 	</v-card>
 
 </template>
@@ -170,6 +203,9 @@
 		-webkit-border-radius: 15px;
 		-moz-border-radius: 15px;
 		border-radius: 15px;
+	}
+	#listaLecciones {
+		list-style: none;
 	}
 
 </style>

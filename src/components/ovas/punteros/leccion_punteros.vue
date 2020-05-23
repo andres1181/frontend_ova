@@ -31,6 +31,7 @@
 			e1: 1,
 			steps: 11,
 			tab: null,
+			contenido : 'Introducción',
 			temas: [
 				{ _id: '1', titulo: 'Introducción', terminado: false, contenido: 'Introduccion' },
 				{ _id: '2', titulo: 'Declaración', terminado: false, contenido: 'Declaracion' },
@@ -64,6 +65,9 @@
 				} else {
 					this.e1 = n - 1
 				}
+			},
+			seleccionarTema(t){
+				this.temaActual = t
 			}
 		},
 		created() {
@@ -80,36 +84,56 @@
 <template >
 
 	<v-card outlined flat>
-		<v-toolbar color="color-2" dark fixed flat dense class="px-4">
+		<!-- <v-toolbar color="color-2" dark fixed flat dense class="px-4">
 
-			<v-toolbar-title class="text-center justify-center">
-				<h3>Estilo</h3>
-			</v-toolbar-title>
+				<v-toolbar-title class="text-center justify-center">
+					<h3>Punteros</h3>
+				</v-toolbar-title>
 
-			<v-spacer></v-spacer>
-			<template v-slot:extension>
-						<v-tabs v-model="tab" dark centered
-						        show-arrows
-						        slider-color="yellow"
-										dense
-						        background-color="transparent">
+				<v-spacer></v-spacer>
+				<template v-slot:extension>
+							<v-tabs v-model="tab" dark centered
+							        show-arrows
+							        slider-color="yellow"
+											dense
+							        background-color="transparent">
 
-							<v-tab v-for="(tema, i) in temas" :key="i">
-								{{tema.titulo}}
-							</v-tab>
-						</v-tabs>
-						</template>
-		</v-toolbar>
-		<v-tabs-items v-model="tab">
-			<v-tab-item v-for="(tema, i) in temas" :key="i">
-				<v-container fluid>
+								<v-tab v-for="(tema, i) in temas" :key="i">
+									{{tema.titulo}}
+								</v-tab>
+							</v-tabs>
+							</template>
+			</v-toolbar>
+			<v-tabs-items v-model="tab">
+				<v-tab-item v-for="(tema, i) in temas" :key="i">
+					<v-container fluid>
 
-					<component :is="tema.contenido"></component>
+						<component :is="tema.contenido"></component>
 
-				</v-container>
-			</v-tab-item>
-		</v-tabs-items>
+					</v-container>
+				</v-tab-item>
+			</v-tabs-items> -->
+		<v-card class="mx-auto"
+		        max-width="800"
+		        outlined>
+			<v-row align="center">
+				<v-col class="text-center" cols="12" sm="4">
+					<div class="my-2">
+						<v-btn large v-for="(tema, i) in temas" :key="i" @click="contenido=tema.titulo">{{tema.titulo}}</v-btn>
+					</div>
+				</v-col>
+			</v-row>
+		</v-card>
+		<v-card class="mx-auto"
+		        max-width="800"
+		        outlined>
+						<v-container fluid>
 
+							<component :is="contenido"></component>
+
+						</v-container>
+
+		</v-card>
 	</v-card>
 
 </template>
@@ -117,28 +141,28 @@
 <style>
 
 	/* #tabItems {
-			height: calc(100% - 64px) !important;
-			max-height: calc(100% - 64px) !important;
-			-webkit-border-radius: 15px;
-			-moz-border-radius: 15px;
-			border-radius: 15px;
-		}
-		#cucu {
-			height: 100% !important;
-			max-height: 100% !important;
-			-webkit-border-radius: 15px;
-			-moz-border-radius: 15px;
-			border-radius: 15px;
-		} */
+				height: calc(100% - 64px) !important;
+				max-height: calc(100% - 64px) !important;
+				-webkit-border-radius: 15px;
+				-moz-border-radius: 15px;
+				border-radius: 15px;
+			}
+			#cucu {
+				height: 100% !important;
+				max-height: 100% !important;
+				-webkit-border-radius: 15px;
+				-moz-border-radius: 15px;
+				border-radius: 15px;
+			} */
 	.v-window__container {
 		height: 100% !important;
 		max-height: 100% !important;
 	}
 	/* #card_2 {
-			-webkit-border-radius: 15px;
-			-moz-border-radius: 15px;
-			border-radius: 15px;
-		} */
+				-webkit-border-radius: 15px;
+				-moz-border-radius: 15px;
+				border-radius: 15px;
+			} */
 	.ron {
 		-webkit-border-radius: 15px;
 		-moz-border-radius: 15px;

@@ -1,15 +1,22 @@
 <script>
-export default {
-  name: 'Evaluacion',
-}
+
+
+
+	export default {
+		name: 'Evaluacion'
+
+
+	}
+
 </script>
 
-<template >
+<template>
 
+	<div class="">
 
-<div class="">
+	
+	</div>
 
-</div>
 </template>
 
 <style>

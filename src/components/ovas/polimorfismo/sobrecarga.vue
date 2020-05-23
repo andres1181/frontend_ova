@@ -1,17 +1,23 @@
 <script>
+import Editor from '@/components/views/editor.vue'
+import Compilador from '@/components/views/compilador.vue'
 
 	export default {
 		name: 'Sobrecarga',
-		components: {},
-		props: {
-			terminado: {
-				type: Boolean,
-				defalult: false,
-				required: true
-			}
+		components: {
+			Editor,
+			Compilador
 		},
+		// props: {
+		// 	terminado: {
+		// 		type: Boolean,
+		// 		defalult: false,
+		// 		required: true
+		// 	}
+		// },
 		data: () => ({
 			hidden: false,
+			codigo: '#include <iostream>\nusing namespace std; \n\nint main() {\nint x=10;\nint y=25;\nint z=x+y;\n\ncout<< "Sum of x+y = " << z;\n}',
 			years: [
 				{
 					color: 'cyan',
@@ -299,14 +305,16 @@
 					</v-timeline-item>
 				</v-timeline>
 
-				<iframe height="400px"
+				<!-- <iframe height="400px"
 				        width="100%"
 				        src="https://repl.it/@ANDRESFELIPEF31/SarcasticJudiciousDemos-1?lite=true"
 				        scrolling="no"
 				        frameborder="no"
 				        allowtransparency="true"
 				        allowfullscreen="true"
-				        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+				        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe> -->
+				<Editor :codigo="codigo"></Editor>
+				<Compilador> </Compilador>
 			</v-col>
 
 			<v-col cols="1">
