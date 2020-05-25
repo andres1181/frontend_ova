@@ -314,7 +314,7 @@ import Compilador from '@/components/views/compilador.vue'
 				        allowfullscreen="true"
 				        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe> -->
 				<Editor :codigo="codigo"></Editor>
-				<Compilador> </Compilador>
+				<Compilador nombre="compilador1" :codigo="codigo"> </Compilador>
 			</v-col>
 
 			<v-col cols="1">

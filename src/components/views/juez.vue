@@ -7,7 +7,7 @@
 	import 'codemirror/theme/dracula.css'
 
 	export default {
-		name: 'Compilador',
+		name: 'Juez',
 		//Agregar un prop con codigo de entrada
 		// Para el juez:
 		//
@@ -18,25 +18,40 @@
 			},
 			codigo: {
 				type: String,
-			//	require: true,
+				//	require: true,
 				defalult: '#include <iostream>\nusing namespace std;'
+			},
+			salidaEsperada: {
+				type: String,
+				require: true
 			}
 		},
 		data: () => ({
 			code: '',
 			editor: '',
-			text: '',
+			salidaObtenida: '',
+			//salidaEsperada: '',
+			correcta: null,
 			datos: {
 				script: '',
 				language: '',
 				versionIndex: '',
 				clientId: '',
 				clientSecret: ''
-			},
-			respuesta: ''
+			}
 		}),
 		watch: {},
 		methods: {
+			//salida esperada y salida obtenida de la api
+			comparar(a, b) {
+				var correcto = false
+				if (a == b) {
+					correcto = true
+				} else {
+					correcto = false
+				}
+				return correcto
+			},
 			compilar() {
 				this.datos.script = dedent(this.editor.getValue())
 				this.datos.lenguaje = 'cpp'
@@ -69,7 +84,7 @@
 						if (response.status == '200' || response.status == '201') {
 							// eslint-disable-next-line no-console
 							console.log(response.data)
-							this.text = response.data.output
+							this.salidaObtenida = response.data.output
 						}
 						if (response.status == '400' || response.status == '401' || response.status == '404') {
 							// eslint-disable-next-line no-console
@@ -107,10 +122,27 @@
 		<div id="resultado">
 			<h3>Resultado:</h3>
 			<p>
-				{{text}}
+				{{salidaObtenida}}
 			</p>
 		</div>
 		<v-btn @click="compilar()">Compilar</v-btn>
+		{{correcta = comparar(salidaObtenida, salidaEsperada)}}
+		<v-alert
+      dense
+      outlined
+      type="error"
+			v-show="!correcta"
+    >
+       <strong>Incorrecto.</strong> Revise su código.
+    </v-alert>
+		<v-alert
+      dense
+      text
+      type="success"
+			v-show="correcta"
+    >
+      <strong>¡Correcto!</strong>
+    </v-alert>
 	</div>
 
 </template>

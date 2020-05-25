@@ -12,7 +12,7 @@
       codigo: {
         type: String,
         defalult: '#include <iostream>\nusing namespace std;',
-        //required: true
+        required: true
       }
     },
 		data: () => ({
