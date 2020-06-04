@@ -1,12 +1,15 @@
 <script>
-import Editor from '@/components/views/editor.vue'
-import Compilador from '@/components/views/compilador.vue'
+
+	import Editor from '@/components/views/editor.vue'
+	import Compilador from '@/components/views/compilador.vue'
+	import juez from '@/components/views/juez.vue'
 
 	export default {
 		name: 'Sobrecarga',
 		components: {
 			Editor,
-			Compilador
+			Compilador,
+			juez
 		},
 		// props: {
 		// 	terminado: {
@@ -17,7 +20,8 @@ import Compilador from '@/components/views/compilador.vue'
 		// },
 		data: () => ({
 			hidden: false,
-			codigo: '#include <iostream>\nusing namespace std; \n\nint main() {\nint x=10;\nint y=25;\nint z=x+y;\n\ncout<< "Sum of x+y = " << z;\n}',
+			codigo:
+				'#include <iostream>\nusing namespace std; \n\nint main() {\nint x=10;\nint y=25;\nint z=x+y;\n\ncout<< "Sum of x+y = " << z;\n}',
 			years: [
 				{
 					color: 'cyan',
@@ -99,13 +103,13 @@ import Compilador from '@/components/views/compilador.vue'
 	<v-container fluid
 	             class="screen fill-height"
 	             style="
-									    height: calc(100% - 48px) !important;
-									    max-height: calc(100% - 48px) !important;
-									">
+										    height: calc(100% - 48px) !important;
+										    max-height: calc(100% - 48px) !important;
+										">
 		<v-row justify="center"
 		       style="
-									    height: calc(100% - 48px) !important;
-									    max-height: calc(100% - 48px) !important;">
+										    height: calc(100% - 48px) !important;
+										    max-height: calc(100% - 48px) !important;">
 			<v-col cols="1">
 
 				<v-fab-transition>
@@ -127,11 +131,11 @@ import Compilador from '@/components/views/compilador.vue'
 
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-									         <span
-									          :class="`headline font-weight-bold ${years[0].color}--text`"
-									          v-text="'Sobrecarga'"
-									        ></span>
-									      </template>
+										         <span
+										          :class="`headline font-weight-bold ${years[0].color}--text`"
+										          v-text="'Sobrecarga'"
+										        ></span>
+										      </template>
 						<div class="py-4">
 
 							<div>
@@ -143,7 +147,7 @@ import Compilador from '@/components/views/compilador.vue'
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
 
-									      </template>
+										      </template>
 						<div class="py-4">
 
 							<div>
@@ -159,11 +163,11 @@ import Compilador from '@/components/views/compilador.vue'
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-									        <div class="">
-									          <img src="" alt="">
-									          <img src="" alt="">
-									        </div>
-									      </template>
+										        <div class="">
+										          <img src="" alt="">
+										          <img src="" alt="">
+										        </div>
+										      </template>
 						<div class="py-4">
 
 							<div>
@@ -175,14 +179,14 @@ import Compilador from '@/components/views/compilador.vue'
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-									        <div class="">
-	                          <p>Hasta hora el planteamiento es correcto, pero ¿Qué pasaria si una persona ingresa un número que no es de tipo entero?, se presentaria
-	                						un error. Para solucionar este error podemos recurrir a la sobrecarga de la función <em>volumen</em> por cada tipo de
-	                						dato, asi:
-	                					</p>
+										        <div class="">
+		                          <p>Hasta hora el planteamiento es correcto, pero ¿Qué pasaria si una persona ingresa un número que no es de tipo entero?, se presentaria
+		                						un error. Para solucionar este error podemos recurrir a la sobrecarga de la función <em>volumen</em> por cada tipo de
+		                						dato, asi:
+		                					</p>
 
-									        </div>
-									      </template>
+										        </div>
+										      </template>
 						<div class="py-4">
 
 							<div>
@@ -194,11 +198,11 @@ import Compilador from '@/components/views/compilador.vue'
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-									        <div class="">
-									          <img src="" alt="">
+										        <div class="">
+										          <img src="" alt="">
 
-									        </div>
-									      </template>
+										        </div>
+										      </template>
 						<div class="py-4">
 
 							<div>
@@ -209,11 +213,11 @@ import Compilador from '@/components/views/compilador.vue'
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-									        <div class="">
-									          <img src="" alt="">
+										        <div class="">
+										          <img src="" alt="">
 
-									        </div>
-									      </template>
+										        </div>
+										      </template>
 						<div class="py-4">
 
 							<div>
@@ -229,11 +233,11 @@ import Compilador from '@/components/views/compilador.vue'
 				<v-timeline v-show="page == 2">
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
-								            <span
-								             :class="`headline font-weight-bold ${years[1].color}--text`"
-								             v-text="'Quiz'"
-								           ></span>
-									      </template>
+									            <span
+									             :class="`headline font-weight-bold ${years[1].color}--text`"
+									             v-text="'Quiz'"
+									           ></span>
+										      </template>
 						<div class="py-4">
 
 							<div>
@@ -241,8 +245,8 @@ import Compilador from '@/components/views/compilador.vue'
 								<p>Supongamos que tenemos la clase <strong> Tabla </strong>
 									<v-tooltip bottom>
 										<template v-slot:activator="{ on }">
-	                          <v-icon light dense v-on="on">mdi-comment </v-icon>
-	                        </template>
+		                          <v-icon light dense v-on="on">mdi-comment </v-icon>
+		                        </template>
 										<span> Sus atributos son: <em>titulo, columnas</em> y<em> filas</em> </span>
 									</v-tooltip>.</p>
 							</div>
@@ -251,7 +255,7 @@ import Compilador from '@/components/views/compilador.vue'
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
 
-												</template>
+													</template>
 						<div class="py-4">
 
 							<div class="">
@@ -261,11 +265,11 @@ import Compilador from '@/components/views/compilador.vue'
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-														<div class="">
-										          <img src="" alt="">
+															<div class="">
+											          <img src="" alt="">
 
-										        </div>
-												</template>
+											        </div>
+													</template>
 						<div class="py-4">
 
 							<div>
@@ -276,11 +280,11 @@ import Compilador from '@/components/views/compilador.vue'
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-	                          <div class="">
-	                            <img src="" alt="">
+		                          <div class="">
+		                            <img src="" alt="">
 
-	                          </div>
-	                      </template>
+		                          </div>
+		                      </template>
 						<div class="py-4">
 
 							<div>
@@ -291,12 +295,12 @@ import Compilador from '@/components/views/compilador.vue'
 					</v-timeline-item>
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
-														<div class="py-4">
-															<div>
-																<p>El compilador decide el construtor a utilizar en tiempo de ejecución de acuerdo a los datos ingresados</p>
+															<div class="py-4">
+																<div>
+																	<p>El compilador decide el construtor a utilizar en tiempo de ejecución de acuerdo a los datos ingresados</p>
+																</div>
 															</div>
-														</div>
-												</template>
+													</template>
 						<div class="py-4">
 							<div>
 
@@ -306,15 +310,16 @@ import Compilador from '@/components/views/compilador.vue'
 				</v-timeline>
 
 				<!-- <iframe height="400px"
-				        width="100%"
-				        src="https://repl.it/@ANDRESFELIPEF31/SarcasticJudiciousDemos-1?lite=true"
-				        scrolling="no"
-				        frameborder="no"
-				        allowtransparency="true"
-				        allowfullscreen="true"
-				        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe> -->
+					        width="100%"
+					        src="https://repl.it/@ANDRESFELIPEF31/SarcasticJudiciousDemos-1?lite=true"
+					        scrolling="no"
+					        frameborder="no"
+					        allowtransparency="true"
+					        allowfullscreen="true"
+					        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe> -->
 				<Editor :codigo="codigo"></Editor>
 				<Compilador nombre="compilador1" :codigo="codigo"> </Compilador>
+				<juez nombre="juez1" salida="Sum of x+y = 35"></juez>
 			</v-col>
 
 			<v-col cols="1">

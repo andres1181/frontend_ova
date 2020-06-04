@@ -115,3 +115,6 @@ padding-right: 58px;
 .v-text-field fieldset, .v-text-field .v-input__control, .v-text-field .v-input__slot {
     border-color: white;
 }
+.resultado{
+  height: 150px;
+}
