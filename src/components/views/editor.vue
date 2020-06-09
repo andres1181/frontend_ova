@@ -22,9 +22,9 @@
 		}),
 		watch: {},
 		methods: {
-			mostrar() {
+		/* mostrar() {
 				this.text = dedent(this.editor.getValue())
-			}
+			}*/
 		},
 		mounted() {
 			this.editor = Codemirror.fromTextArea(document.getElementById('editor'), {
@@ -35,7 +35,7 @@
 			})
 		},
     created(){
-      this.code = this.codigo
+      this.code = dedent(this.codigo)
     }
 	}
 
@@ -46,12 +46,12 @@
 	<div class="">
 
 		<textarea v-model="code" rows="20" cols="80" id="editor" disabled></textarea>
-		<div class="" height="300px">
+		<!-- <div class="" height="300px">
 			<v-btn @click="mostrar()">Mostrar</v-btn>
 			<p>
 				{{text}}
 			</p>
-		</div>
+		</div> -->
 	</div>
 
 </template>

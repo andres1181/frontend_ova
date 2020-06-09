@@ -8,7 +8,7 @@
 	import Polimorficas from '@/components/ovas/polimorfismo/polimorficas.vue'
 	import Sobrecarga from '@/components/ovas/polimorfismo/sobrecarga.vue'
 	import Sobreescritura from '@/components/ovas/polimorfismo/sobrescritura.vue'
-	import EvaluacionPolimorfirmo from '@/components/ovas/polimorfismo/evaluacion.vue'
+	import vistaEvaluacion from '@/components/actividades/evaluacion/vistaEvaluacion.vue'
 
 	export default {
 		name: 'Polimorfismo',
@@ -19,20 +19,22 @@
 			Polimorficas,
 			Sobrecarga,
 			Sobreescritura,
-			EvaluacionPolimorfirmo
+			vistaEvaluacion
 		},
 		data: () => ({
 			e1: 1,
 			steps: 8,
 			tab: null,
+			Evaluacion: vistaEvaluacion,
 			avance: [],
 			lista: [],
 			contenido: 'Introduccion',
+			iniciarEvaluacion: false,
 			temas: [
 				{ _id: '1', titulo: 'Introducción', terminado: false, contenido: 'Introduccion', unidad: 'polimorfismo' },
 				{ _id: '2', titulo: 'Conceptos', terminado: false, contenido: 'Conceptos', unidad: 'polimorfismo' },
 				{ _id: '3', titulo: 'Sobrecarga', terminado: false, contenido: 'Sobrecarga', unidad: 'polimorfismo' },
-				{ _id: '4', titulo: 'Sobrescritura', terminado: false, contenido: 'Sobrescritura', unidad: 'polimorfismo' },
+				{ _id: '4', titulo: 'Sobrescritura', terminado: false, contenido: 'Sobreescritura', unidad: 'polimorfismo' },
 				{ _id: '5', titulo: 'Genericidad', terminado: false, contenido: 'Genericidad', unidad: 'polimorfismo' },
 				{
 					_id: '6',
@@ -40,8 +42,7 @@
 					terminado: false,
 					contenido: 'Polimorficas',
 					unidad: 'polimorfismo'
-				},
-				{ _id: '7', titulo: 'Evaluación', terminado: false, contenido: 'EvaluacionPolimorfirmo', unidad: 'polimorfismo' }
+				}
 			]
 		}),
 		watch: {
@@ -51,6 +52,9 @@
 		},
 		mixins: [misMixins],
 		methods: {
+			evaluacion() {
+				this.contenido = 'vistaEvaluacion'
+			},
 			buscarAvance() {
 				var token = String(localStorage.getItem('tokenUser'))
 				var id_ = this.obtenerDatos().id
@@ -95,6 +99,7 @@
 				}
 			}
 		},
+
 		created() {
 			this.steps = this.temas.length
 			//this.buscarAvance()
@@ -112,49 +117,50 @@
 	<v-card outlined flat>
 		<!-- <v-toolbar color="color-2" dark fixed flat dense class="px-4">
 
-				<v-toolbar-title class="text-center justify-center">
-					<h3>Polimorfismo</h3>
-				</v-toolbar-title>
+					<v-toolbar-title class="text-center justify-center">
+						<h3>Polimorfismo</h3>
+					</v-toolbar-title>
 
-				<v-spacer></v-spacer>
-				<template v-slot:extension>
-						<v-tabs v-model="tab" dark centered
-						        show-arrows
-						        slider-color="yellow"
-										dense
-						        background-color="transparent">
-							<v-tab v-for="(tema, i) in temas" :key="i">
-								{{tema.titulo}}
-							</v-tab>
-						</v-tabs>
-						</template>
-			</v-toolbar>
-			<v-tabs-items v-model="tab">
-				<v-tab-item v-for="(tema, i) in temas" :key="i">
-					<v-container fluid>
+					<v-spacer></v-spacer>
+					<template v-slot:extension>
+							<v-tabs v-model="tab" dark centered
+							        show-arrows
+							        slider-color="yellow"
+											dense
+							        background-color="transparent">
+								<v-tab v-for="(tema, i) in temas" :key="i">
+									{{tema.titulo}}
+								</v-tab>
+							</v-tabs>
+							</template>
+				</v-toolbar>
+				<v-tabs-items v-model="tab">
+					<v-tab-item v-for="(tema, i) in temas" :key="i">
+						<v-container fluid>
 
-						<component :is="tema.contenido"></component>
+							<component :is="tema.contenido"></component>
 
-					</v-container>
-				</v-tab-item>
-			</v-tabs-items> -->
+						</v-container>
+					</v-tab-item>
+				</v-tabs-items> -->
 		<v-row>
 			<v-col cols="3" sm="3">
 				<v-card class="mx-auto"
 				        max-width="100%"
 				        outlined>
 					<!-- <v-row align="center">
-					<v-col v-for="(tema, i) in temas" :key="i" class="text-left" cols="6" sm="6">
-						<div class="my-1" 	max-width="100%" width="100%">
-							<v-btn  outlined  large @click="contenido=tema.titulo" max-width="100%" width="100%"> <h1>Lección {{i+1}}: </h1>{{tema.titulo}}</v-btn>
-						</div>
-					</v-col>
-				</v-row> -->
+						<v-col v-for="(tema, i) in temas" :key="i" class="text-left" cols="6" sm="6">
+							<div class="my-1" 	max-width="100%" width="100%">
+								<v-btn  outlined  large @click="contenido=tema.titulo" max-width="100%" width="100%"> <h1>Lección {{i+1}}: </h1>{{tema.titulo}}</v-btn>
+							</div>
+						</v-col>
+					</v-row> -->
 					<ul id="listaLecciones">
 						<li v-for="(tema, i) in temas" :key="i" class="text-left">
 							<v-btn class="my-1" outlined large @click="contenido=tema.contenido" max-width="100%" width="100%" color="success"> {{tema.titulo}}</v-btn>
 						</li>
 					</ul>
+					<v-btn class="my-1" outlined large @click="evaluacion" max-width="100%" width="100%" color="success"> Evaluación</v-btn>
 				</v-card>
 			</v-col>
 			<v-col cols="9" sm="9">
@@ -162,8 +168,8 @@
 				        max-width="800"
 				        outlined>
 					<v-container fluid>
-						
-						<component :is="contenido"></component>
+
+						<component :is="contenido" unidad="polimorfismo"></component>
 
 					</v-container>
 

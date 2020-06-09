@@ -79,6 +79,7 @@
 		<v-btn @click="enviarResultado">
 			Enviar
 		</v-btn>
+		{{info}}
 	</v-container>
 
 </template>

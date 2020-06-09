@@ -3,11 +3,11 @@ export default {
   name: 'Sobreescritura',
   components: {},
   props: {
-    terminado: {
+  /*  terminado: {
       type: Boolean,
       defalult: false,
       required: true
-    }
+    }*/
   },
   data: () => ({
     hidden: false,

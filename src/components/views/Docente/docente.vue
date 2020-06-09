@@ -1,8 +1,10 @@
 <script>
-
+import crearPreguntas from '@/components/views/Docente/crear_preguntas.vue'
 	export default {
 		name: 'Docente',
-
+		componets: {
+			crearPreguntas
+		},
 		data: () => ({})
 	}
 
@@ -11,7 +13,7 @@
 <template>
 
 	<div>
-
+		<crearPreguntas></crearPreguntas>
 	</div>
 
 </template>
