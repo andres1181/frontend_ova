@@ -1,25 +1,30 @@
 <script>
 
-	import Editor from '@/components/views/editor.vue'
-	import Compilador from '@/components/views/compilador.vue'
+	//import Editor from '@/components/views/editor.vue'
+	//import Compilador from '@/components/views/compilador.vue'
 	import juez from '@/components/views/juez.vue'
 
 	export default {
 		name: 'Sobrecarga',
 		components: {
-			Editor,
-			Compilador,
+			//	Editor,
+			//		Compilador,
 			juez
 		},
-		// props: {
-		// 	terminado: {
-		// 		type: Boolean,
-		// 		defalult: false,
-		// 		required: true
-		// 	}
-		// },
+		props: {
+			tamano: {
+				type: Number,
+				required: true
+			}
+			// 	terminado: {
+			// 		type: Boolean,
+			// 		defalult: false,
+			// 		required: true
+			// 	}
+		},
 		data: () => ({
 			hidden: false,
+
 			codigo:
 				'#include <iostream>\nusing namespace std; \n\nint main() {\nint x=10;\nint y=25;\nint z=x+y;\n\ncout<< "Sum of x+y = " << z;\n}',
 			years: [
@@ -100,42 +105,53 @@
 
 <template >
 
-	<v-container fluid
-	             class="screen fill-height"
-	             style="
-										    height: calc(100% - 48px) !important;
-										    max-height: calc(100% - 48px) !important;
-										">
-		<v-row justify="center"
-		       style="
-										    height: calc(100% - 48px) !important;
-										    max-height: calc(100% - 48px) !important;">
-			<v-col cols="1">
+	<v-card :height="tamano" class="overflow-hidden" flat>
+		<v-app-bar dense absolute
+		           color="white"
+		           scroll-target="#scrolling-techniques-7">
 
-				<v-fab-transition>
-					<v-btn v-show="!hidden"
-					       color="pink"
-					       dark
-					       bottom
-					       fixed
-					       fab
-					       class="my-5"
-					       @click="anteriorPagina()">
-						<v-icon>mdi-arrow-left-thick</v-icon>
-					</v-btn>
-				</v-fab-transition>
+			<v-toolbar-title>Sobrecarga</v-toolbar-title>
 
-			</v-col>
-			<v-col cols="10">
+			<v-spacer></v-spacer>
+
+			<v-btn text>
+				Actividad Practica
+			</v-btn>
+		</v-app-bar>
+		<!-- <v-banner single-line color="white" bottom class="justify-center headline font-weight-light" sticky>
+
+					<span class="font-weight-bold">	Sobrecarga</span>
+					<template v-slot:actions>
+					       <v-btn
+					         color="pink"
+									 text
+					       >
+					         Actividad Practica
+
+					       </v-btn>
+					     </template>
+				</v-banner> -->
+		<!-- <v-fab-transition> -->
+		<!-- <v-btn v-show="!hidden" dark fab fixed
+												       class="mx-1"
+												       @click="anteriorPagina()">
+													<v-icon>mdi-arrow-left-thick</v-icon>
+												</v-btn> -->
+		<!-- </v-fab-transition> -->
+
+		<v-sheet id="scrolling-techniques-7"
+		         class="mt-12  overflow-y-auto"
+		         max-height="calc(100% - 48px)">
+			<v-container>
 				<v-timeline v-show="page == 1">
 
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-										         <span
-										          :class="`headline font-weight-bold ${years[0].color}--text`"
-										          v-text="'Sobrecarga'"
-										        ></span>
-										      </template>
+																			         <span
+																			          :class="`headline font-weight-bold ${years[0].color}--text`"
+																			          v-text="'Sobrecarga'"
+																			        ></span>
+																			      </template>
 						<div class="py-4">
 
 							<div>
@@ -147,7 +163,7 @@
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
 
-										      </template>
+																			      </template>
 						<div class="py-4">
 
 							<div>
@@ -161,184 +177,45 @@
 							</div>
 						</div>
 					</v-timeline-item>
-					<v-timeline-item :color="years[0].color" small>
-						<template v-slot:opposite>
-										        <div class="">
-										          <img src="" alt="">
-										          <img src="" alt="">
-										        </div>
-										      </template>
-						<div class="py-4">
 
-							<div>
-								<h2 :class="`headline font-weight-light mb-4 ${years[1].color}--text`">Ejemplo:</h2>
-								<p>Supongamos que queremos construir una función que permita conocer el volumen de un cubo. Dicha función recibiria el
-									valor de uno de los lados, sera de tipo entero y esta se multiplicaria tres veces para obtener el resultado.</p>
-							</div>
-						</div>
-					</v-timeline-item>
-					<v-timeline-item :color="years[0].color" small>
-						<template v-slot:opposite>
-										        <div class="">
-		                          <p>Hasta hora el planteamiento es correcto, pero ¿Qué pasaria si una persona ingresa un número que no es de tipo entero?, se presentaria
-		                						un error. Para solucionar este error podemos recurrir a la sobrecarga de la función <em>volumen</em> por cada tipo de
-		                						dato, asi:
-		                					</p>
-
-										        </div>
-										      </template>
-						<div class="py-4">
-
-							<div>
-								<img src="" alt="">
-								<img src="" alt="">
-
-							</div>
-						</div>
-					</v-timeline-item>
-					<v-timeline-item :color="years[0].color" small>
-						<template v-slot:opposite>
-										        <div class="">
-										          <img src="" alt="">
-
-										        </div>
-										      </template>
-						<div class="py-4">
-
-							<div>
-								<p>De esta forma se ejecutara solo la función que corresponda al tipo de dato ingresado por el ususario.</p>
-
-							</div>
-						</div>
-					</v-timeline-item>
-					<v-timeline-item :color="years[0].color" small>
-						<template v-slot:opposite>
-										        <div class="">
-										          <img src="" alt="">
-
-										        </div>
-										      </template>
-						<div class="py-4">
-
-							<div>
-								<h2 :class="`headline font-weight-light mb-4 ${years[0].color}--text`">Sobrecarga de constructores:</h2>
-								<p>Un constructor es una función y puede sobrecargarse. No puede haber varios constructores con un mismo número y tipo
-									de argumentos.
-								</p>
-							</div>
-						</div>
-					</v-timeline-item>
 				</v-timeline>
 
-				<v-timeline v-show="page == 2">
-					<v-timeline-item :color="years[1].color" small>
-						<template v-slot:opposite>
-									            <span
-									             :class="`headline font-weight-bold ${years[1].color}--text`"
-									             v-text="'Quiz'"
-									           ></span>
-										      </template>
-						<div class="py-4">
+				<div v-show="page == 2">
+					<juez nombre="juez1" salida="Sum of x+y = 35"></juez>
+				</div>
+			</v-container>
+		</v-sheet>
+		<!-- <iframe height="400px"
+														        width="100%"
+														        src="https://repl.it/@ANDRESFELIPEF31/SarcasticJudiciousDemos-1?lite=true"
+														        scrolling="no"
+														        frameborder="no"
+														        allowtransparency="true"
+														        allowfullscreen="true"
+														        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe> -->
+		<!-- <Editor :codigo="codigo"></Editor>
+												<Compilador nombre="compilador1" :codigo="codigo"> </Compilador>
+												<juez nombre="juez1" salida="Sum of x+y = 35"></juez> -->
 
-							<div>
-								<h2 :class="`headline font-weight-light mb-4 ${years[0].color}--text`">Ejemplo:</h2>
-								<p>Supongamos que tenemos la clase <strong> Tabla </strong>
-									<v-tooltip bottom>
-										<template v-slot:activator="{ on }">
-		                          <v-icon light dense v-on="on">mdi-comment </v-icon>
-		                        </template>
-										<span> Sus atributos son: <em>titulo, columnas</em> y<em> filas</em> </span>
-									</v-tooltip>.</p>
-							</div>
-						</div>
-					</v-timeline-item>
-					<v-timeline-item :color="years[1].color" small>
-						<template v-slot:opposite>
+		<v-card-actions fixed>
+			<v-btn v-show="!hidden" dark @click="anteriorPagina()">
+				<v-icon>mdi-arrow-left-thick</v-icon>
+			</v-btn>
+			<v-btn color="orange" text>
+				Share
+			</v-btn>
+			<v-btn v-show="!hidden"
+			       color="pink"
+			       dark
+			       @click="siguientePagina()">
+				<v-icon>mdi-arrow-right-thick</v-icon>
+			</v-btn>
+			<v-btn color="orange" text>
+				Explore
+			</v-btn>
+		</v-card-actions>
 
-													</template>
-						<div class="py-4">
-
-							<div class="">
-								<img src="" alt="">
-							</div>
-						</div>
-					</v-timeline-item>
-					<v-timeline-item :color="years[0].color" small>
-						<template v-slot:opposite>
-															<div class="">
-											          <img src="" alt="">
-
-											        </div>
-													</template>
-						<div class="py-4">
-
-							<div>
-
-								<p>Creamos dos constructores, el primero no recibe datos e inicializa los atributos por defecto.</p>
-							</div>
-						</div>
-					</v-timeline-item>
-					<v-timeline-item :color="years[0].color" small>
-						<template v-slot:opposite>
-		                          <div class="">
-		                            <img src="" alt="">
-
-		                          </div>
-		                      </template>
-						<div class="py-4">
-
-							<div>
-
-								<p>El segundo recibe datos que el usuario ingrese e inicializa los atributos con estos valores.</p>
-							</div>
-						</div>
-					</v-timeline-item>
-					<v-timeline-item :color="years[1].color" small>
-						<template v-slot:opposite>
-															<div class="py-4">
-																<div>
-																	<p>El compilador decide el construtor a utilizar en tiempo de ejecución de acuerdo a los datos ingresados</p>
-																</div>
-															</div>
-													</template>
-						<div class="py-4">
-							<div>
-
-							</div>
-						</div>
-					</v-timeline-item>
-				</v-timeline>
-
-				<!-- <iframe height="400px"
-					        width="100%"
-					        src="https://repl.it/@ANDRESFELIPEF31/SarcasticJudiciousDemos-1?lite=true"
-					        scrolling="no"
-					        frameborder="no"
-					        allowtransparency="true"
-					        allowfullscreen="true"
-					        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe> -->
-				<Editor :codigo="codigo"></Editor>
-				<Compilador nombre="compilador1" :codigo="codigo"> </Compilador>
-				<juez nombre="juez1" salida="Sum of x+y = 35"></juez>
-			</v-col>
-
-			<v-col cols="1">
-				<v-fab-transition>
-					<v-btn v-show="!hidden"
-					       color="pink"
-					       dark
-					       centered
-					       bottom
-					       fixed
-					       fab
-					       class="my-5"
-					       @click="siguientePagina()">
-						<v-icon>mdi-arrow-right-thick</v-icon>
-					</v-btn>
-				</v-fab-transition>
-			</v-col>
-		</v-row>
-	</v-container>
+	</v-card>
 
 </template>
 

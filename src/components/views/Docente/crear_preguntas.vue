@@ -3,7 +3,7 @@
 	import crearfalsoVerdadero from '@/components/views/Docente/Preguntas/falsoYverdadero.vue'
 	import crearOpcionMultiple from '@/components/views/Docente/Preguntas/CrearOpcionMultiple.vue'
 	import ordenar from '@/components/views/Docente/Preguntas/ordenar.vue'
-
+// TODO: falta importar analizar codigo y evaluacion
 	export default {
 		name: 'Crear',
 		components: {

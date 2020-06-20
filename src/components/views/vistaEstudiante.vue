@@ -312,11 +312,11 @@
 		border-bottom-left-radius: 0px;
 		border-bottom-right-radius: 0px;
 	}
-	#contenido {
+/*	#contenido {
 		height: 100%;
 		max-height: 100%;
 		overflow-y: auto;
-	}
+	}*/
 	.ovas {
 	}
 

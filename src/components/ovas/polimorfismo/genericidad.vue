@@ -3,13 +3,7 @@
 	export default {
 		name: 'Genericidad',
 		components: {},
-		props: {
-			terminado: {
-				type: Boolean,
-				defalult: false,
-				required: true
-			}
-		},
+
 		data: () => ({
 			hidden: false,
 			years: [

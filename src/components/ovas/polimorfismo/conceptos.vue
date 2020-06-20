@@ -3,13 +3,7 @@
 	export default {
 		name: 'Introduccion',
 		components: {},
-		props: {
-			terminado: {
-				type: Boolean,
-				defalult: false,
-      	required: true
-			}
-		},
+
 		data: () => ({
 			hidden: false,
 			years: [
@@ -61,9 +55,9 @@
 			]
 		}),
 		methods: {
-			 scrollWin: function() {
-  window.scrollTo(0, 0);
-},
+			scrollWin: function() {
+				window.scrollTo(0, 0)
+			},
 			siguientePagina: function() {
 				if (this.page === this.numPaginas) {
 					this.page = this.numPaginas
@@ -93,42 +87,40 @@
 	<v-container fluid
 	             class="screen fill-height"
 	             style="
-								    height: calc(100% - 48px) !important;
-								    max-height: calc(100% - 48px) !important;
-								">
+									    height: calc(100% - 48px) !important;
+									    max-height: calc(100% - 48px) !important;
+									">
 
 		<v-row justify="center"
 		       style="
-								    height: calc(100% - 48px) !important;
-								    max-height: calc(100% - 48px) !important;">
-										<v-col cols="1">
+									    height: calc(100% - 48px) !important;
+									    max-height: calc(100% - 48px) !important;">
+			<v-col cols="1">
 
+				<v-fab-transition>
+					<v-btn v-show="!hidden"
+					       color="pink"
+					       dark
+					       bottom
+					       fixed
+					       fab
+					       class="my-5"
+					       @click="anteriorPagina()">
+						<v-icon>mdi-arrow-left-thick</v-icon>
+					</v-btn>
+				</v-fab-transition>
 
-												<v-fab-transition>
-													<v-btn v-show="!hidden"
-																 color="pink"
-																 dark
-																 bottom
-																 fixed
-
-																 fab
-																 class="my-5"
-																 @click="anteriorPagina()">
-														<v-icon>mdi-arrow-left-thick</v-icon>
-													</v-btn>
-												</v-fab-transition>
-
-											</v-col>
+			</v-col>
 			<v-col cols="10">
 				<v-timeline v-show="page == 1">
 
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-								         <span
-								          :class="`headline font-weight-bold ${years[0].color}--text`"
-								          v-text="'Herencia'"
-								        ></span>
-								      </template>
+									         <span
+									          :class="`headline font-weight-bold ${years[0].color}--text`"
+									          v-text="'Herencia'"
+									        ></span>
+									      </template>
 						<div class="py-4">
 
 							<div>
@@ -140,8 +132,8 @@
 									<span>class <span class="negrita_">NombreClaseDerivada </span> <span class="subrayar_ negrita_">:</span> <span class="subrayar_">public</span>								<span class="negrita_">NombreClaseBase </span>{ ... }</span>
 									<v-tooltip bottom light max-width="300px">
 										<template v-slot:activator="{ on }">
-													<v-icon light dense v-on="on">mdi-comment </v-icon>
-												</template>
+														<v-icon light dense v-on="on">mdi-comment </v-icon>
+													</template>
 										<span>Los dos puntos <strong>" : " </strong> significan que la clase derivada podra utilizar todos los miembros	de la clase base que sean publicos.</span>
 									</v-tooltip>
 								</p>
@@ -153,11 +145,11 @@
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-								        <div class="">
-								          <img src="" alt="">
-								          <img src="" alt="">
-								        </div>
-								      </template>
+									        <div class="">
+									          <img src="" alt="">
+									          <img src="" alt="">
+									        </div>
+									      </template>
 						<div class="py-4">
 
 							<div>
@@ -166,8 +158,8 @@
 									estas clases tienen muchos atributos en común como
 									<v-tooltip bottom light max-width="300px">
 										<template v-slot:activator="{ on }">
-													<v-icon light dense v-on="on">mdi-comment </v-icon>
-												</template>
+														<v-icon light dense v-on="on">mdi-comment </v-icon>
+													</template>
 										<span><em>Edad, Código, Nombres y Apellidos</em></span>
 									</v-tooltip>. La clases también pueden tener en común la función <span class="negrita_"> ObtenerPromedio() </span>.
 									<br>
@@ -177,11 +169,11 @@
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-								        <div class="">
-								          <img src="" alt="">
-								          <img src="" alt="">
-								        </div>
-								      </template>
+									        <div class="">
+									          <img src="" alt="">
+									          <img src="" alt="">
+									        </div>
+									      </template>
 						<div class="py-4">
 
 							<div>
@@ -193,11 +185,11 @@
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-								        <div class="">
-								          <img src="" alt="">
-								          <img src="" alt="">
-								        </div>
-								      </template>
+									        <div class="">
+									          <img src="" alt="">
+									          <img src="" alt="">
+									        </div>
+									      </template>
 						<div class="py-4">
 
 							<div>
@@ -205,8 +197,8 @@
 									lo que las clases <span class="negrita_">EstudiantePregrado</span> y <span class="negrita_">EstudianteMaestria</span>								tienen en común.
 									<v-tooltip bottom light max-width="300px">
 										<template v-slot:activator="{ on }">
-													<v-icon light dense v-on="on">mdi-comment </v-icon>
-												</template>
+														<v-icon light dense v-on="on">mdi-comment </v-icon>
+													</template>
 										<span>De esta forma evitamos repetir código innecesario.</span>
 									</v-tooltip>.
 								</p>
@@ -216,11 +208,11 @@
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-								        <div class="">
-								          <img src="" alt="">
+									        <div class="">
+									          <img src="" alt="">
 
-								        </div>
-								      </template>
+									        </div>
+									      </template>
 						<div class="py-4">
 
 							<div>
@@ -233,11 +225,11 @@
 					</v-timeline-item>
 					<v-timeline-item :color="years[0].color" small>
 						<template v-slot:opposite>
-								        <div class="">
-								          <img src="" alt="">
+									        <div class="">
+									          <img src="" alt="">
 
-								        </div>
-								      </template>
+									        </div>
+									      </template>
 						<div class="py-4">
 
 							<div>
@@ -251,11 +243,11 @@
 				<v-timeline v-show="page == 2">
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
-							            <span
-							             :class="`headline font-weight-bold ${years[1].color}--text`"
-							             v-text="'Funciones Virtuales'"
-							           ></span>
-								      </template>
+								            <span
+								             :class="`headline font-weight-bold ${years[1].color}--text`"
+								             v-text="'Funciones Virtuales'"
+								           ></span>
+									      </template>
 						<div class="py-4">
 
 							<div>
@@ -268,7 +260,7 @@
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
 
-											</template>
+												</template>
 						<div class="py-4">
 
 							<div class="">
@@ -279,11 +271,11 @@
 
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
-													<div class="">
-									          <img src="" alt="">
+														<div class="">
+										          <img src="" alt="">
 
-									        </div>
-											</template>
+										        </div>
+												</template>
 						<div class="py-4">
 							<div>
 								<p>Una <strong>Función virtual</strong> puede ser utilizada e implementada de forma diferente en las clases derivadas
@@ -294,12 +286,12 @@
 
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
-													<div class="py-4">
-														<div>
-															<p>Cuando se declara una función virtual, esta permanecera como una Función virtual en todas la capas de clases derivadas que existan. Es decir, si crea una nueva clase que derive de la clase derivada y no de la clase base, la nueva clase podra implementar la función y esta seguira siendo virtual. </p>
+														<div class="py-4">
+															<div>
+																<p>Cuando se declara una función virtual, esta permanecera como una Función virtual en todas la capas de clases derivadas que existan. Es decir, si crea una nueva clase que derive de la clase derivada y no de la clase base, la nueva clase podra implementar la función y esta seguira siendo virtual. </p>
+															</div>
 														</div>
-													</div>
-											</template>
+												</template>
 						<div class="py-4">
 							<div>
 								<p>Cuando una función virtual es redefinida en una clase derivada no es necesario definirla nuevamente como <strong>Virtual</strong>,
@@ -311,7 +303,7 @@
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
 
-											</template>
+												</template>
 						<div class="py-4">
 							<div>
 								<p>Si existen varias versiones de una función en diferentes clases derivadas, <strong>C++</strong> llamara en tiempo
@@ -323,7 +315,7 @@
 					<v-timeline-item :color="years[1].color" small>
 						<template v-slot:opposite>
 
-											</template>
+												</template>
 						<div class="py-4">
 							<div>
 								<p>Si en una clase derivada no se redefine una función virtual, entonces se utiliza la función de la clase base. A continuación
@@ -337,11 +329,11 @@
 				<v-timeline v-show="page == 3">
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
-												<span
-												 :class="`headline font-weight-bold ${years[2].color}--text`"
-												 v-text="'Constructores virtuales'"
-											 ></span>
-										</template>
+													<span
+													 :class="`headline font-weight-bold ${years[2].color}--text`"
+													 v-text="'Constructores virtuales'"
+												 ></span>
+											</template>
 						<div class="py-4">
 
 							<div>
@@ -354,7 +346,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 
 							<div>
@@ -366,11 +358,11 @@
 
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
-												<span
-												 :class="`headline font-weight-bold ${years[2].color}--text`"
-												 v-text="'Destructores virtuales'"
-											 ></span>
-										</template>
+													<span
+													 :class="`headline font-weight-bold ${years[2].color}--text`"
+													 v-text="'Destructores virtuales'"
+												 ></span>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Los destructores sirven para eliminar un objeto de determinada clase, terminando su ambito temporal y liberando memoria
@@ -382,7 +374,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>En el caso de los <strong> Destructores virtuales </strong> se deben utilizar en una clase base para asegurar que
@@ -396,7 +388,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<h2 :class="`headline font-weight-light mb-4 ${years[1].color}--text`">Ejemplo:</h2>
 						<div class="py-4">
 							<div>
@@ -409,7 +401,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Definicón de la clase A:</p>
@@ -419,7 +411,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Definicón de la clase B:</p>
@@ -429,7 +421,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Definicón de la clase C:</p>
@@ -440,7 +432,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Creando el Objeto de la clase C</p>
@@ -451,7 +443,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Eliminando el objeto de la clase C:</p>
@@ -462,7 +454,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Destrución de la clase A:</p>
@@ -481,7 +473,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>¿Qué pasa si no se define un constructor virtual?:</p>
@@ -499,7 +491,7 @@
 					<v-timeline-item :color="years[2].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Pregunta</p>
@@ -512,19 +504,19 @@
 				<v-timeline v-show="page == 4">
 					<v-timeline-item :color="years[4].color" small>
 						<template v-slot:opposite>
-												<span
-												 :class="`headline font-weight-bold ${years[4].color}--text`"
-												 v-text="'Clases abstractas'"
-											 ></span>
-										</template>
+													<span
+													 :class="`headline font-weight-bold ${years[4].color}--text`"
+													 v-text="'Clases abstractas'"
+												 ></span>
+											</template>
 						<div class="py-4">
 
 							<div>
 								<p>Son clases de las que no se pueden declarar instancias
 									<v-tooltip bottom>
 										<template v-slot:activator="{ on }">
-														<v-icon light dense v-on="on">mdi-comment </v-icon>
-													</template>
+															<v-icon light dense v-on="on">mdi-comment </v-icon>
+														</template>
 										<span>Es decir, no se pueden declarar objetos de una clase abstracta</span>
 									</v-tooltip>. Para que una clase sea abstracta debe poseer al menos un metodo virtual puro y es una clase base para
 									otras clases concretas.
@@ -536,7 +528,7 @@
 					<v-timeline-item :color="years[4].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 
 							<div>
@@ -548,11 +540,11 @@
 
 					<v-timeline-item :color="years[4].color" small>
 						<template v-slot:opposite>
-												<div class="">
-													<img src="" alt="">
+													<div class="">
+														<img src="" alt="">
 
-												</div>
-										</template>
+													</div>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Si una clase hereda de una clase abstracta y no se define los metodos virtuales puro heredados, entonces la clase
@@ -564,7 +556,7 @@
 					<v-timeline-item :color="years[4].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>En el siguiente ejemplo podemos ver la el funcionamiento de una clase abstracta. </p>
@@ -575,7 +567,7 @@
 					<v-timeline-item :color="years[4].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<h2 :class="`headline font-weight-light mb-4 ${years[1].color}--text`">Ejemplo:</h2>
 							<div>
@@ -588,7 +580,7 @@
 					<v-timeline-item :color="years[4].color" small>
 						<template v-slot:opposite>
 
-										</template>
+											</template>
 						<div class="py-4">
 							<div>
 								<p>Si en una clase derivada no se redefine una función virtual, entonces se utiliza la función de la clase base. A continuación
@@ -602,18 +594,18 @@
 				<v-timeline v-show="page == 5">
 					<v-timeline-item :color="years[5].color" small>
 						<template v-slot:opposite>
-											<span
-											 :class="`headline font-weight-bold ${years[5].color}--text`"
-											 v-text="'Quiz'"
-										 ></span>
-									</template>
+												<span
+												 :class="`headline font-weight-bold ${years[5].color}--text`"
+												 v-text="'Quiz'"
+											 ></span>
+										</template>
 
 					</v-timeline-item>
 
-					<v-timeline-item v-show='!terminado' :color="years[5].color" small>
+					<v-timeline-item :color="years[5].color" small>
 						<template v-slot:opposite>
 
-									</template>
+										</template>
 						<div class="py-4">
 							<h2 :class="`headline font-weight-light mb-4 ${years[1].color}--text`">Pregunta 1</h2>
 							<div>
@@ -623,13 +615,13 @@
 						</div>
 					</v-timeline-item>
 
-					<v-timeline-item v-show='!terminado' :color="years[5].color" small>
+					<v-timeline-item :color="years[5].color" small>
 						<template v-slot:opposite>
-											<div class="">
-												<img src="" alt="">
+												<div class="">
+													<img src="" alt="">
 
-											</div>
-									</template>
+												</div>
+										</template>
 						<div class="py-4">
 							<h2 :class="`headline font-weight-light mb-4 ${years[1].color}--text`">Pregunta 2</h2>
 							<div>
@@ -639,10 +631,10 @@
 						</div>
 					</v-timeline-item>
 
-					<v-timeline-item v-show='!terminado' :color="years[5].color" small>
+					<v-timeline-item :color="years[5].color" small>
 						<template v-slot:opposite>
 
-									</template>
+										</template>
 						<div class="py-4">
 							<h2 :class="`headline font-weight-light mb-4 ${years[1].color}--text`">Pregunta 3</h2>
 							<div>
@@ -650,9 +642,6 @@
 							</div>
 						</div>
 					</v-timeline-item>
-
-
-
 
 				</v-timeline>
 			</v-col>

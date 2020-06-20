@@ -2,6 +2,30 @@ import jwt_decode from 'jwt-decode';
 
 export const misMixins = {
   methods:{
+    listaUnidades: function(){
+      var unidades = []
+      unidades.push({unidad: 'Polimorfismo', componente: 'polimorfismo',temas: [
+        {
+          tema: 'Genericidad'
+        },
+        {
+          tema: 'Sobrecarga'
+        },
+        {
+          tema: 'Variables Polimorficas'
+        }
+      ]})
+      unidades.push({unidad: 'Punteros', componente: 'punteros'})
+      unidades.push({unidad: 'Estilo de programación', componente: 'estilo'})
+      return unidades
+    },
+    obtenerDimensiones: function() {
+      var alto = window.innerHeight - 64 // 64 =  margin(*2)
+      var ancho = window.innerWidth - (56 + 56)  // 96 = (navigation) + margin(*2)
+      var dimensiones = [alto, ancho]
+  
+      return dimensiones
+    },
     shuffle: function(array){
         var j, x, i
         //Recorremos el array del final hacia delante

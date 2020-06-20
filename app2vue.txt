@@ -1,0 +1,365 @@
+<script>
+
+	// import HelloWorld from './components/HelloWorld';
+	import { misMixins } from '@/mixins/mixins.js'
+	//	import axios from 'axios'
+
+	//	import Unidades from '@/components/views/card_unidad.vue'
+	import menuPolimorfismo from '@/components/ovas/polimorfismo/menuPolimorfismo.vue'
+		import reportes from '@/components/views/Docente/menuDocente.vue'
+	// import Perfil from '@/components/views/editar_perfil.vue'
+
+	export default {
+		name: 'App',
+
+		components: {
+			menuPolimorfismo,
+			reportes
+		},
+
+		data: () => ({
+			usuario: {
+				codigo: '1111111',
+				tipo: 'estudiante',
+				nombres: 'Usuario'
+			},
+			unidad: 'Polimorfismo'
+
+			//
+		}),
+		mixins: [misMixins],
+
+		methods: {
+			buscarDatos() {
+				var token = String(localStorage.getItem('tokenUser'))
+				var id_ = this.obtenerDatos().id
+				// eslint-disable-next-line no-console
+				//console.log(`EL ID ES: ${id_}`);
+
+				//	const host = 'http://localhost:3000'
+				//const baseURL = `/api/usuarios/me/${id_}`
+				const ruta = `/usuarios/me/${id_}`
+
+				this.axios({
+					method: 'get',
+					url: ruta, //host + baseURL, // + user,
+					headers: {
+						'content-type': 'application/json',
+						'x-access-token': token
+					}
+				})
+					.then(response => {
+						this.usuario = response.data
+						//	eslint-disable-next-line no-console
+						//		console.log(this.usuario);
+					})
+					.catch(e => {
+						this.error = `Error:  ${e}`
+					})
+			},
+      handleResize() {
+            this.ventana.ancho = window.innerWidth
+            this.ventana.alto = window.innerHeight
+        },
+        tamanoVentana(){
+        window.addEventListener('resize', this.handleResize)
+  			 this.handleResize()
+        }
+		},
+		created() {
+    this.tamanoVentana()
+			if (this.$route.name != 'login' && this.$route.name != 'registro') {
+				this.buscarDatos()
+			}
+		},
+		destroyed() {
+			 window.removeEventListener('resize', this.handleResize)
+	 },
+		mounted() {
+
+
+
+		var app =		document.getElementById('app')
+		app.style.maxHeight = this.ventana.alto + "px"
+
+		}
+	}
+
+</script>
+
+<template>
+
+	<v-app id="app">
+		<v-navigation-drawer class="" permanent stateless app light>
+			<v-toolbar flat light class="toolbar">
+				<!-- <v-list-item tree-line>
+						<v-list-item-avatar>
+							<img src="https://randomuser.me/api/portraits/women/81.jpg">
+						</v-list-item-avatar>
+
+						<v-list-item-content>
+							<v-list-item-subtitle class="headline">{{usuario.nombres}}</v-list-item-subtitle>
+							<v-list-item-subtitle>{{usuario.codigo}}</v-list-item-subtitle>
+						<v-list-item-subtitle>{{usuario.tipo}}</v-list-item-subtitle>
+						</v-list-item-content>
+					</v-list-item> -->
+			</v-toolbar>
+
+			<!-- Registro -->
+			<v-list v-show="$route.name=='registro'" class="grow pa-4">
+				<v-list-item>
+					<v-list-item-content>
+
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item>
+					<v-list-item-content>
+						<v-list-item-title>¿Ya tienes una cuenta?</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+				<v-list-item @click="$router.push({ path: 'login' })">
+					<v-icon class="mx-2">mdi-account</v-icon>
+
+					<v-list-item-content>
+						<v-list-item-title>Login</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+				<v-list-item @click="">
+					<v-icon class="mx-2">mdi-help</v-icon>
+					<v-list-item-content>
+						<v-list-item-title>Ayuda</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+				<v-list-item @click="">
+					<v-icon class="mx-2">mdi-file-tree</v-icon>
+					<v-list-item-content>
+						<v-list-item-title>Mapa del sitio</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+			</v-list>
+
+			<!-- Login -->
+
+			<v-list v-show="$route.name=='login'" class="grow pa-4">
+				<v-list-item>
+					<v-list-item-content>
+
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item>
+					<v-list-item-content>
+						<v-list-item-title>¿No tienes una cuenta?</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+				<v-list-item @click="$router.push({ path: 'registro' })">
+					<v-icon class="mx-2">mdi-account</v-icon>
+
+					<v-list-item-content>
+						<v-list-item-title>Registro</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+				<v-list-item @click="">
+					<v-icon class="mx-2">mdi-help</v-icon>
+					<v-list-item-content>
+						<v-list-item-title>Ayuda</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+
+				<v-divider></v-divider>
+				<v-list-item @click="">
+					<v-icon class="mx-2">mdi-file-tree</v-icon>
+					<v-list-item-content>
+						<v-list-item-title>Mapa del sitio</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+			</v-list>
+
+			<v-list dense v-show="usuario.tipo=='estudiante' && $route.name!='login' && $route.name!='registro'" class="grow pa-4">
+
+				<v-list-group prepend-icon="mdi-school">
+					<template v-slot:activator>
+					             <v-list-item-title>Temas</v-list-item-title>
+					  </template>
+
+					<menuPolimorfismo></menuPolimorfismo>
+
+				</v-list-group>
+
+				<v-divider></v-divider>
+
+				<v-list-item @click="">
+					<v-list-item-icon>
+						<v-icon>mdi-ballot</v-icon>
+					</v-list-item-icon>
+					<v-list-item-title>Encuesta</v-list-item-title>
+
+				</v-list-item>
+				<v-divider></v-divider>
+
+				<v-list-item @click="">
+					<v-list-item-icon>
+						<v-icon>mdi-logout</v-icon>
+					</v-list-item-icon>
+					<v-list-item-content>
+						<v-list-item-title>Cerrar Sesión</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+
+			</v-list>
+
+			<v-list v-show="usuario.tipo=='docente' && $route.name!='login' && $route.name!='registro'" class="grow pa-4">
+				<!-- <v-list-item two-line>
+					<v-list-item-avatar>
+						<img src="https://randomuser.me/api/portraits/women/81.jpg">
+					</v-list-item-avatar>
+
+					<v-list-item-content>
+						<v-list-item-title>{{usuario.codigo}}</v-list-item-title>
+						<v-list-item-subtitle>{{usuario.tipo}}</v-list-item-subtitle>
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item>
+					<v-list-item-title class="headline">{{usuario.nombres}}</v-list-item-title>
+				</v-list-item>
+				<v-divider></v-divider> -->
+				<!-- <v-list-item @click="($router.push({ path: '/usuario/perfil' })) && (titulo='Editar Perfil')">
+					<v-icon class="mx-2">mdi-account</v-icon>
+
+					<v-list-item-content>
+						<v-list-item-title>Editar Perfil</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item> -->
+				<v-list-group prepend-icon="mdi-school">
+					<template v-slot:activator>
+					             <v-list-item-title>Reportes</v-list-item-title>
+					  </template>
+
+					<reportes></reportes>
+
+				</v-list-group>
+				<v-divider></v-divider>
+				<v-list-item @click="($router.push({ path: '/docente/crear_preguntas' })) && (titulo='Crear Pregunta')">
+					<v-icon class="mx-2">mdi-school</v-icon>
+
+					<v-list-item-content>
+						<v-list-item-title>Crear Pregunta</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider></v-divider>
+
+				<v-list-item @click="">
+					<v-list-item-icon>
+						<v-icon>mdi-ballot</v-icon>
+					</v-list-item-icon>
+					<v-list-item-title>Encuesta</v-list-item-title>
+
+				</v-list-item>
+				<v-divider></v-divider>
+
+				<v-list-item @click="">
+					<v-list-item-icon>
+						<v-icon>mdi-logout</v-icon>
+					</v-list-item-icon>
+					<v-list-item-content>
+						<v-list-item-title>Cerrar Sesión</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+
+
+			</v-list>
+
+		</v-navigation-drawer>
+
+		<v-app-bar color="#fc6767" app dense dark>
+			<span>{{unidad}}</span>
+
+			<v-spacer></v-spacer>
+
+			<span>{{usuario.nombres}} - {{usuario.codigo}}</span>
+			<v-menu left bottom>
+				<template v-slot:activator="{ on, attrs }">
+						          <v-btn
+						            icon
+						            v-bind="attrs"
+						            v-on="on"
+						          >
+						            <v-icon>mdi-dots-vertical</v-icon>
+						          </v-btn>
+						        </template>
+
+				<v-list>
+					<v-list-item @click="($router.push({ path: '/usuario/perfil' })) && (titulo='Editar Perfil')">
+						<v-icon class="mx-2">mdi-account</v-icon>
+
+						<v-list-item-content>
+							<v-list-item-title>Editar Perfil</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+					<v-list-item @click="">
+						<v-icon class="mx-2">mdi-help</v-icon>
+						<v-list-item-content>
+							<v-list-item-title>Ayuda</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+					<v-divider></v-divider>
+					<v-list-item @click="">
+						<v-icon class="mx-2">mdi-ballot</v-icon>
+						<v-list-item-content>
+							<v-list-item-title>Encuesta</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+					<v-divider></v-divider>
+					<v-list-item @click="">
+						<v-icon class="mx-2">mdi-file-tree</v-icon>
+						<v-list-item-content>
+							<v-list-item-title>Mapa del sitio</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+					<v-divider></v-divider>
+					<v-list-item @click="">
+						<v-icon class="mx-2">mdi-logout</v-icon>
+						<v-list-item-content>
+							<v-list-item-title>Cerrar Sesión</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+
+				</v-list>
+			</v-menu>
+		</v-app-bar>
+		<v-content>
+
+			<!-- Provides the application the proper gutter -->
+			<v-container fluid>
+				<!-- If using vue-router -->
+				<transition>
+					<keep-alive>
+						<router-view></router-view>
+					</keep-alive>
+				</transition>
+
+			</v-container>
+		</v-content>
+
+	</v-app>
+
+</template>
+
+<style >
+
+	.navigation_d {
+		max-height: calc(100% - 64px);
+	}
+	#app {
+		height: 100vh;
+		background: #eceff1;
+	}
+
+</style>

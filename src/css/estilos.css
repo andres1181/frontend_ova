@@ -1,6 +1,10 @@
 html {
   /* overflow-y: hidden; */
   overflow-x: hidden;
+  background: #ECEFF1;
+}
+.body {
+  background: #ECEFF1;
 }
 .font-dosis{
   font-family: 'Dosis';
@@ -99,8 +103,7 @@ padding-right: 58px;
 }
 .screen {
 
-  height: 100%;
-  width: 100%;
+
   background-color: #ffffff;
   /* height: -moz-available;          WebKit-based browsers will ignore this. */
   height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
@@ -117,4 +120,22 @@ padding-right: 58px;
 } */
 .resultado{
   height: 150px;
+}
+ .fijarLeccion {
+   position: fixed;
+   min-height: 300px;
+ }
+ .card_cabecera{
+ 	position: relative;
+  justify-content: center !important;
+  height: 55px;
+ 	min-height: 55px;
+ 	top: -20px;
+ 	z-index: 1;
+ }
+.contenido {
+
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
 }

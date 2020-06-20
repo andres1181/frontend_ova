@@ -22,6 +22,7 @@
 			vistaEvaluacion
 		},
 		data: () => ({
+			drawer: true,
 			e1: 1,
 			steps: 8,
 			tab: null,
@@ -117,51 +118,100 @@
 	<v-card outlined flat>
 		<!-- <v-toolbar color="color-2" dark fixed flat dense class="px-4">
 
-					<v-toolbar-title class="text-center justify-center">
-						<h3>Polimorfismo</h3>
-					</v-toolbar-title>
+						<v-toolbar-title class="text-center justify-center">
+							<h3>Polimorfismo</h3>
+						</v-toolbar-title>
 
-					<v-spacer></v-spacer>
-					<template v-slot:extension>
-							<v-tabs v-model="tab" dark centered
-							        show-arrows
-							        slider-color="yellow"
-											dense
-							        background-color="transparent">
-								<v-tab v-for="(tema, i) in temas" :key="i">
-									{{tema.titulo}}
-								</v-tab>
-							</v-tabs>
-							</template>
-				</v-toolbar>
-				<v-tabs-items v-model="tab">
-					<v-tab-item v-for="(tema, i) in temas" :key="i">
-						<v-container fluid>
+						<v-spacer></v-spacer>
+						<template v-slot:extension>
+								<v-tabs v-model="tab" dark centered
+								        show-arrows
+								        slider-color="yellow"
+												dense
+								        background-color="transparent">
+									<v-tab v-for="(tema, i) in temas" :key="i">
+										{{tema.titulo}}
+									</v-tab>
+								</v-tabs>
+								</template>
+					</v-toolbar>
+					<v-tabs-items v-model="tab">
+						<v-tab-item v-for="(tema, i) in temas" :key="i">
+							<v-container fluid>
 
-							<component :is="tema.contenido"></component>
+								<component :is="tema.contenido"></component>
 
-						</v-container>
-					</v-tab-item>
-				</v-tabs-items> -->
+							</v-container>
+						</v-tab-item>
+					</v-tabs-items> -->
 		<v-row>
 			<v-col cols="3" sm="3">
-				<v-card class="mx-auto"
-				        max-width="100%"
-				        outlined>
-					<!-- <v-row align="center">
-						<v-col v-for="(tema, i) in temas" :key="i" class="text-left" cols="6" sm="6">
-							<div class="my-1" 	max-width="100%" width="100%">
-								<v-btn  outlined  large @click="contenido=tema.titulo" max-width="100%" width="100%"> <h1>Lección {{i+1}}: </h1>{{tema.titulo}}</v-btn>
-							</div>
-						</v-col>
-					</v-row> -->
-					<ul id="listaLecciones">
-						<li v-for="(tema, i) in temas" :key="i" class="text-left">
-							<v-btn class="my-1" outlined large @click="contenido=tema.contenido" max-width="100%" width="100%" color="success"> {{tema.titulo}}</v-btn>
-						</li>
-					</ul>
-					<v-btn class="my-1" outlined large @click="evaluacion" max-width="100%" width="100%" color="success"> Evaluación</v-btn>
-				</v-card>
+
+					<v-navigation-drawer v-model="drawer"
+					                     color="success"
+															 fixed
+															 class="fijarLeccion"
+					                     :right="right"
+					                     :permanent="true"
+					                     absolute
+					                     dark>
+						<v-list dense nav
+						        class="py-0">
+							<v-list-item two-line :class="miniVariant && 'px-0'">
+								<!--   <v-list-item-avatar>
+								 <img src="https://randomuser.me/api/portraits/men/81.jpg">
+							 </v-list-item-avatar> -->
+
+								<v-list-item-content class="text-aling-center">
+									<v-list-item-title>Polimorfismo</v-list-item-title>
+									<v-list-item-subtitle>Subtext</v-list-item-subtitle>
+								</v-list-item-content>
+							</v-list-item>
+
+							<v-divider></v-divider>
+
+							<v-list-item v-for="(tema, i) in temas"
+							             :key="i"
+							             @click="contenido=tema.contenido">
+								<!-- <v-list-item-icon>
+								 <v-icon>{{ item.icon }}</v-icon>
+							 </v-list-item-icon> -->
+
+								<v-list-item-content>
+									<v-list-item-title>{{tema.titulo}}</v-list-item-title>
+								</v-list-item-content>
+							</v-list-item>
+						</v-list>
+
+						<template v-slot:append>
+						 <div class="pa-2">
+						 <v-btn outlined  depressed   block>Sopa de letras</v-btn>
+					 </div>
+					 <div class="pa-2">
+						 <v-btn outlined dense  block @click="evaluacion" > Evaluación</v-btn>
+					 </div>
+				 </template>
+					</v-navigation-drawer>
+
+				<!-- <v-card class="mx-auto"
+					        max-width="100%"
+					        outlined> -->
+				<!-- ggg -->
+				<!-- <v-row align="center">
+							<v-col v-for="(tema, i) in temas" :key="i" class="text-left" cols="6" sm="6">
+								<div class="my-1" 	max-width="100%" width="100%">
+									<v-btn  outlined  large @click="contenido=tema.titulo" max-width="100%" width="100%"> <h1>Lección {{i+1}}: </h1>{{tema.titulo}}</v-btn>
+								</div>
+							</v-col>
+						</v-row> -->
+				<!-- ggg -->
+				<!-- <ul id="listaLecciones">
+							<li v-for="(tema, i) in temas" :key="i" class="text-left">
+								<v-btn class="my-1" outlined large @click="contenido=tema.contenido" max-width="100%" width="100%" color="success"> {{tema.titulo}}</v-btn>
+							</li>
+						</ul>
+						<v-btn class="my-1" outlined large @click="evaluacion" max-width="100%" width="100%" color="success"> Evaluación</v-btn>
+					</v-card> -->
 			</v-col>
 			<v-col cols="9" sm="9">
 				<v-card class="mx-auto"

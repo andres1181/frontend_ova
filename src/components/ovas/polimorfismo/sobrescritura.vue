@@ -2,13 +2,6 @@
 export default {
   name: 'Sobreescritura',
   components: {},
-  props: {
-  /*  terminado: {
-      type: Boolean,
-      defalult: false,
-      required: true
-    }*/
-  },
   data: () => ({
     hidden: false,
     years: [

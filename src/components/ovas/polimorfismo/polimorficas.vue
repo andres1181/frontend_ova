@@ -2,13 +2,7 @@
 export default {
   name: 'Polimorficas',
   components: {},
-  props: {
-    terminado: {
-      type: Boolean,
-      defalult: false,
-      required: true
-    }
-  },
+
   data: () => ({
     years: [
       {
