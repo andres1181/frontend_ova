@@ -1,5 +1,6 @@
 <script>
 
+	import { misMixins } from '@/mixins/mixins.js'
 	export default {
 		name: 'crearOpcionMultiple',
 		props: {
@@ -9,6 +10,9 @@
 			}
 		},
 		data: () => ({
+			unidades: '',
+			unidad: '',
+			tema: '',
 			valid: true,
 			lazy: false,
 			campoRules: [v => !!v || 'Campo requerido'],
@@ -20,8 +24,9 @@
 			opciones: []
 			/*
 
-											*/
+														*/
 		}),
+		mixins: [misMixins],
 		methods: {
 			guardar() {
 				if (this.$refs.form.validate()) {
@@ -40,11 +45,11 @@
 					//limpiar formlario
 				}
 			}
-		}
+		},
 		//
-		// created() {
-		// 	this.aleatorio()
-		// }
+		created() {
+			this.unidades = this.listaUnidades()
+		}
 	}
 
 </script>
@@ -55,19 +60,35 @@
 		<v-form ref="form"
 		        v-model="valid"
 		        :lazy-validation="lazy">
-			<v-textarea v-model="enunciado" outlined
+			<v-select v-model="unidad" required
+			          :items="unidades"
+			          item-text="unidad"
+			          :rules="campoRules"
+			          label="Seleccione una unidad tematica"
+			          return-object>
+			</v-select>
+			<v-select v-model="tema" required
+			          :rules="campoRules"
+			          :items="unidad.temas"
+			          item-text="tema"
+			          label="Seleccione un tema"
+			          return-object>
+			</v-select>
+			<v-textarea v-model="enunciado"
 			            :rules="enunciadoRules"
-			            label="Enunciado de la pregunta"
-			            required></v-textarea>
+									outlined
+			            label="Escria el enunciado de la pregunta"
+			            required>
+			</v-textarea>
 			<v-row>
-				<v-text-field outlined v-model="nuevaOpcionC" :rules="campoRules" label="Añadir opción correcta"  ></v-text-field>
+				<v-text-field v-model="nuevaOpcionC" :rules="campoRules" label="Añadir opción CORRECTA"></v-text-field>
 			</v-row>
 			<v-row>
-				<v-text-field outlined v-model="nuevaOpcionesI[0]" :rules="campoRules" label="Añadir opción incorrecta"  ></v-text-field>
+				<v-text-field v-model="nuevaOpcionesI[0]" :rules="campoRules" label="Añadir una opción INCORRECTA"></v-text-field>
 			</v-row>
-			<v-text-field outlined v-model="nuevaOpcionesI[1]" :rules="campoRules" label="Añadir opción incorrecta"  ></v-text-field>
+			<v-text-field v-model="nuevaOpcionesI[1]" :rules="campoRules" label="Añadir una opción INCORRECTA"></v-text-field>
 			<v-row>
-				<v-text-field outlined v-model="nuevaOpcionesI[2]" :rules="campoRules" label="Añadir opción incorrecta"  ></v-text-field>
+				<v-text-field v-model="nuevaOpcionesI[2]" :rules="campoRules" label="Añadir una opción INCORRECTA"></v-text-field>
 			</v-row>
 			<v-row>
 				<v-btn :disabled="!valid"
@@ -77,7 +98,6 @@
 					Guardar
 				</v-btn>
 			</v-row>
-			<p>{{opciones}}</p>
 
 		</v-form>
 	</v-container>

@@ -8,10 +8,7 @@
 		components: {},
 		data: () => ({
 			navigation: 0,
-			alto: '',
-			ancho: '',
-			a: 0,
-			an: 0,
+			dim: [],
 			color: '#4CBAC4',
 			color2: '#3cd3ad',
 			color3: '#737373',
@@ -125,10 +122,7 @@
 			}
 		},
 		created() {
-			this.a = window.innerHeight
-			this.an = window.innerWidth
-			this.alto = window.innerHeight - 124 + 'px' // 96 = (app-bar) - margin(12*2)
-			this.ancho = window.innerWidth - (64 + this.navigation) + 'px' // 96 = (app-bar) - margin(12*2)
+				this.dim = this.obtenerDimensiones()
 			this.buscarDatos()
 		}
 	}
@@ -139,7 +133,7 @@
 
 	<v-row justify="center">
 		<v-col cols="8" class="pa-0">
-			<v-card elevation="3" :width="ancho" :height="alto" class="pb-5 mx-8 mt-10 mb-5 rounded-xl">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-5 mx-8 mt-10 mb-5 rounded-xl">
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
 						<v-card dark color="cyan" elevation="4" class="card_cabecera rounded-lg d-flex  align-center">

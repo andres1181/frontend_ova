@@ -1,3 +1,7 @@
+
+
+
+
 <script>
 
 	// import HelloWorld from './components/HelloWorld';
@@ -28,8 +32,8 @@
 			tamContenido: 0,
 			usuario: {
 				codigo: '1111111',
-					tipo: 'estudiante',
-				//		tipo: 'docente',
+						tipo: 'estudiante',
+			//		tipo: 'docente',
 				//tipo: 'administrador',
 				nombres: 'Usuario x'
 			},

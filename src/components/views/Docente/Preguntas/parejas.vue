@@ -1,7 +1,13 @@
 <script>
-
+import Codemirror from 'codemirror/lib/codemirror.js'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/clike/clike.js'
+import 'codemirror/theme/dracula.css'
+import { misMixins } from '@/mixins/mixins.js'
 	export default {
 		name: 'parejas',
+		components: {
+		},
 		props: {
 			id: {
 				type: String,
@@ -9,23 +15,36 @@
 			}
 		},
 		data: () => ({
+			unidades: '',
+			unidad: '',
 			valid: true,
 			lazy: false,
 			numItems: 0,
+			code: '',
+			value: '',
+existCodigo: true,
 			campoRules: [v => !!v || 'Campo requerido'],
 			enunciadoRules: [v => !!v || 'Enunciado es requerido'],
 			enunciado: null,
 			//nuevaOpcionC: '',
-			nuevaOpcionesI: [],
-			tipo: 'opcionMultiple',
-			items: []
+			editor: '',
+
 			/*
 
 																*/
 		}),
+		mixins: [misMixins],
 		methods: {
+			mostrarAlert(){
+				var exist
+				if (this.value === '') {
+					this.existCodigo = false
+				}
+				return exist
+			},
 			guardar() {
-				if (this.$refs.form.validate()) {
+				this.value = this.editor.getValue()
+		/* else 	if (this.$refs.form.validate()) {
 					this.items.push({
 						respuesta: this.nuevaOpcionC,
 						correcta: true
@@ -38,20 +57,21 @@
 					}
 
 					//guardar en el api
-				}
-			},
-			crearItems() {
-				this.numItems = this.numItems + 1
-				//	for (var i = 0; i < this.numItems; i++) {
-				this.items.push({
-					posicion: this.numItems,
-					texto: null
-				})
-				//}
+				}*/
 			}
 		},
-		//
-		created() {}
+
+		created() {
+			this.unidades = this.listaUnidades()
+		},
+		mounted() {
+			this.editor = Codemirror.fromTextArea(document.getElementById('editorParejas'), {
+				mode: 'text/x-c++src',
+				theme: 'dracula',
+				lineNumbers: true,
+
+			})
+		}
 	}
 
 </script>
@@ -64,34 +84,22 @@
 		        :lazy-validation="lazy">
 			<v-row>
 				<v-col cols="12" md="12">
-					<v-textarea outlined
-					            v-model="enunciado"
-					            :rules="enunciadoRules"
-					            label="Enunciado de la pregunta"
-					            required></v-textarea>
-				</v-col>
-			</v-row>
-			<v-row v-if="numItems>0">
-				<v-col cols="12" md="12">
-					<v-textarea outlined
-					            v-for="(element, index) in items"
-					            :key="index"
-					            v-model="element.texto"
-					            :rules="campoRules"
-					            label="Texto"
-
-					            required></v-textarea>
+					<h6>Escriba un código en C++</h6>
+						<textarea required :rules="campoRules" v-model="code" rows="20" cols="80" id="editorParejas"></textarea>
 				</v-col>
 			</v-row>
 			<v-row>
-				<!--	<v-text-field  type="number" v-model="numItems" :rules="campoRules" placeholder="Número de Items" solo></v-text-field>
-								:disabled="!(numItems>0)" -->
-				<v-btn color="success"
-				       class="mr-4"
-				       @click="crearItems">
-					Añadir
-				</v-btn>
+				<v-col cols="12" md="12">
+					<v-select v-model="unidad"
+					          :items="unidades"
+										:rules="campoRules"
+					          item-text="unidad"
+					          label="Seleccione una unidad tematica"
+					          return-object>
+					</v-select>
+				</v-col>
 			</v-row>
+			
 			<v-row>
 				<v-btn :disabled="!valid"
 				       color="success"
@@ -100,7 +108,7 @@
 					Guardar
 				</v-btn>
 			</v-row>
-			<p>{{items}}</p>
+
 
 		</v-form>
 	</v-container>

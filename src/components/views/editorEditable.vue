@@ -1,49 +1,40 @@
 <script>
 
-	import dedent from 'dedent'
+	//import dedent from 'dedent'
 	import Codemirror from 'codemirror/lib/codemirror.js'
 	import 'codemirror/lib/codemirror.css'
 	import 'codemirror/mode/clike/clike.js'
 	import 'codemirror/theme/dracula.css'
 
 	export default {
-		name: 'Editor',
-    props: {
-			nombre: {
-				type: String,
-        required: true
-			},
-      codigo: {
-        type: String,
-        defalult: '#include <iostream>\nusing namespace std;',
-        required: true
-      }
-    },
+		name: 'EditorEditable',
+
 		data: () => ({
-			code: '',
+			code: '#include <iostream>\nusing namespace std;',
+			readOnly: '',
 			editor: '',
 			text: ''
 		}),
-		computed: {
-			/*cod: function() {
-				return dedent(this.code)
-			}*/
-		},
+		watch: {$emit('codigo', this.code)},
 		methods: {
+
 		/* mostrar() {
 				this.text = dedent(this.editor.getValue())
 			}*/
 		},
+		computed() {
+
+		},
 		mounted() {
-			this.editor = Codemirror.fromTextArea(document.getElementById(this.nombre), {
+			this.editor = Codemirror.fromTextArea(document.getElementById('editor'), {
 				mode: 'text/x-c++src',
 				theme: 'dracula',
 				lineNumbers: true,
-      	readOnly: 'nocursor'
+
 			})
 		},
     created(){
-      this.code = dedent(this.codigo)
+
     }
 	}
 
@@ -53,13 +44,14 @@
 
 	<div class="">
 
-		<textarea v-model="code"  :id="nombre" diseable></textarea>
+		<textarea v-model="code" rows="20" cols="80" id="editor"></textarea>
 		<!-- <div class="" height="300px">
 			<v-btn @click="mostrar()">Mostrar</v-btn>
 			<p>
 				{{text}}
 			</p>
 		</div> -->
+		{{code}}
 	</div>
 
 </template>

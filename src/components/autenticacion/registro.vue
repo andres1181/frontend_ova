@@ -34,6 +34,7 @@
 		}),
 		mixins: [misMixins],
 		methods: {
+			usuarioRules() { return [v => !!v || 'Campo requerido']},
 			convertirString() {
 				this.usuario.nombres = String(this.usuario.nombres)
 				this.usuario.email = String(this.usuario.email)

@@ -1,67 +1,101 @@
-<v-timeline-item :color="years[0].color" small>
-  <template v-slot:opposite>
-                    <div class="">
-                      <img src="" alt="">
-                      <img src="" alt="">
-                    </div>
-                  </template>
-  <div class="py-4">
+<v-timeline dense>
 
-    <div>
-      <h2 :class="`headline font-weight-light mb-4 ${years[1].color}--text`">Ejemplo:</h2>
-      <p>Supongamos que queremos construir una función que permita conocer el volumen de un cubo. Dicha función recibiria el
-        valor de uno de los lados, sera de tipo entero y esta se multiplicaria tres veces para obtener el resultado.</p>
+  <v-timeline-item :color="years[0].color" small>
+    <template v-slot:opposite>
+                                             <span
+                                              :class="`headline font-weight-bold ${years[0].color}--text`"
+                                              v-text="'Sobrecarga'"
+                                            ></span>
+                                          </template>
+    <div class="py-4">
+
+      <div>
+        <p>Es una característica de la programación orientada a objetos y puede ser aplicada a constructores o métodos.
+        </p>
+      </div>
     </div>
-  </div>
-</v-timeline-item>
-<v-timeline-item :color="years[0].color" small>
-  <template v-slot:opposite>
-                    <div class="">
-                      <p>Hasta hora el planteamiento es correcto, pero ¿Qué pasaria si una persona ingresa un número que no es de tipo entero?, se presentaria
-                        un error. Para solucionar este error podemos recurrir a la sobrecarga de la función <em>volumen</em> por cada tipo de
-                        dato, asi:
-                      </p>
+  </v-timeline-item>
+  <v-timeline-item :color="years[0].color" small>
+    <template v-slot:opposite>
 
-                    </div>
-                  </template>
-  <div class="py-4">
+                                          </template>
+    <div class="py-4">
 
-    <div>
-      <img src="" alt="">
-      <img src="" alt="">
+      <div>
 
+        <p>Para que exista sobrecarga se debe cumplir que:
+        </p>
+        <ol>
+          <li value="1">Dos o más funciones pueden compartir un nombre.</li>
+          <li>En la declaración los tipos de parámetros sean diferentes.</li>
+        </ol>
+      </div>
     </div>
-  </div>
-</v-timeline-item>
-<v-timeline-item :color="years[0].color" small>
-  <template v-slot:opposite>
-                    <div class="">
-                      <img src="" alt="">
+  </v-timeline-item>
 
-                    </div>
-                  </template>
-  <div class="py-4">
+  <v-timeline-item :color="years[0].color" small>
 
-    <div>
-      <p>De esta forma se ejecutara solo la función que corresponda al tipo de dato ingresado por el ususario.</p>
+    <div class="py-4">
 
+      <div>
+        <h2 :class="`headline font-weight-light mb-4 ${years[1].color}--text`">Ejemplo:</h2>
+        <p>Supongamos que queremos construir una función que permita conocer el volumen de un cubo. Dicha función recibiria el
+          valor de uno de los lados, sera de tipo entero y esta se multiplicaria tres veces para obtener el resultado.</p>
+      </div>
     </div>
-  </div>
-</v-timeline-item>
-<v-timeline-item :color="years[0].color" small>
-  <template v-slot:opposite>
-                    <div class="">
-                      <img src="" alt="">
+  </v-timeline-item>
+  <v-timeline-item :color="years[0].color" small>
+    <template v-slot:opposite>
+                          <div class="">
+                            <p>Hasta hora el planteamiento es correcto, pero ¿Qué pasaria si una persona ingresa un número que no es de tipo entero?, se presentaria
+                              un error. Para solucionar este error podemos recurrir a la sobrecarga de la función <em>volumen</em> por cada tipo de
+                              dato, asi:
+                            </p>
 
-                    </div>
-                  </template>
-  <div class="py-4">
+                          </div>
+                        </template>
+    <div class="py-4">
 
-    <div>
-      <h2 :class="`headline font-weight-light mb-4 ${years[0].color}--text`">Sobrecarga de constructores:</h2>
-      <p>Un constructor es una función y puede sobrecargarse. No puede haber varios constructores con un mismo número y tipo
-        de argumentos.
-      </p>
+      <div>
+        <img src="" alt="">
+        <img src="" alt="">
+
+      </div>
     </div>
-  </div>
-</v-timeline-item>
+  </v-timeline-item>
+  <v-timeline-item :color="years[0].color" small>
+    <template v-slot:opposite>
+                          <div class="">
+                            <img src="" alt="">
+
+                          </div>
+                        </template>
+    <div class="py-4">
+
+      <div>
+        <p>De esta forma se ejecutara solo la función que corresponda al tipo de dato ingresado por el ususario.</p>
+
+      </div>
+    </div>
+  </v-timeline-item>
+  <v-timeline-item :color="years[0].color" small>
+    <template v-slot:opposite>
+                          <div class="">
+                            <img src="" alt="">
+
+                          </div>
+                        </template>
+    <div class="py-4">
+
+      <div>
+        <h2 :class="`headline font-weight-light mb-4 ${years[0].color}--text`">Sobrecarga de constructores:</h2>
+        <p>Un constructor es una función y puede sobrecargarse. No puede haber varios constructores con un mismo número y tipo
+          de argumentos.
+        </p>
+      </div>
+    </div>
+  </v-timeline-item>
+</v-timeline>
+<div v-show="page == 2">
+  <juez nombre="juez1" salida="Sum of x+y = 35"></juez>
+</div>
