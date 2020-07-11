@@ -1,7 +1,7 @@
 <script>
 
 	export default {
-		name: 'Aritmetica',
+		name: 'Declaracion',
 		components: {},
 		props: {
 			color: {
@@ -25,12 +25,11 @@
 																	<span
 																		:class="`headline font-weight-bold ${color}--text`"
 
-																	>Matrices dinamicas</span>
+																	>Declaración de punteros</span>
 																</template>
 				<div class="py-4">
-					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué es?</h2>
 					<div>
-						<span>Las funciones virtuales permiten que las clases derivadas de una clase base, implementen de distintas formas un método creado en una clase base.</span>
+						<span>La declaración de un puntero es similar a la declaración de otros objetos, la única diferencia es que se debe añadir un * antes del identificador del objeto. Existen 3 formas declarar un puntero:</span>
 					</div>
 				</div>
 			</v-timeline-item>
@@ -38,7 +37,12 @@
 
 				<div class="py-4">
 					<div>
-						<span>Para decirle al compilador que una función es virtual se utiliza la palabra virtual. Así, el compilador sabe que existen diferentes definiciones de una función.</span>
+						<span>Existen tres formas de declarar un puntero:</span>
+            <ul>
+              <li><span>&lt;tipo&gt;  *&lt;identificador&gt;</span></li>
+              <li><span>&lt;tipo&gt;  *  &lt;identificador&gt;</span></li>
+              <li><span>&lt;tipo&gt;*  &lt;identificador&gt;</span></li>
+            </ul>
 					</div>
 				</div>
 			</v-timeline-item>

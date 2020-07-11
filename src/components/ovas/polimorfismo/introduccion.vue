@@ -15,7 +15,7 @@
 		data: () => ({
 			palabras: [
 				{
-					palabra: 'Función miembro',
+					palabra: 'función miembro',
 					significado: 'En el lenguaje C++ las funciones miembro se declaran, se definen y se llaman.'
 				}
 			]
@@ -62,6 +62,8 @@
 						importantes de la Programación Orientada a Objetos. En C++ el polimorfismo significa que al llamar a una
 						<tooltip titulo="función miembro"
 						         :texto="palabras[0].significado"
+						         	:concepto="palabras[0].palabra"
+
 						         :color="color"></tooltip>, esta se comporta diferente dependiendo del objeto que la llame.</span>	 </div>
 				</div>
 			</v-timeline-item>

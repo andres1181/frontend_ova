@@ -1,173 +1,78 @@
 <script>
-import { misMixins } from '@/mixins/mixins.js'
+
+	import { misMixins } from '@/mixins/mixins.js'
 
 	import cronometro from '@/components/views/cronometro.vue'
-	import verdaderoFalso from '@/components/actividades/evaluacion/examen/verdaderoFalso.vue'
-	import opcionMultiple from '@/components/actividades/evaluacion/examen/opcionMultiple.vue'
-	import arrastrarSoltar from '@/components/actividades/evaluacion/examen/arrastrarysoltar.vue'
-	import parejasDefinicion from '@/components/actividades/evaluacion/examen/parejasD.vue'
-	import parejasCodigo from '@/components/actividades/evaluacion/examen/parejasC.vue'
+	import falsoVerdadero from '@/components/actividades/evaluacion/examen/falsoVerdaderoE.vue'
+	import multiple from '@/components/actividades/evaluacion/examen/multipleE.vue'
+	import ordenar from '@/components/actividades/evaluacion/examen/ordenarE.vue'
+	import analizarCodigo from '@/components/actividades/evaluacion/examen/analizarCodigoE.vue'
+	import analizarProblema from '@/components/actividades/evaluacion/examen/analizarProblemaE.vue'
 
 	export default {
 		name: 'Evaluacion',
 		props: {
-			unidad: {//para saber a que unidad pertenecen las preguntas
+			unidad: {
+				//para saber a que unidad pertenecen las preguntas
 				type: String,
 				require: true
 			}
-
 		},
 		components: {
 			cronometro,
-			verdaderoFalso,
-			opcionMultiple,
-			arrastrarSoltar,
-			parejasDefinicion,
-			parejasCodigo
+			falsoVerdadero,
+			multiple,
+			ordenar,
+			analizarCodigo,
+			analizarProblema
 		},
 		data: () => ({
-
-			componente: '',
+			fallos: [],
 			iniciarCronometro: false,
 			terminar: false,
 			cont: 0,
-			datos: '',
+			datos: [],
 			resultados: [],
 			correctas: 0,
-			incorrectas: 0,
+			incorrectas: 5,
 			vistaResultados: false,
 			inicio: true,
-			preguntas: [
-				{
-					id: '1234564',
-					tipo: 'opcionMultiple',
-					enunciado: 'Este deberia ser el enunciado de opcion multiple',
-					unidad: 'polimorfismo',
-					opciones: [
-						{
-							respuesta: 'Uno',
-							correcta: true
-						},
-						{
-							respuesta: 'Dos',
-							correcta: false
-						},
-						{
-							respuesta: 'Tres',
-							correcta: false
-						},
-						{
-							respuesta: 'Cuatro',
-							correcta: false
-						}
-					]
-				},
-				{
-					id: '7687678',
-					tipo: 'arrastrarSoltar',
-					enunciado: 'Este deberia ser el enunciado de Arrastrar y soltar',
-					opciones: [
-						{
-							texto: 'Uno',
-							posicion: 1
-						},
-						{
-							texto: 'Dos',
-							posicion: 2
-						},
-						{
-							texto: 'Tres',
-							posicion: 3
-						},
-						{
-							texto: 'Cuatro',
-							posicion: 4
-						}
-					]
-				},
-				{
-					id: '897987',
-					tipo: 'parejasDefinicion',
-					enunciado: 'Este deberia ser el enunciado de Arrastrar y soltar',
-					opciones: [
-						{
-							concepto: 'Uno',
-							definicion: 'Estes es el numero Uno'
-						},
-						{
-							concepto: 'Dos',
-							definicion: 'Estes es el numero Dos'
-						},
-						{
-							concepto: 'Tres',
-							definicion: 'Estes es el numero Tres'
-						},
-						{
-							concepto: 'Cuatro',
-							definicion: 'Estes es el numero Cuatro'
-						}
-					]
-				},
-				{
-					id: '8787566353',
-					tipo: 'parejasCodigo',
-					enunciado: 'Este deberia ser el enunciado de Parejas-Codigo',
-					opciones: [
-						{
-							concepto: 'Uno',
-							codigo: 'Estes es el codigo Uno'
-						},
-						{
-							concepto: 'Dos',
-							codigo: 'Estes es el codigo Dos'
-						},
-						{
-							concepto: 'Tres',
-							codigo: 'Estes es el codigo Tres'
-						},
-						{
-							concepto: 'Cuatro',
-							codigo: 'Estes es el codigo Cuatro'
-						}
-					]
-				},
-				{
-					id: '3453',
-					tipo: 'verdaderoFalso',
-					enunciado: 'Este deberia ser el enunciado de verdadero Falso',
-					opciones: [
-						{
-							respuesta: 'true'
-						}
-					]
-				}
-			]
+			lista: null,
+			preguntas: []
 		}),
 		mixins: [misMixins],
 		methods: {
-			solicitarPreguntas() {//solitar datos al backend, a partir de la propiedad unidad
+			actualizarFallos() {
+				/*
+				fallos: [
+				{
+				tema: ''
+				grupo: ''
+				fallos: 0
+			}
+			]
+				*/
+			},
+			solicitarPreguntas() {
+				const ruta = '/actividades/obtenerPorUnidad/' + this.unidad
+
+				this.axios({ method: 'get', url: ruta })
+					.then(response => {
+						//	eslint-disable-next-line no-console
+					//	console.log(response.data)
+						this.lista = response.data
+						//	eslint-disable-next-line no-console
+					//	console.log('Lista:')
+						//	eslint-disable-next-line no-console
+					//	console.log(this.temas)
+					})
+					.catch(e => {
+						//	eslint-disable-next-line no-console
+						console.log(`Error:  ${e.response}`)
+					})
 
 			},
-			/*	enviarResultado(info) {
-															//this.informacion = info
-															// eslint-disable-next-line no-console
-															console.log('La respuesta es: ' + info)
-														},*/
-			/*	calificar(array) {
-												let tam = array.length
-												var completo = false
-												var correctas = 0
-												for (var i = 0; i < array.length; i++) {
-													if (array[i].result === true) {
-														correctas = correctas + 1
-													}
-												}
-												if (correctas == tam) {
-													completo = true
-												}
 
-												return completo
-											},*/
 			terminar_E(e) {
 				// eslint-disable-next-line no-console
 				console.log(e)
@@ -177,19 +82,26 @@ import { misMixins } from '@/mixins/mixins.js'
 				this.inicio = false
 				this.vistaResultados = true
 			},
-			iniciarResultados() {
-				var tam = this.preguntas.length
-				for (var i = 0; i < tam; i++) {
-					this.resultados.push({ id: this.preguntas[i].id, result: false })
+			actualizarPreguntas() {//Actualiza la lista de preguntas
+				//Inicia el cuestionario
+				var lista_preguntas = this.lista
+
+				this.shuffle(lista_preguntas)
+				for (var i = 0; i < 5; i++) {
+					this.preguntas[i] = lista_preguntas[i]
+					this.datos[i] = JSON.stringify(this.preguntas[i])
+					this.resultados.push({ id: this.preguntas[i]._id, result: false })
 				}
-				this.correctas = 0
-				this.incorrectas = tam
+				console.log('Resultados: ')
+				console.log(this.resultados)
+				console.log('Lista preguntas: ')
+				console.log(this.preguntas)
 			},
 
 			iniciar() {
-				//Inicia el cuestionario
-				this.componente = this.preguntas[this.cont].tipo
-				this.datos = JSON.stringify(this.preguntas[this.cont])
+				this.actualizarPreguntas()
+				this.correctas = 0
+				this.incorrectas = 5
 				this.iniciarCronometro = true
 				this.vistaResultados = false
 				this.inicio = false
@@ -201,20 +113,19 @@ import { misMixins } from '@/mixins/mixins.js'
 				this.inicio = true
 				this.componente = ''
 				this.resultados = []
-				this.iniciarResultados()
 				//this.correctas = 0
 				//this.incorrectas = 0
 				this.terminar = false
 				this.iniciarCronometro = false
+				this.iniciar()
 			},
 			enviarResultado(info) {
 				//this.resultados.push(info)
 				var i = this.resultados.findIndex(element => element.id === info.id)
-				// eslint-disable-next-line no-console
-				//console.log(i)
+
 				this.resultados[i].result = info.result
 				// eslint-disable-next-line no-console
-				//console.log(info.result)
+
 
 				this.cont = this.cont + 1
 				if (this.cont === this.preguntas.length) {
@@ -222,28 +133,35 @@ import { misMixins } from '@/mixins/mixins.js'
 					this.vistaResultados = true
 					this.inicio = false
 				}
-				this.informacion = this.cont
-				if (this.cont < this.preguntas.length) {
+
+				/* if (this.cont < this.preguntas.length) {
+					this.componente = null
 					this.componente = this.preguntas[this.cont].tipo
 					this.datos = JSON.stringify(this.preguntas[this.cont])
-				}
 
-				if (info.result === true) {
+				}*/
+				var cont1 = 0
+				var cont2 = 0
+				for (var i = 0; i < this.resultados.length; i++) {
+					if (this.resultados[i].result === true) {
+						cont1 = cont1 + 1
+					}else if (this.resultados[i].result === false) {
+						cont2 = cont2 + 1
+					}
+				}
+				this.correctas = cont1
+				this.incorrectas = cont2
+			/*	if (this.resultados[i].result === true) {
 					this.correctas = this.correctas + 1
 					this.incorrectas = this.incorrectas - 1
-				}
+				}*/
+
 			}
 
-			/*
-										if(inventario.find(element => element.nombre === 'bananas')==null){
-							  console.log('No existe imbecil');
-							}else {
-							  console.log(inventario.find(element => element.nombre === 'bananas'));
-							}
-										*/
 		},
 		created() {
-			this.iniciarResultados()
+			this.solicitarPreguntas()
+			//this.actualizarPreguntas()
 		}
 	}
 
@@ -251,83 +169,101 @@ import { misMixins } from '@/mixins/mixins.js'
 
 <template>
 
-	<div>
-		<div v-if="(!vistaResultados) && (!inicio) && (cont < preguntas.length)">
-			<cronometro :iniciar="iniciarCronometro" :duraccion="20" @tiempoAgotado="terminar_E"> </cronometro>
-			<component :is="componente" :datos="datos" @click="enviarResultado"></component>
-		</div>
+	<v-container fluid>
+		<v-card class="elevation-0">
 
-		<!-- <verdaderoFalso :enunciado="Enunciado" @click="enviarResultado"></verdaderoFalso>
-												<opcionMultiple :datos="multiple" @click="enviarResultado"></opcionMultiple>-->
-		<div v-show="(!vistaResultados) && (inicio)" class="" id="inicio">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-			Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-			dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-			non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			<v-btn @click="iniciar">
-				Iniciar
-			</v-btn>
-		</div>
-		<div v-if="(terminar) && (!inicio) && (vistaResultados)" class="" id="resultados">
-			<h4>Resultados</h4>
-			<v-row align="center" class="ma-1">
-				<v-col class="text-left" cols="6" sm="6">
-					<v-alert dense text type="success">
-						<strong>Respuestas correctas: </strong> {{correctas}}
-					</v-alert>
+			<div v-if="(!vistaResultados) && (!inicio) && (cont < preguntas.length)">
+				<cronometro :iniciar="iniciarCronometro" :duraccion="10" @tiempoAgotado="terminar_E"> </cronometro>
+				<div class="overline mb-4">Pregunta {{cont + 1}}</div>
+				<component v-show="(cont === 0)" :is="preguntas[0].tipo" :datos="datos[0]" @click="enviarResultado"></component>
+				<component v-show="(cont === 1)" :is="preguntas[1].tipo" :datos="datos[1]" @click="enviarResultado"></component>
+				<component v-show="(cont === 2)" :is="preguntas[2].tipo" :datos="datos[2]" @click="enviarResultado"></component>
+				<component v-show="(cont === 3)" :is="preguntas[3].tipo" :datos="datos[3]" @click="enviarResultado"></component>
+				<component v-show="(cont === 4)" :is="preguntas[4].tipo" :datos="datos[4]" @click="enviarResultado"></component>
+			</div>
 
-				</v-col>
-				<v-col class="text-left" cols="6" sm="6">
-					<v-alert dense text
-					         icon="mdi-cancel"
-					         type="error">
-						<strong>Respuestas incorrectas: </strong> {{incorrectas}}
-					</v-alert>
+			<!-- <verdaderoFalso :enunciado="Enunciado" @click="enviarResultado"></verdaderoFalso>
+																<opcionMultiple :datos="multiple" @click="enviarResultado"></opcionMultiple>-->
+			<v-card class="elevation-0 ma-12" tile v-show="(!vistaResultados) && (inicio)">
+				<span>El siguente Quiz: </span><br>
+				<ul>
+					<li>Cuenta con 6 preguntas relacionadas con la unidad.</li>
+					<li>Tiene un límite de tiempo de 10 minutos. </li>
+					<li>No hay un limite de intentos.</li>
+					<li>Puede ser realizado en cualquier momento.</li>
+				</ul>
 
-				</v-col>
-			</v-row>
-			<v-list two-line subheader>
-
-				<v-list-item v-for="(item, index) in preguntas"
-				             :key="item.id"
-				             @click="">
-
-					<v-list-item-content>
-						<v-list-item-title v-text="'Pregunta ' + (index+1) "></v-list-item-title>
-						<v-list-item-subtitle v-text="item.enunciado"></v-list-item-subtitle>
-					</v-list-item-content>
-
-					<v-list-item-action>
-						<v-btn icon>
-
-							<v-icon v-if="(!resultados[index].result)" color="error lighten-1">mdi-cancel</v-icon>
-							<v-icon v-if="(resultados[index].result)" color="green lighten-1">mdi-checkbox-marked-circle</v-icon>
-						</v-btn>
-					</v-list-item-action>
-				</v-list-item>
-			</v-list>
-			<div class="text-center ma-2">
 				<v-row align="center" justify="center">
-					<v-col class="text-center" cols="6" sm="6">
-						<div>
-							<v-btn block large dark @click="nuevoIntento">
-								<v-icon></v-icon> Nuevo intento
-							</v-btn>
-						</div>
-					</v-col>
-					<!-- </v-row>
-						<v-row align="center" justify="center"> -->
-					<v-col class="text-center" cols="6" sm="6">
-						<div>
-							<v-btn block large outlined @click="">
-								<v-icon></v-icon> Salir
+					<v-col class="text-center" cols="12" sm="4">
+						<div class="my-1">
+							<v-btn outlined color="info" @click="iniciar">
+								Iniciar Quiz
+								<v-icon right>mdi-arrow-right-bold</v-icon>
 							</v-btn>
 						</div>
 					</v-col>
 				</v-row>
+			</v-card>
+			<div v-if="(terminar) && (!inicio) && (vistaResultados)" class="" id="resultados">
+				<h4>Resultados</h4>
+				<v-row align="center" class="ma-1">
+					<v-col class="text-left" cols="6" sm="6">
+						<v-alert dense text type="success">
+							<strong>Respuestas correctas: </strong> {{correctas}}
+						</v-alert>
+
+					</v-col>
+					<v-col class="text-left" cols="6" sm="6">
+						<v-alert dense text
+						         icon="mdi-cancel"
+						         type="error">
+							<strong>Respuestas incorrectas: </strong> {{incorrectas}}
+						</v-alert>
+
+					</v-col>
+				</v-row>
+				<v-list two-line subheader>
+
+					<v-list-item v-for="(item, index) in preguntas"
+					             :key="item.id"
+					             @click="">
+
+						<v-list-item-content>
+							<v-list-item-title v-text="'Pregunta ' + (index+1) "></v-list-item-title>
+						</v-list-item-content>
+
+						<v-list-item-action>
+							<v-btn icon>
+								<v-icon v-if="(!resultados[index].result)" color="error lighten-1">mdi-cancel</v-icon>
+								<v-icon v-if="(resultados[index].result)" color="green lighten-1">mdi-checkbox-marked-circle</v-icon>
+							</v-btn>
+						</v-list-item-action>
+					</v-list-item>
+				</v-list>
+				{{resultados}}
+				<div class="text-center ma-2">
+					<v-row align="center" justify="center">
+						<v-col class="text-center" cols="6" sm="6">
+							<div>
+								<v-btn block large dark @click="nuevoIntento">
+									<v-icon></v-icon> Nuevo intento
+								</v-btn>
+							</div>
+						</v-col>
+						<!-- </v-row>
+										<v-row align="center" justify="center"> -->
+						<v-col class="text-center" cols="6" sm="6">
+							<div>
+								<v-btn block large outlined @click="">
+									<v-icon></v-icon> Salir
+								</v-btn>
+							</div>
+						</v-col>
+					</v-row>
+				</div>
 			</div>
-		</div>
-	</div>
+		</v-card>
+	</v-container>
 
 </template>
 

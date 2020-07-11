@@ -128,9 +128,9 @@ padding-right: 58px;
  .card_cabecera{
  	position: relative;
   justify-content: center !important;
-  height: 55px;
- 	min-height: 55px;
- 	top: -20px;
+  height: 50px;
+ 	min-height: 50px;
+ 	top: -15px;
  	z-index: 1;
  }
 .contenido {

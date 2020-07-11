@@ -178,107 +178,58 @@
 								<v-container>
 									<v-row v-if="tipo==='grupales'">
 										<v-col cols="12">
-											<v-expansion-panels>
-												<v-expansion-panel class="elevation-0" v-for="(g, i) in grupos" :key="i">
+											<v-expansion-panels elevation="0">
+												<v-expansion-panel v-for="(g, i) in grupos" :key="i">
 													<v-expansion-panel-header><span>{{g.codigo}}  - {{g.nombre}}</span></v-expansion-panel-header>
-													<v-expansion-panel-content>
-														<v-list-item v-for="(u, i) in g.unidades" :key="i">
-															<v-row justify="center">
-																<v-list-item-content>
-
-																	<v-list-item-title><span>{{u.nombre}}</span></v-list-item-title>
-
-																</v-list-item-content>
-
-																<v-list-item-action>
-																	<v-dialog v-model="dialog" scrollable max-width="80%">
-																		<template v-slot:activator="{ on, attrs }">
-																																         <v-btn
-																																           color="primary"
-																																            x-large 
-																																           v-bind="attrs"
-																																           v-on="on"
-																																         >
-																																          Ver reportes
-																																         </v-btn>
-																																       </template>
-																		<v-card>
-																			<v-card-title>Porcentaje de fallos de cada tema</v-card-title>
-																			<v-divider></v-divider>
-																			<v-card-text>
-																				<v-card class="ma-2 py-2 px-5" v-for="(t, j) in u.temas" :key="j">
-																					<v-card-title class="title font-weight-light mb-2">{{t.tema}}</v-card-title>
-																					<v-divider class="my-1"></v-divider>
-																					<v-progress-linear active
-																					                   background-opacity="0.4"
-																					                   :buffer-value="100"
-																					                   height="25px"
-																					                   class="my-2"
-																					                   dark
-																					                   rounded
-																					                   top
-																					                   :value="t.desaciertos"
-																					                   color="orange">
-																						<template><strong>{{ Math.ceil(t.desaciertos) }}%</strong></template>
-																					</v-progress-linear>
-																					<v-divider class="my-2"></v-divider>
-																				</v-card>
-																			</v-card-text>
-																			<v-divider></v-divider>
-																			<v-card-actions>
-																				<v-spacer></v-spacer>
-																				<v-btn color="" text @click="dialog = false">Salir</v-btn>
-																			</v-card-actions>
-																		</v-card>
-																	</v-dialog>
-																</v-list-item-action>
-															</v-row>
-														</v-list-item>
+													<v-expansion-panel-content >
+														<v-row>
+															<v-expansion-panels>
+																<v-expansion-panel v-for="(u, i) in g.unidades" :key="i">
+																	<v-expansion-panel-header><span>{{u.nombre}}</span></v-expansion-panel-header>
+																	<v-expansion-panel-content>
+																		<v-col cols="12" v-for="(t, j) in u.temas" :key="j">
+																			<v-card class="ma-2 py-2 px-5">
+																				<v-card-title class="title font-weight-light mb-2">{{t.tema}}</v-card-title>
+																				<v-divider class="my-1"></v-divider>
+																				<v-progress-linear active
+																				                   background-opacity="0.4"
+																				                   :buffer-value="100"
+																				                   height="25px"
+																				                   class="my-2"
+																				                   dark
+																				                   rounded
+																				                   top
+																				                   :value="t.desaciertos"
+																				                   color="orange">
+																					<template><strong>{{ Math.ceil(t.desaciertos) }}%</strong></template>
+																				</v-progress-linear>
+																				<v-divider class="my-2"></v-divider>
+																			</v-card>
+																		</v-col>
+																	</v-expansion-panel-content>
+																</v-expansion-panel>
+															</v-expansion-panels>
+														</v-row>
 													</v-expansion-panel-content>
-													<!-- <v-expansion-panels>
-																						<v-expansion-panel v-for="(u, i) in g.unidades" :key="i">
-																							<v-expansion-panel-header><span>{{u.nombre}}</span></v-expansion-panel-header>
-																							<v-expansion-panel-content>
-																								<v-col cols="12" v-for="(t, j) in u.temas" :key="j">
-																									<v-card class="ma-2 py-2 px-5">
-																										<v-card-title class="title font-weight-light mb-2">{{t.tema}}</v-card-title>
-																										<v-divider class="my-1"></v-divider>
-																										<v-progress-linear active
-																																			 background-opacity="0.4"
-																																			 :buffer-value="100"
-																																			 height="25px"
-																																			 class="my-2"
-																																			 dark
-																																			 rounded
-																																			 top
-																																			 :value="t.desaciertos"
-																																			 color="orange">
-																											<template><strong>{{ Math.ceil(t.desaciertos) }}%</strong></template>
-																										</v-progress-linear>
-																										<v-divider class="my-2"></v-divider>
-																									</v-card>
-																								</v-col>
-																							</v-expansion-panel-content>
-																						</v-expansion-panel>
-																					</v-expansion-panels> -->
+
 												</v-expansion-panel>
 											</v-expansion-panels>
 											<!-- <v-list dense class="grow ">
 
-																							<v-list-item v-for="(g, i) in grupos" :key="i">
+															<v-list-item v-for="(g, i) in grupos" :key="i">
 
-																								<v-list-item-content>
-																									<v-list-item-title><span>{{g.nombre}}</span></v-list-item-title>
-																									<v-list-item-subtitle><span>Código grupo: {{g.codigo}}</span></v-list-item-subtitle>
+																<v-list-item-content>
+																	<v-list-item-title><span>{{g.nombre}}</span></v-list-item-title>
+																	<v-list-item-subtitle><span>Código grupo: {{g.codigo}}</span></v-list-item-subtitle>
 
-																								</v-list-item-content>
-																								<v-list-item-action>
+																</v-list-item-content>
+																<v-list-item-action>
 
-																								</v-list-item-action>
+																</v-list-item-action>
 
-																							</v-list-item>
+															</v-list-item>
 
-																						</v-list> -->
+														</v-list> -->
 										</v-col>
 									</v-row>
 									<!-- <reportesUnidad :datos="JSON.stringify(unidad)"> </reportesUnidad> -->

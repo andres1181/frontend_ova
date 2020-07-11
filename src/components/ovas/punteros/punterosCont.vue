@@ -2,72 +2,86 @@
 
 	import { misMixins } from '@/mixins/mixins.js'
 
-	import Sobrecarga from '@/components/ovas/polimorfismo/sobrecarga.vue'
-	import FuncionesVirtuales from '@/components/ovas/polimorfismo/funcionesVirtuales.vue'
-	import IntroduccionP from '@/components/ovas/polimorfismo/introduccion.vue'
-	import Herencia from '@/components/ovas/polimorfismo/herencia.vue'
-	import Sobreescritura from '@/components/ovas/polimorfismo/sobrescritura.vue'
+	import IntroduccionPunteros from '@/components/ovas/punteros/introduccionPunteros.vue'
+	import Punteros from '@/components/ovas/punteros/punteros.vue'
+	import Referencias from '@/components/ovas/punteros/referencias.vue'
+	import PasoReferencia from '@/components/ovas/punteros/pasoporreferencia.vue'
+	import Matrices from '@/components/ovas/punteros/matrices.vue'
+	import Arreglos from '@/components/ovas/punteros/arreglos.vue'
 	import VistaEvaluacion from '@/components/actividades/evaluacion/vistaEvaluacion.vue'
 	import Juez from '@/components/views/juez.vue'
-	//	import menuPolimorfismo from '@/components/ovas/polimorfismo/menuPolimorfismo.vue'
+
 	export default {
-		name: 'polimorfismo',
+		name: 'PunterosCont',
 		components: {
-			Sobrecarga,
-			FuncionesVirtuales,
-			Herencia,
-			Sobreescritura,
-			VistaEvaluacion,
-			IntroduccionP,
-			Juez
-			//	menuPolimorfismo
+			IntroduccionPunteros,
+			Punteros,
+			PasoReferencia,
+			Referencias,
+			Arreglos,
+			Matrices,
+			Juez,
+			VistaEvaluacion
 		},
+		mixins: [misMixins],
 		data: () => ({
 			unidades: '',
 			fixed: true,
-			color: 'orange',
-			usuario: [],
-			componente: 'IntroduccionP',
 			dim: [],
+			color: 'orange',
 			temaActual: 0,
+			componente: 'IntroduccionPunteros',
 			temas: [
-				{ titulo: 'Introducción', contenido: 'IntroduccionP', color: 'orange' },
-				//	{ titulo: 'Conceptos', contenido: 'Conceptos' },
-				{ titulo: 'Herencia', contenido: 'Herencia', color: 'purple' },
-				{ titulo: 'Funciones Virtuales', contenido: 'FuncionesVirtuales', color: 'pink' },
-				{ titulo: 'Sobrecarga', contenido: 'Sobrecarga', color: 'cyan' },
-				{ titulo: 'Sobrescritura', contenido: 'Sobreescritura', color: 'amber' }
-			],
-			codigoRules: [v => (v && v.length == 7) || 'El código debe ser de 7 digitos'],
-			basicRules: [v => !!v || 'Campo requerido'],
-			emailRules: [v => !!v || 'El correo es requerido', v => /.+@.+\..+/.test(v) || 'El correo ingresado no es valido']
+				{ titulo: 'Introducción', contenido: 'IntroduccionPunteros', color: 'orange' },
+				{ titulo: 'Punteros', contenido: 'Punteros', color: 'lime' },
+				{ titulo: 'Referencias', contenido: 'Referencias', color: 'purple' },
+				{ titulo: 'Paso por referencia', contenido: 'PasoReferencia', color: 'pink' },
+				{ titulo: 'Arreglos dinamicos', contenido: 'Arreglos', color: 'cyan' },
+				{ titulo: 'Matrices dinamicas', contenido: 'Matrices', color: 'amber' }
+			]
 		}),
-		mixins: [misMixins],
-
+		// watch: {
+		// 	length(val) {
+		// 		this.tab = val - 1
+		// 	}
+		// },
 		methods: {
-			scrollWin: function() {
-				window.scrollTo(0, 0)
-			}
+			// siguienteTema(n) {
+			// 	if (n === this.steps) {
+			// 		this.e1 = this.steps
+			// 	} else {
+			// 		this.e1 = n + 1
+			// 	}
+			// },
+			// anteriorTema(n) {
+			// 	if (n === 1) {
+			// 		this.e1 = 1
+			// 	} else {
+			// 		this.e1 = n - 1
+			// 	}
+			// },
+			// seleccionarTema(t){
+			// 	this.temaActual = t
+			// }
 		},
 		created() {
 			this.dim = this.obtenerDimensiones()
 			this.unidades = this.listaUnidades()
-			//	this.buscarDatos()
 		}
 	}
 
 </script>
 
-<template>
+<template >
 
 	<v-row justify="center">
 		<v-col cols="12" class="pa-0">
-			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-3 mt-9 mx-7 rounded-lg">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-2 px-4 mb-3 mt-7 mx-7 rounded-lg">
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
-						<v-card dark color="cyan" elevation="4" class="card_cabecera rounded-lg d-flex  align-center">
+						<v-card dark color="cyan" elevation="5" class="card_cabecera rounded-lg d-flex  align-center">
 							<v-card-title class="align-center">
-								<span class="headline font-weight-bold">Polimorfismo</span>
+								<span class="headline font-weight-bold">Punteros y Referencias</span>
 							</v-card-title>
 						</v-card>
 					</v-col>
@@ -83,6 +97,7 @@
 							<v-app-bar dense absolute
 							           color="white"
 							           scroll-target="#scrolling-techniques-p">
+
 								<v-btn v-if="temaActual!== 0" icon
 								       color="cyan"
 								       @click="(componente = temas[temaActual - 1].contenido) && (color = temas[temaActual - 1].color) && (temaActual = temaActual - 1)">
@@ -94,25 +109,22 @@
 
 								<v-toolbar-title v-if="(componente === 'Juez')">Actividad Práctica</v-toolbar-title>
 								<v-toolbar-title v-if="(componente === 'VistaEvaluacion')">Quiz</v-toolbar-title>
+
 								<v-spacer></v-spacer>
 
-								<v-btn v-if="temaActual!== 4" icon
+								<v-btn v-if="temaActual!== 5" icon
 								       color="cyan"
 								       @click="(componente = temas[temaActual + 1].contenido) && (color = temas[temaActual + 1].color) && (temaActual = temaActual + 1)">
 
 									<v-icon>mdi-arrow-right-bold</v-icon>
 								</v-btn>
-							</v-app-bar>
-							<!-- <v-bottom-navigation height="40" scroll-target="#scrolling-techniques-p" absolute horizontal> -->
 
-							<!-- </v-bottom-navigation> -->
+							</v-app-bar>
+
 							<v-sheet id="scrolling-techniques-p"
 							         class="mt-10 pa-2  overflow-y-auto"
 							         max-height="calc(100% - 48px)">
-								<component :color="color" unidad="polimorfismo" :is="componente"></component>
-								<div class="">
-
-								</div>
+								<component :color="color" :is="componente"></component>
 							</v-sheet>
 
 						</v-card>
@@ -143,14 +155,6 @@
 											<v-list-item-title>Quiz</v-list-item-title>
 										</v-list-item-content>
 									</v-list-item>
-									<!-- <template v-slot:append>
-																								 <div class="pa-2">
-																								 <v-btn outlined  depressed   block>Sopa de letras</v-btn>
-																							 </div>
-																							 <div class="pa-2">
-																								 <v-btn outlined dense  block @click="" > Evaluación</v-btn>
-																							 </div>
-																</template> -->
 								</v-list-item-group>
 							</v-navigation-drawer>
 						</v-card>
@@ -169,18 +173,6 @@
 
 <style>
 
-	#editar_perfil {
-		-webkit-border-radius: 12px;
-		-moz-border-radius: 12px;
-		border-radius: 12px;
-	}
-	.card_cabecera {
-		position: relative;
-		align-self: center;
-		min-height: 50px;
-		top: -20px;
-		z-index: 1;
-		color: '#4CBAC4';
-	}
+
 
 </style>

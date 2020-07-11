@@ -1,91 +1,55 @@
 <script>
-export default {
-  name: 'Sobreescritura',
-  components: {},
-  data: () => ({
-    hidden: false,
-    years: [
-      {
-        color: 'cyan',
-        year: '1960'
-      },
-      {
-        color: 'green',
-        year: '1970'
-      },
-      {
-        color: 'pink',
-        year: '1980'
-      },
-      {
-        color: 'amber',
-        year: '1990'
-      },
-      {
-        color: 'orange',
-        year: '2000'
-      },
 
-      {
-        color: 'purple',
-        year: '2000'
-      }
-    ],
-    numPaginas: 2,
-    page: 1,
-    items: [
-      {
-        color: 'red lighten-2',
-        icon: 'mdi-star'
-      },
-      {
-        color: 'purple darken-1',
-        icon: 'mdi-book-variant'
-      },
-      {
-        color: 'green lighten-1',
-        icon: 'mdi-airballoon'
-      },
-      {
-        color: 'indigo',
-        icon: 'mdi-buffer'
-      }
-    ]
-  }),
-  methods: {
-    scrollWin: function() {
-      window.scrollTo(0, 0)
-    },
-    siguientePagina: function() {
-      if (this.page === this.numPaginas) {
-        this.page = this.numPaginas
-      } else {
-        this.page = this.page + 1
-      }
-      this.scrollWin()
-    },
-    anteriorPagina: function() {
-      if (this.page === 1) {
-        this.page = 1
-      } else {
-        this.page = this.page - 1
-      }
-      this.scrollWin()
-    }
-  },
-  created() {
-    this.page = 1
-  }
-}
+	export default {
+		name: 'Sobreescritura',
+		components: {},
+		props: {
+			color: {
+				type: String,
+				required: true
+			}
+		},
+		data: () => ({}),
+		methods: {
+			scrollWin: function() {
+				window.scrollTo(0, 0)
+			}
+		},
+		created() {}
+	}
 
 </script>
 
 <template >
 
+	<v-container fluid>
+		<v-timeline>
+			<v-timeline-item :color="color" small>
+				<template v-slot:opposite>
+																		<span
+																			:class="`headline font-weight-bold ${color}--text`"
 
-<div class="">
+																		>Sobre escritura</span>
+																	</template>
+				<div class="py-4">
+					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué es?</h2>
+					<div>
+						<span>Es la una característica de la programación orientada a objetos que permite que una función declarada en una clase base, pueda ser utilizada en sus clases hijas. </span>
+					</div>
+				</div>
+			</v-timeline-item>
+			<v-timeline-item :color="color" small>
 
-</div>
+				<div class="py-4">
+
+					<div>
+						<span>En la sobre escritura, a diferencia de la sobrecarga, la función conserva su nombre y tipo de datos de entrada y de salida. </span>
+					</div>
+				</div>
+			</v-timeline-item>
+		</v-timeline>
+	</v-container>
+
 </template>
 
 <style>

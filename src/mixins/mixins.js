@@ -2,6 +2,10 @@ import jwt_decode from 'jwt-decode';
 
 export const misMixins = {
   methods: {
+
+    // Crear actividades
+
+
     listaUnidades: function() {
       var unidades = []
       unidades.push({
@@ -27,26 +31,34 @@ export const misMixins = {
         ]
       })
       unidades.push({
-        unidad: 'Punteros',
+        unidad: 'Punteros y Referencias',
         componente: 'punteros',
         temas: [{
-            tema: 'Aritmetica de punteros'
+            tema: 'Punteros',
+            componente: 'punteros'
           },
           {
-            tema: 'Paso por referencia'
+            tema: 'Referencias',
+            componente: 'referencias'
           },
           {
-            tema: 'Arreglos dinámicos'
+            tema: 'Paso por referencia',
+            componente: 'pasoReferencia'
           },
           {
-            tema: 'Matrices dinámicos'
+            tema: 'Arreglos dinámicos',
+            componente: 'arreglos'
+          },
+          {
+            tema: 'Matrices dinámicos',
+            componente: 'matrices'
           }
         ]
       })
       return unidades
     },
     obtenerDimensiones: function() {
-      var alto = window.innerHeight - 64 // 64 =  margin(*2)
+      var alto = window.innerHeight - 48 // 64 =  margin(*2)
       var ancho = window.innerWidth - (56 + 56) // 96 = (navigation) + margin(*2)
       var dimensiones = [alto, ancho]
 

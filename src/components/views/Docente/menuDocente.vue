@@ -40,7 +40,7 @@
 				<v-list-item-group sub-group>
 					<v-list-item v-for="(r, i) in reportes"
 					             :key="i"
-					             @click="$router.push({ name: `${r.contenido}` })">
+					             @click="$router.push({ name: `${r.contenido}` }).catch(err => {})">
 						<v-list-item-content>
 							<v-list-item-subtitle>{{r.titulo}}</v-list-item-subtitle>
 						</v-list-item-content>
@@ -49,14 +49,14 @@
 				</v-list-item-group>
 
 			</v-list-group>
-			<v-list-item @click="$router.push({ name: 'crearGrupo' })">
+			<v-list-item @click="$router.push({ name: 'crearGrupo' }).catch(err => {})">
 				<v-list-item-icon>
 					<v-icon>mdi-ballot</v-icon>
 				</v-list-item-icon>
 				<v-list-item-title>Crear grupo</v-list-item-title>
 			</v-list-item>
 			<v-divider></v-divider>
-			<v-list-item @click="($router.push({ path: '/docente/crear_preguntas' })) && (titulo='Crear Pregunta')">
+			<v-list-item @click="($router.push({ path: '/docente/crear_preguntas' }).catch(err => {})) && (titulo='Crear Pregunta')">
 				<v-list-item-icon>
 					<v-icon>mdi-school</v-icon>
 				</v-list-item-icon>

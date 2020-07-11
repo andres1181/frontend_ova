@@ -4,10 +4,7 @@
 	export default {
 		name: 'crearOpcionMultiple',
 		props: {
-			id: {
-				type: String,
-				required: true
-			}
+
 		},
 		data: () => ({
 			unidades: '',
@@ -20,7 +17,7 @@
 			enunciado: '',
 			nuevaOpcionC: '',
 			nuevaOpcionesI: [],
-			tipo: 'opcionMultiple',
+			tipo: 'multiple',
 			opciones: []
 			/*
 
@@ -28,6 +25,7 @@
 		}),
 		mixins: [misMixins],
 		methods: {
+
 			guardar() {
 				if (this.$refs.form.validate()) {
 					this.opciones.push({
@@ -40,11 +38,47 @@
 							correcta: false
 						})
 					}
-
+					var id_ = this.obtenerDatos().id
+					console.log(id_);
+					var _data = {
+						enunciado: String(this.enunciado),
+						tipo: String(this.tipo),
+						unidad: String(this.unidad.componente),
+						tema: String(this.tema.componente),
+						autor: String(id_),
+						opciones: this.opciones,
+						activo: true
+					}
 					//guardar en el api
+
+						var token = String(localStorage.getItem('tokenUser'))
+						const ruta = '/actividades/crear'
+						//const host = 'http://localhost:3000'
+						//const baseURL = '/api/usuarios/login'
+
+						this.axios({
+							method: 'post',
+							url: ruta, // + user,
+							headers: {
+								'Content-Type': 'application/json',
+								'x-access-token': token
+							},
+							data: _data
+						})
+							.then(response => {
+								this.$emit('creada', {creada: true, select: { text: '', componente: '' }})
+							})
+							.catch(e => {
+								// eslint-disable-next-line no-console
+								console.log(`Error en el servidor:  ${e}`)
+								// eslint-disable-next-line no-console
+								console.log(e.response)
+							})
+
+					}
 					//limpiar formlario
 				}
-			}
+
 		},
 		//
 		created() {
@@ -86,12 +120,14 @@
 			<v-row>
 				<v-text-field v-model="nuevaOpcionesI[0]" :rules="campoRules" label="Añadir una opción INCORRECTA"></v-text-field>
 			</v-row>
+			<v-row>
 			<v-text-field v-model="nuevaOpcionesI[1]" :rules="campoRules" label="Añadir una opción INCORRECTA"></v-text-field>
+			</v-row>
 			<v-row>
 				<v-text-field v-model="nuevaOpcionesI[2]" :rules="campoRules" label="Añadir una opción INCORRECTA"></v-text-field>
 			</v-row>
 			<v-row>
-				<v-btn :disabled="!valid"
+				<v-btn block x-large :disabled="!valid"
 				       color="success"
 				       class="mr-4"
 				       @click="guardar">

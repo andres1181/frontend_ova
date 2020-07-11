@@ -180,7 +180,7 @@
 					})
 						.then(response => {
 							if (response.status == '201') {
-								//	this.$router.push({ name: 'crearGrupo' })
+								//	this.$router.push({ name: 'crearGrupo' }).catch(err => {})
 								// Si el grupo se creo correctamente, ocultar el formulario de crear grupo y
 								// añadir una area de vista grupo para agregar estudiantes y modificar las
 								// ovas que puede visualizar el grupo

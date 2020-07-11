@@ -1,7 +1,7 @@
 <script>
 
 	export default {
-		name: 'Aritmetica',
+		name: 'Arreglos',
 		components: {},
 		props: {
 			color: {
@@ -25,7 +25,7 @@
 																	<span
 																		:class="`headline font-weight-bold ${color}--text`"
 
-																	>Matrices dinamicas</span>
+																	>Arreglos Dinamicos</span>
 																</template>
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué es?</h2>

@@ -40,7 +40,7 @@
 		        </v-list-group> -->
 
 			<v-divider></v-divider>
-			<v-list-item @click="$router.push({ path: '/usuario/perfil' })">
+			<v-list-item @click="$router.push({ path: '/usuario/perfil' }).catch(err => {})">
 				<v-list-item-icon>
 					<v-icon>mdi-account</v-icon>
 				</v-list-item-icon>
@@ -54,13 +54,13 @@
 				</v-list-item-icon>
 				<v-list-item-title>Reportes</v-list-item-title>
 			</v-list-item>
-			<v-list-item @click="$router.push({ name: 'registro' })">
+			<v-list-item @click="$router.push({ name: 'registro' }).catch(err => {})">
 				<v-list-item-icon>
 					<v-icon>mdi-ballot</v-icon>
 				</v-list-item-icon>
 				<v-list-item-title>Registrar usuarios</v-list-item-title>
 			</v-list-item>
-			<v-list-item @click="$router.push({ name: 'crearGrupo' })">
+			<v-list-item @click="$router.push({ name: 'crearGrupo' }).catch(err => {})">
 				<v-list-item-icon>
 					<v-icon>mdi-ballot</v-icon>
 				</v-list-item-icon>

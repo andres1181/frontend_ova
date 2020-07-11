@@ -4,7 +4,8 @@
 	import crearfalsoVerdadero from '@/components/views/Docente/Preguntas/falsoYverdadero.vue'
 	import crearOpcionMultiple from '@/components/views/Docente/Preguntas/CrearOpcionMultiple.vue'
 	import ordenar from '@/components/views/Docente/Preguntas/ordenar.vue'
-	import parejas from '@/components/views/Docente/Preguntas/parejas.vue'
+	import analizar from '@/components/views/Docente/Preguntas/analizar.vue'
+	import analizarProblema from '@/components/views/Docente/Preguntas/analizarProblemaC.vue'
 	// TODO: falta importar analizar codigo y evaluacion
 	export default {
 		name: 'Crear',
@@ -12,23 +13,30 @@
 			crearfalsoVerdadero,
 			crearOpcionMultiple,
 			ordenar,
-			parejas
+			analizar,
+			analizarProblema
 		},
 
 		data: () => ({
-			//	ver: false,
+			creada: false,
+
 			unidades: '',
 			select: { text: '', componente: '' },
-			id: '12234',
 			items: [
 				{ text: 'Opción Multiple', componente: 'crearOpcionMultiple' },
 				{ text: 'Verdadero y Falso', componente: 'crearfalsoVerdadero' },
 				{ text: 'Ordenar', componente: 'ordenar' },
-				{ text: 'Parejas', componente: 'parejas' }
+				{ text: 'Analizar código', componente: 'analizar' },
+				{ text: 'Elegir código', componente: 'analizarProblema' }
 			]
 		}),
 		mixins: [misMixins],
-		methods: {},
+		methods: {
+			preguntaCreada(e){
+				this.creada = true
+				this.select = e.select
+			}
+		},
 		created() {
 			this.unidades = this.listaUnidades()
 			this.dim = this.obtenerDimensiones()
@@ -84,7 +92,10 @@
 
 											</v-col>
 											<v-col cols="12" md="12">
-												<component v-if="select.componente !== ''" :is="select.componente" :id="id"></component>
+												<v-alert v-if="(creada===true) && (select.componente === '')" type="success" dark icon="mdi-clock-fast">
+													<span>La pregunta ha sido creada</span>
+												</v-alert>
+												<component v-if="select.componente !== ''" :is="select.componente" @creada="preguntaCreada"></component>
 											</v-col>
 										</v-row>
 

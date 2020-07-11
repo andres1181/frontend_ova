@@ -45,7 +45,9 @@
 			// }
 		},
 		created() {
-			this.page = 1
+		//	scrollWin: function() {
+	      window.scrollTo(0, 0)
+	    //},
 		}
 	}
 

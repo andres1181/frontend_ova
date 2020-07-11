@@ -14,6 +14,10 @@
 			titulo: {
 				type: String,
 				required: true
+			},
+			concepto: {
+				type: String,
+				required: true
 			}
 		},
 		data() {
@@ -36,7 +40,7 @@
 				           v-bind="attrs"
 				           v-on="on"
 				               class="punteado" :style="borderBottomColor"
-				         >{{titulo}}</span>
+				         >{{concepto}}</span>
 				       </template>
 		<v-card elevation="6"
 		        max-width="600"

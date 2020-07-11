@@ -112,7 +112,7 @@
 			<li>Para el profesor: Salario, Horas de trabajo.</li>
 		</ul>
 		<!-- <editor nombre="ejemploHerencia" :codigo="codigoEditor[1]"></editor> -->
-		<iframe height="400px"
+		<iframe height="500px"
 		        width="100%"
 		        src="https://repl.it/@ANDRESFELIPEF31/Profesor?lite=true"
 		        scrolling="no"
