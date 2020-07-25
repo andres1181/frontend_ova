@@ -1,15 +1,33 @@
 <script>
-
+import quiz from '@/components/views/quiz.vue'
 	export default {
 		name: 'Arreglos',
-		components: {},
+		components: {
+			quiz
+		},
 		props: {
 			color: {
 				type: String,
 				required: true
+			},
+			listaPreguntas: {
+				type: Array,
+				required: true
+			},
+			aprobado: {
+				type: Boolean,
+				required: true
+			},
+			avance: {
+				type: String,
+				required: true
 			}
 		},
-		data: () => ({}),
+		data() {
+			return {
+				tema: 'arreglos'
+			}
+		},
 		methods: {},
 		created() {}
 	}
@@ -22,11 +40,11 @@
 		<v-timeline>
 			<v-timeline-item :color="color" small>
 				<template v-slot:opposite>
-																	<span
-																		:class="`headline font-weight-bold ${color}--text`"
+																			<span
+																				:class="`headline font-weight-bold ${color}--text`"
 
-																	>Arreglos Dinamicos</span>
-																</template>
+																			>Arreglos Dinamicos</span>
+																		</template>
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué es?</h2>
 					<div>
@@ -73,6 +91,16 @@
 				</div>
 			</v-timeline-item>
 		</v-timeline>
+		<div class=" ma-2">
+			<v-row align="center" justify="center">
+				<v-col class="text-center" cols="12" sm="12">
+					<div>
+						<h2 :class="`headline font-weight-light mb-1 ${color}--text`">Quiz</h2>
+					</div>
+				</v-col>
+				<quiz :preguntas="listaPreguntas" :avance="avance" :tema="tema"></quiz>
+			</v-row>
+		</div>
 	</v-container>
 
 </template>

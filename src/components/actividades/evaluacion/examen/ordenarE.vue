@@ -17,14 +17,16 @@
 			// SortableItem,
 			// SortableList
 		},
-		data: () => ({
-			opciones: null,
-			info: null,
-			enunciado: '',
-			result: null,
-			enabled: true,
-			dragging: false
-		}),
+		data() {
+			return {
+				opciones: null,
+				info: null,
+				enunciado: '',
+				result: null,
+				enabled: true,
+				dragging: false
+			}
+		},
 		mixins: [misMixins],
 		methods: {
 			asignarDatos() {
@@ -61,24 +63,17 @@
 <template>
 
 	<v-container fluid>
-		<!-- <v-list>
-								<v-list-item>
-									<v-list-item-action>
-										<h4>2</h4>
-									</v-list-item-action>
-									<v-list-item-content>
-										<v-list-item-title>I'm a item</v-list-item-title>
-									</v-list-item-content>
-								</v-list-item>
-							</v-list> -->
-		<p>{{enunciado}}</p>
+
+		<v-card outlined class=" pa-2 ma-2">
+			<p>{{enunciado}}</p>
+		</v-card>
 		<draggable :list="opciones"
 		           :disabled="!enabled"
 		           class="list-group "
 		           ghost-class="ghost"
 		           @start="dragging = true"
 		           @end="dragging = false">
-			<v-card color="black" dark
+			<v-card color="blue-grey" dark
 			        class="ma-2 pa-4 list-group-item element"
 			        v-for="element in opciones"
 			        :key="element.posicion">
@@ -87,7 +82,7 @@
 		</draggable>
 
 		<v-btn block color="secondary" dark @click="enviarResultado">
-			Siguiente
+			Enviar
 		</v-btn>
 	</v-container>
 

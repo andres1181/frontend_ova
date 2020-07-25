@@ -3,7 +3,9 @@
 	export default {
 		name: 'Ayuda',
 
-		data: () => ({})
+		data() {
+			return {}
+		}
 	}
 
 </script>

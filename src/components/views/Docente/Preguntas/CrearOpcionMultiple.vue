@@ -4,10 +4,14 @@
 	export default {
 		name: 'crearOpcionMultiple',
 		props: {
-
+			temas: {
+				type: Array,
+				required: true
+			}
 		},
-		data: () => ({
-			unidades: '',
+	 data() {
+	    return {
+			cargando: false,
 			unidad: '',
 			tema: '',
 			valid: true,
@@ -19,15 +23,16 @@
 			nuevaOpcionesI: [],
 			tipo: 'multiple',
 			opciones: []
-			/*
 
-														*/
-		}),
+
+		}
+		},
 		mixins: [misMixins],
 		methods: {
 
 			guardar() {
 				if (this.$refs.form.validate()) {
+					this.cargando = true
 					this.opciones.push({
 						respuesta: this.nuevaOpcionC,
 						correcta: true
@@ -43,8 +48,8 @@
 					var _data = {
 						enunciado: String(this.enunciado),
 						tipo: String(this.tipo),
-						unidad: String(this.unidad.componente),
-						tema: String(this.tema.componente),
+						id_tema: String(this.tema._id),
+						id_unidad: String(this.tema.id_unidad._id),
 						autor: String(id_),
 						opciones: this.opciones,
 						activo: true
@@ -69,11 +74,9 @@
 								this.$emit('creada', {creada: true, select: { text: '', componente: '' }})
 							})
 							.catch(e => {
-								// eslint-disable-next-line no-console
-								console.log(`Error en el servidor:  ${e}`)
-								// eslint-disable-next-line no-console
-								console.log(e.response)
+
 							})
+							.finally(() => (this.cargando = false))
 
 					}
 					//limpiar formlario
@@ -82,7 +85,6 @@
 		},
 		//
 		created() {
-			this.unidades = this.listaUnidades()
 		}
 	}
 
@@ -91,20 +93,14 @@
 <template>
 
 	<v-container fluid>
-		<v-form ref="form"
+		<v-form v-if="cargando===false" ref="form"
 		        v-model="valid"
 		        :lazy-validation="lazy">
-			<v-select v-model="unidad" required
-			          :items="unidades"
-			          item-text="unidad"
-			          :rules="campoRules"
-			          label="Seleccione una unidad tematica"
-			          return-object>
-			</v-select>
+
 			<v-select v-model="tema" required
 			          :rules="campoRules"
-			          :items="unidad.temas"
-			          item-text="tema"
+			          :items="temas"
+			          item-text="nombre"
 			          label="Seleccione un tema"
 			          return-object>
 			</v-select>
@@ -136,6 +132,17 @@
 			</v-row>
 
 		</v-form>
+		<div v-else>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+		</div>
 	</v-container>
 
 </template>

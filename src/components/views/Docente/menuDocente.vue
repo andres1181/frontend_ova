@@ -1,5 +1,6 @@
 <script>
 
+	import { misMixins } from '@/mixins/mixins.js'
 	export default {
 		name: 'menuDocente',
 		props: {
@@ -8,84 +9,78 @@
 				require: true
 			}
 		},
+		mixins: [misMixins],
 		data: () => ({
 			// v-show="usuario.tipo=='estudiante' && $route.name!='login' && $route.name!='registro'"
-			reportes: [{ titulo: 'Global', contenido: 'reportesGlobales' }, { titulo: 'Por grupo', contenido: 'reportesGrupales' }]
-		})
+			dim: [],
+			reportes: [
+				{ titulo: 'Global', contenido: 'reportesGlobales' },
+				{ titulo: 'Por grupo', contenido: 'reportesGrupales' }
+			]
+		}),
+		created() {
+			this.dim = this.obtenerDimensiones()
+		}
 	}
 
 </script>
 
 <template>
 
-	<v-navigation-drawer expand-on-hover permanent stateless app dark min-width="56">
+	<v-row justify="center">
+		<v-col cols="8">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-2 mx-7 rounded-lg">
+				<v-row justify="center">
+					<v-col class="pa-0 " cols="11">
+						<v-card dark color="red" elevation="6" class="card_cabecera d-flex  align-center">
+							<v-card-title class="align-center">
+								<span class="headline font-weight-bold">Menu</span>
+							</v-card-title>
+						</v-card>
+					</v-col>
+				</v-row>
+				<v-row justify="center">
+					<v-col cols="12" class="pa-2">
+						<v-card outlined @click="$router.push({ name: 'preguntas' }).catch(err => {})">
+							<v-card-title class="headline">
+								<v-icon large left>
+									mdi-file-document-edit
+								</v-icon size="62"><span class="title font-weight-light">Crear Actividades</span>
+								<v-spacer></v-spacer>
+								<v-icon class="mr-1">mdi-arrow-right</v-icon>
+							</v-card-title>
 
-		<v-list dense class="grow ">
-			<v-list-item two-line class="px-2">
-				<v-list-item-avatar>
-					<img src="https://randomuser.me/api/portraits/men/81.jpg">
-				</v-list-item-avatar>
+							<!-- <v-card-actions>
+									<v-btn text @click="$router.push({ name: 'preguntas' }).catch(err => {})">
+										Crear Actividades
 
-				<v-list-item-content>
-					<v-list-item-title>{{nombre}}</v-list-item-title>
-					<v-list-item-subtitle>Docente</v-list-item-subtitle>
-				</v-list-item-content>
-			</v-list-item>
+									</v-btn>
+								</v-card-actions> -->
+						</v-card>
+					</v-col>
+				</v-row>
+				<v-row justify="center">
+					<v-col cols="12" class="pa-2">
+						<v-card outlined @click="$router.push({ name: 'crearGrupo' }).catch(err => {})">
+							<v-card-title class="headline">
+								<v-icon large left>
+									mdi-account-group
+								</v-icon size="62"><span class="title font-weight-light">Grupos</span>
+								<v-spacer></v-spacer>
+								<v-icon class="mr-1">mdi-arrow-right</v-icon>
+							</v-card-title>
+							<!--
+								<v-card-actions>
+									<v-btn text @click="$router.push({ name: 'crearGrupo' }).catch(err => {})">
+										Grupos
+									</v-btn>
+								</v-card-actions> -->
+						</v-card>
+					</v-col>
+				</v-row>
 
-			<v-list-group color="white" prepend-icon="mdi-school">
-				<template v-slot:activator>
-					<v-list-item-title>Reportes</v-list-item-title>
-				</template>
-
-				<v-list-item-group sub-group>
-					<v-list-item v-for="(r, i) in reportes"
-					             :key="i"
-					             @click="$router.push({ name: `${r.contenido}` }).catch(err => {})">
-						<v-list-item-content>
-							<v-list-item-subtitle>{{r.titulo}}</v-list-item-subtitle>
-						</v-list-item-content>
-					</v-list-item>
-
-				</v-list-item-group>
-
-			</v-list-group>
-			<v-list-item @click="$router.push({ name: 'crearGrupo' }).catch(err => {})">
-				<v-list-item-icon>
-					<v-icon>mdi-ballot</v-icon>
-				</v-list-item-icon>
-				<v-list-item-title>Crear grupo</v-list-item-title>
-			</v-list-item>
-			<v-divider></v-divider>
-			<v-list-item @click="($router.push({ path: '/docente/crear_preguntas' }).catch(err => {})) && (titulo='Crear Pregunta')">
-				<v-list-item-icon>
-					<v-icon>mdi-school</v-icon>
-				</v-list-item-icon>
-				<v-list-item-content>
-					<v-list-item-title>Crear Pregunta</v-list-item-title>
-				</v-list-item-content>
-			</v-list-item>
-			<v-divider></v-divider>
-
-			<v-list-item @click="">
-				<v-list-item-icon>
-					<v-icon>mdi-ballot</v-icon>
-				</v-list-item-icon>
-				<v-list-item-title>Encuesta</v-list-item-title>
-
-			</v-list-item>
-			<v-divider></v-divider>
-
-			<v-list-item @click="">
-				<v-list-item-icon>
-					<v-icon>mdi-logout</v-icon>
-				</v-list-item-icon>
-				<v-list-item-content>
-					<v-list-item-title>Cerrar Sesión</v-list-item-title>
-				</v-list-item-content>
-			</v-list-item>
-
-		</v-list>
-
-	</v-navigation-drawer>
+			</v-card>
+		</v-col>
+	</v-row>
 
 </template>

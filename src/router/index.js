@@ -7,17 +7,18 @@ import Login from '@/components/autenticacion/login.vue'
 import Grupo from '@/components/autenticacion/grupos.vue'
 import Registro from '@/components/autenticacion/registro.vue'
 import Preguntas from '@/components/views/Docente/crear_preguntas.vue'
+import InicioDocente from '@/components/views/Docente/menuDocente.vue'
 //Polimorfismo
 //import Polimorfismo from '@/components/ovas/polimorfismo/leccion.vue'
 
 import Polimorfismo from '@/components/ovas/polimorfismo/polimorfismo.vue'
-
-
-
+import MenuUnidades from '@/components/ovas/menuUnidades.vue'
+import MenuAdministrador from '@/components/views/administrador/menuAdministrador.vue'
+import CrearUnidades from '@/components/views/administrador/crearUnidades.vue'
+import RegistroAdministrador from '@/components/views/administrador/registro_administrador.vue'
 import Punteros from '@/components/ovas/punteros/punterosCont.vue'
 import Perfil from '@/components/views/editar_perfil.vue'
 
-import Reportes from '@/components/views/Docente/Reportes/reportesGlobales.vue'
 
 Vue.use(Router)
 
@@ -25,16 +26,37 @@ export default new Router({
   routes: [
 
     {
-      path: '/usuario/perfil',// /:id',
+      path: '/usuario/perfil', // /:id',
       component: Perfil,
       name: 'perfil',
     },
-    // UserHome will be rendered inside User's <router-view>
-    // when /user/:id is matched
+    {
+      path: '/usuario/docente/Inicio', // /:id',
+      component: InicioDocente,
+      name: 'inicioDocente',
+    },
+    {
+      path: '/usuario/administrador/Inicio', // /:id',
+      component: MenuAdministrador,
+      name: 'inicioAdministrador',
+    },
+    {
+      path: '/usuario/administrador/registro', // /:id',
+      component: RegistroAdministrador,
+      name: 'registroAdministrador',
+    },
+    {
+      path: '/usuario/administrador/crearUnidades', // /:id',
+      component: CrearUnidades,
+      name: 'crearUnidades',
+    },
 
-    // UserHome will be rendered inside User's <router-view>
-    // when /user/:id is matched
+    {
+      path: '/estudiante/unidades',
+      component: MenuUnidades,
+      name: 'unidades'
 
+    },
     {
       path: '/estudiante/unidades/punteros',
       component: Punteros,
@@ -42,7 +64,7 @@ export default new Router({
 
     },
     // inicio Rutas polimorfismo -----------------------------
-  {
+    {
       path: '/estudiante/unidades/polimorfismo',
       component: Polimorfismo,
       name: 'polimorfismo'
@@ -70,27 +92,9 @@ export default new Router({
     {
       path: '/mapa_del_sitio',
       component: Encuesta,
-      name: 'encuesta'
-    },
-    {
-      path: '/reportes/globales',
-      component: Reportes,
-      name: 'reportesGlobales',
-      props: { tipo: 'globales' },
-      meta: {
-        reload: true,
-      }
+      name: 'mapa'
     },
 
-    {
-      path: '/reportes/grupales',
-      component: Reportes,
-      name: 'reportesGrupales',
-      props: { tipo: 'grupales' },
-      meta: {
-        reload: true,
-      }
-    },
     {
       path: '/docente/crear_preguntas',
       component: Preguntas,
@@ -110,8 +114,9 @@ export default new Router({
       name: 'registro',
       component: Registro
     },
+
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: Login
     }

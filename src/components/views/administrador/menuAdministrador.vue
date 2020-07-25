@@ -1,5 +1,7 @@
 <script>
 
+	import { misMixins } from '@/mixins/mixins.js'
+	import restringido from '@/components/views/accesoRestringido.vue'
 	export default {
 		name: 'menuAdministrador',
 		props: {
@@ -8,100 +10,65 @@
 				require: true
 			}
 		},
+		mixins: [misMixins],
+		components: {
+			restringido
+		},
 		data: () => ({
-			// v-show="usuario.tipo=='estudiante' && $route.name!='login' && $route.name!='registro'"
-		})
+			dim: []
+		}),
+		created() {
+			this.dim = this.obtenerDimensiones()
+		}
 	}
 
 </script>
 
 <template>
 
-	<v-navigation-drawer expand-on-hover permanent stateless app dark min-width="56">
-		<v-list dense class="grow ">
-			<v-list-item two-line class="px-2">
-				<v-list-item-avatar>
-					<img src="https://randomuser.me/api/portraits/men/81.jpg">
-				</v-list-item-avatar>
-
-				<v-list-item-content>
-					<v-list-item-title>{{nombre}}</v-list-item-title>
-					<v-list-item-subtitle>Administrador</v-list-item-subtitle>
-				</v-list-item-content>
-			</v-list-item>
-
-			<!-- <v-list-group prepend-icon="mdi-school">
-		          <template v-slot:activator>
-		                         <v-list-item-title>Temas</v-list-item-title>
-		              </template>
-
-		          <menuPolimorfismo></menuPolimorfismo>
-
-		        </v-list-group> -->
-
-			<v-divider></v-divider>
-			<v-list-item @click="$router.push({ path: '/usuario/perfil' }).catch(err => {})">
-				<v-list-item-icon>
-					<v-icon>mdi-account</v-icon>
-				</v-list-item-icon>
-				<v-list-item-content>
-					<v-list-item-title>Editar Perfil</v-list-item-title>
-				</v-list-item-content>
-			</v-list-item>
-			<v-list-item @click="">
-				<v-list-item-icon>
-					<v-icon>mdi-ballot</v-icon>
-				</v-list-item-icon>
-				<v-list-item-title>Reportes</v-list-item-title>
-			</v-list-item>
-			<v-list-item @click="$router.push({ name: 'registro' }).catch(err => {})">
-				<v-list-item-icon>
-					<v-icon>mdi-ballot</v-icon>
-				</v-list-item-icon>
-				<v-list-item-title>Registrar usuarios</v-list-item-title>
-			</v-list-item>
-			<v-list-item @click="$router.push({ name: 'crearGrupo' }).catch(err => {})">
-				<v-list-item-icon>
-					<v-icon>mdi-ballot</v-icon>
-				</v-list-item-icon>
-				<v-list-item-title>Crear grupo</v-list-item-title>
-			</v-list-item>
-      <v-list-item @click="">
-        <v-list-item-icon>
-          <v-icon>mdi-ballot</v-icon>
-        </v-list-item-icon>
-        <v-list-item-title>Registrar Actividades</v-list-item-title>
-      </v-list-item>
-			<v-list-item @click="">
-				<v-list-item-icon>
-					<v-icon>mdi-help</v-icon>
-				</v-list-item-icon>
-				<v-list-item-content>
-					<v-list-item-title>Ayuda</v-list-item-title>
-				</v-list-item-content>
-			</v-list-item>
-			<v-divider></v-divider>
-			<v-list dense>
-				<v-list-item @click="">
-					<v-list-item-icon>
-						<v-icon>mdi-file-tree</v-icon>
-					</v-list-item-icon>
-					<v-list-item-content>
-						<v-list-item-title>Mapa del sitio</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-				<v-list-item @click="">
-					<v-list-item-icon>
-						<v-icon>mdi-logout</v-icon>
-					</v-list-item-icon>
-					<v-list-item-content>
-						<v-list-item-title>Cerrar Sesión</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-
-			</v-list>
-		</v-list>
-
-	</v-navigation-drawer>
+	<v-row justify="center">
+		<v-col cols="8" v-if="this.obtenerDatos().tipo === 'administrador'">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-2 mx-7 rounded-lg">
+				<v-row justify="center">
+					<v-col class="pa-0 " cols="11">
+						<v-card dark color="red" elevation="6" class="card_cabecera d-flex  align-center">
+							<v-card-title class="align-center">
+								<span class="headline font-weight-bold">Menu</span>
+							</v-card-title>
+						</v-card>
+					</v-col>
+				</v-row>
+				<v-row justify="center">
+					<v-col cols="12" class="pa-2">
+						<v-card outlined @click="$router.push({ name: 'crearUnidades' }).catch(err => {})">
+							<v-card-title class="headline">
+								<v-icon large left>
+									mdi-chart-tree
+								</v-icon size="62"><span class="title font-weight-light">Crear Unidades y Temas</span>
+								<v-spacer></v-spacer>
+								<v-icon class="mr-1">mdi-arrow-right</v-icon>
+							</v-card-title>
+						</v-card>
+					</v-col>
+				</v-row>
+				<v-row justify="center">
+					<v-col cols="12" class="pa-2">
+						<v-card outlined @click="$router.push({ name: 'registroAdministrador' }).catch(err => {})">
+							<v-card-title class="headline">
+								<v-icon large left>
+									mdi-file-document-edit
+								</v-icon size="62"><span class="title font-weight-light">Registrar Usarios</span>
+								<v-spacer></v-spacer>
+								<v-icon class="mr-1">mdi-arrow-right</v-icon>
+							</v-card-title>
+						</v-card>
+					</v-col>
+				</v-row>
+			</v-card>
+		</v-col>
+		<v-col v-else cols="12">
+			<restringido></restringido>
+		</v-col>
+	</v-row>
 
 </template>

@@ -29,9 +29,9 @@
 
 	<v-container fluid>
 		<v-timeline>
-			<v-timeline-item :color="color" small>
+			<v-timeline-item  :color="color" small>
 				<template v-slot:opposite>
-			        <span
+			        <span dark
 			          :class="`headline font-weight-bold ${color}--text`"
 
 			        >Introducción</span>

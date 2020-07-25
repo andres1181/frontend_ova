@@ -1,15 +1,34 @@
 <script>
 
+	import quiz from '@/components/views/quiz.vue'
 	export default {
 		name: 'Declaracion',
-		components: {},
+		components: {
+			quiz
+		},
 		props: {
 			color: {
 				type: String,
 				required: true
+			},
+			listaPreguntas: {
+				type: Array,
+				required: true
+			},
+			aprobado: {
+				type: Boolean,
+				required: true
+			},
+			avance: {
+				type: String,
+				required: true
 			}
 		},
-		data: () => ({}),
+		data() {
+			return {
+				tema: 'pasoReferencia'
+			}
+		},
 		methods: {},
 		created() {}
 	}
@@ -22,11 +41,11 @@
 		<v-timeline>
 			<v-timeline-item :color="color" small>
 				<template v-slot:opposite>
-																	<span
-																		:class="`headline font-weight-bold ${color}--text`"
+																				<span
+																					:class="`headline font-weight-bold ${color}--text`"
 
-																	>Declaración de punteros</span>
-																</template>
+																				>Declaración de punteros</span>
+																			</template>
 				<div class="py-4">
 					<div>
 						<span>La declaración de un puntero es similar a la declaración de otros objetos, la única diferencia es que se debe añadir un * antes del identificador del objeto. Existen 3 formas declarar un puntero:</span>
@@ -38,11 +57,11 @@
 				<div class="py-4">
 					<div>
 						<span>Existen tres formas de declarar un puntero:</span>
-            <ul>
-              <li><span>&lt;tipo&gt;  *&lt;identificador&gt;</span></li>
-              <li><span>&lt;tipo&gt;  *  &lt;identificador&gt;</span></li>
-              <li><span>&lt;tipo&gt;*  &lt;identificador&gt;</span></li>
-            </ul>
+						<ul>
+							<li><span>&lt;tipo&gt;  *&lt;identificador&gt;</span></li>
+							<li><span>&lt;tipo&gt;  *  &lt;identificador&gt;</span></li>
+							<li><span>&lt;tipo&gt;*  &lt;identificador&gt;</span></li>
+						</ul>
 					</div>
 				</div>
 			</v-timeline-item>
@@ -77,6 +96,52 @@
 				</div>
 			</v-timeline-item>
 		</v-timeline>
+		<span
+			:class="`headline font-weight-bold ${color}--text`"
+
+		>Ejemplo Paso por referencia utilizando punteros:</span>
+		<iframe width="100%"
+		        height="400"
+		        src="https://www.youtube-nocookie.com/embed/20Mzqchc5ik"
+		        frameborder="0"
+		        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+		        allowfullscreen></iframe>
+		<iframe height="400px"
+		        width="100%"
+		        src="https://repl.it/@ANDRESFELIPEF31/PasoReferencia?lite=true"
+		        scrolling="no"
+		        frameborder="no"
+		        allowtransparency="true"
+		        allowfullscreen="true"
+		        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+						<span
+							:class="`headline font-weight-bold ${color}--text`"
+
+						>Ejemplo Paso por referencia utilizando referencias:</span>
+		<iframe width="100%"
+		        height="400"
+		        src="https://www.youtube.com/embed/A4mEAvxe0KU"
+		        frameborder="0"
+		        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+		        allowfullscreen></iframe>
+		<iframe height="400px"
+		        width="100%"
+		        src="https://repl.it/@ANDRESFELIPEF31/PasoReferenciaReferencias?lite=true"
+		        scrolling="no"
+		        frameborder="no"
+		        allowtransparency="true"
+		        allowfullscreen="true"
+		        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+		<div class=" ma-2">
+			<v-row align="center" justify="center">
+				<v-col class="text-center" cols="12" sm="12">
+					<div>
+						<h2 :class="`headline font-weight-light mb-1 ${color}--text`">Quiz</h2>
+					</div>
+				</v-col>
+				<quiz :preguntas="listaPreguntas" :avance="avance" :tema="tema"></quiz>
+			</v-row>
+		</div>
 	</v-container>
 
 </template>

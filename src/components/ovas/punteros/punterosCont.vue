@@ -3,70 +3,116 @@
 	import { misMixins } from '@/mixins/mixins.js'
 
 	import IntroduccionPunteros from '@/components/ovas/punteros/introduccionPunteros.vue'
-	import Punteros from '@/components/ovas/punteros/punteros.vue'
-	import Referencias from '@/components/ovas/punteros/referencias.vue'
-	import PasoReferencia from '@/components/ovas/punteros/pasoporreferencia.vue'
-	import Matrices from '@/components/ovas/punteros/matrices.vue'
-	import Arreglos from '@/components/ovas/punteros/arreglos.vue'
-	import VistaEvaluacion from '@/components/actividades/evaluacion/vistaEvaluacion.vue'
+	import punteros from '@/components/ovas/punteros/punteros.vue'
+	import referencias from '@/components/ovas/punteros/referencias.vue'
+	import pasoReferencia from '@/components/ovas/punteros/pasoporreferencia.vue'
+	import matrices from '@/components/ovas/punteros/matrices.vue'
+	import arreglos from '@/components/ovas/punteros/arreglos.vue'
+	import restringido from '@/components/views/accesoRestringido.vue'
+	//import VistaEvaluacion from '@/components/actividades/evaluacion/vistaEvaluacion.vue'
 	import Juez from '@/components/views/juez.vue'
 
 	export default {
 		name: 'PunterosCont',
 		components: {
 			IntroduccionPunteros,
-			Punteros,
-			PasoReferencia,
-			Referencias,
-			Arreglos,
-			Matrices,
+			punteros,
+			pasoReferencia,
+			referencias,
+			arreglos,
+			matrices,
 			Juez,
-			VistaEvaluacion
+			restringido
+			//	VistaEvaluacion
 		},
 		mixins: [misMixins],
-		data: () => ({
-			unidades: '',
-			fixed: true,
-			dim: [],
-			color: 'orange',
-			temaActual: 0,
-			componente: 'IntroduccionPunteros',
-			temas: [
-				{ titulo: 'Introducción', contenido: 'IntroduccionPunteros', color: 'orange' },
-				{ titulo: 'Punteros', contenido: 'Punteros', color: 'lime' },
-				{ titulo: 'Referencias', contenido: 'Referencias', color: 'purple' },
-				{ titulo: 'Paso por referencia', contenido: 'PasoReferencia', color: 'pink' },
-				{ titulo: 'Arreglos dinamicos', contenido: 'Arreglos', color: 'cyan' },
-				{ titulo: 'Matrices dinamicas', contenido: 'Matrices', color: 'amber' }
-			]
-		}),
-		// watch: {
-		// 	length(val) {
-		// 		this.tab = val - 1
-		// 	}
-		// },
+		data() {
+			return {
+				datosUnidad: {},
+				listaActividades: {},
+				fixed: true,
+				dim: [],
+				color: 'red',
+				temaActual: 0,
+				aprobado: false,
+				componente: 'IntroduccionPunteros',
+				idAvance: '',
+				temas: [
+					{ titulo: 'Punteros', componente: 'punteros', aprobado: false, avance: '' },
+					{ titulo: 'Referencias', componente: 'referencias', aprobado: false, avance: '' },
+					{ titulo: 'Paso por referencia', componente: 'pasoReferencia', aprobado: false, avance: '' },
+					{ titulo: 'Arreglos dinámicos', componente: 'arreglos', aprobado: false, avance: '' },
+					{ titulo: 'Matrices dinámicas', componente: 'matrices', aprobado: false, avance: '' }
+				]
+			}
+		},
+
 		methods: {
-			// siguienteTema(n) {
-			// 	if (n === this.steps) {
-			// 		this.e1 = this.steps
-			// 	} else {
-			// 		this.e1 = n + 1
-			// 	}
-			// },
-			// anteriorTema(n) {
-			// 	if (n === 1) {
-			// 		this.e1 = 1
-			// 	} else {
-			// 		this.e1 = n - 1
-			// 	}
-			// },
-			// seleccionarTema(t){
-			// 	this.temaActual = t
-			// }
+			obtenerAvances(id) {
+				const ruta = '/estudiante/listarAvances/tema/' + id
+
+				this.axios({
+					method: 'get',
+					url: ruta
+				})
+					.then(response => {
+						localStorage.setItem(`avances`, JSON.stringify(response.data))
+					})
+					.catch(e => {
+						this.isError = true
+						this.error = `${e}`
+					})
+			},
+			actualizarTema(tema, i) {
+				this.temaActual = i
+				this.componente = tema.componente
+				this.color = 'red'
+				this.aprobado = tema.aprobado
+				this.idAvance = tema.avance
+			},
+			esAprobado() {
+				var avances = JSON.parse(localStorage.getItem(`avances`))
+				for (var i = 0; i < this.temas.length; i++) {
+					var encontrado = false
+					for (var j = 0; j < avances.length && encontrado === false; j++) {
+						if (avances[j].id_tema.componente === this.temas[i].componente) {
+							encontrado = true
+							this.temas[i].avance = avances[j]._id
+							if (avances[j].aprobado === true) {
+								this.temas[i].aprobado = true
+							} else {
+								this.temas[i].aprobado = false
+							}
+						}
+					}
+				}
+			},
+			obtenerActividades(id_unidad) {
+				const ruta = '/actividades/obtenerPorUnidad/' + id_unidad //obtego las actividades que pertenecen a esa unidad
+				var self = this
+				this.axios({ method: 'get', url: ruta })
+					.then(response => {
+						//	eslint-disable-next-line no-console
+						//	console.log(response.data)
+						self.listaActividades = response.data
+
+						return true
+						//	eslint-disable-next-line no-console
+						//	console.log('Lista:')
+						//	eslint-disable-next-line no-console
+					})
+					.catch(e => {
+						//	eslint-disable-next-line no-console
+						console.log(`Error:  ${e}`)
+					})
+			}
 		},
 		created() {
 			this.dim = this.obtenerDimensiones()
-			this.unidades = this.listaUnidades()
+			this.datosUnidad = JSON.parse(localStorage.getItem(`datospunterosCont`))
+			this.obtenerActividades(this.datosUnidad._id)
+			this.obtenerAvances(this.obtenerDatos().id)
+			this.esAprobado()
 		}
 	}
 
@@ -75,11 +121,11 @@
 <template >
 
 	<v-row justify="center">
-		<v-col cols="12" class="pa-0">
-			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-2 px-4 mb-3 mt-7 mx-7 rounded-lg">
+		<v-col v-if="this.obtenerDatos().tipo === 'estudiante'" cols="12" class="pa-0">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-9 mx-7 rounded-lg">
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
-						<v-card dark color="cyan" elevation="5" class="card_cabecera rounded-lg d-flex  align-center">
+						<v-card dark color="red" elevation="5" class="card_cabecera rounded-lg d-flex  align-center">
 							<v-card-title class="align-center">
 								<span class="headline font-weight-bold">Punteros y Referencias</span>
 							</v-card-title>
@@ -92,39 +138,32 @@
 						<v-card :height="dim[0]-80"
 						        :fixed="fixed"
 						        flat
-						        class="overflow-hidden ">
+						        class="overflow-hidden elevation-0">
 
 							<v-app-bar dense absolute
 							           color="white"
+							           class="elevation-0"
 							           scroll-target="#scrolling-techniques-p">
 
-								<v-btn v-if="temaActual!== 0" icon
-								       color="cyan"
-								       @click="(componente = temas[temaActual - 1].contenido) && (color = temas[temaActual - 1].color) && (temaActual = temaActual - 1)">
-									<v-icon>mdi-arrow-left-bold</v-icon>
-								</v-btn>
+								<v-toolbar-title class="headline font-weight-bold"
+								                 v-if="(componente !== 'Juez') && (componente !== 'IntroduccionPunteros')"><span :class="`headline font-weight-light grey--text`">{{temas[temaActual].titulo}}</span></v-toolbar-title>
 
-								<v-spacer></v-spacer>
-								<v-toolbar-title v-if="(componente !== 'Juez') && (componente !== 'VistaEvaluacion')">{{temas[temaActual].titulo}}</v-toolbar-title>
+								<v-toolbar-title class="headline font-weight-light" v-if="(componente === 'Juez')">Actividad Práctica</v-toolbar-title>
 
-								<v-toolbar-title v-if="(componente === 'Juez')">Actividad Práctica</v-toolbar-title>
-								<v-toolbar-title v-if="(componente === 'VistaEvaluacion')">Quiz</v-toolbar-title>
-
-								<v-spacer></v-spacer>
-
-								<v-btn v-if="temaActual!== 5" icon
-								       color="cyan"
-								       @click="(componente = temas[temaActual + 1].contenido) && (color = temas[temaActual + 1].color) && (temaActual = temaActual + 1)">
-
-									<v-icon>mdi-arrow-right-bold</v-icon>
-								</v-btn>
+								<v-toolbar-title v-if="(componente === 'IntroduccionPunteros')"><span :class="`headline font-weight-light grey--text`">Introducción</span></v-toolbar-title>
 
 							</v-app-bar>
 
 							<v-sheet id="scrolling-techniques-p"
-							         class="mt-10 pa-2  overflow-y-auto"
+							         class="mt-12 pa-2   overflow-y-auto"
 							         max-height="calc(100% - 48px)">
-								<component :color="color" :is="componente"></component>
+								<component :color="color"
+								           :listaPreguntas="listaActividades"
+								           :unidad="datosUnidad"
+								           :aprobado="aprobado"
+								           :avance="idAvance"
+								           nombre="juezUni"
+								           :is="componente"></component>
 							</v-sheet>
 
 						</v-card>
@@ -136,25 +175,30 @@
 						        class="overflow-hidden ml-2">
 							<v-navigation-drawer right permanent absolute light>
 								<v-list-item-group shaped sub-group>
+									<v-list-item @click="componente = 'IntroduccionPunteros'">
+										<v-list-item-content>
+											<v-list-item-subtitle>Introducción</v-list-item-subtitle>
+										</v-list-item-content>
+									</v-list-item>
 									<v-list-item v-for="(tema, i) in temas"
 									             :key="i"
-									             @click="(componente = tema.contenido) && (color = tema.color) && (temaActual = i)">
+									             @click="actualizarTema(tema, i)">
 										<v-list-item-content>
 											<v-list-item-subtitle>{{tema.titulo}}</v-list-item-subtitle>
 										</v-list-item-content>
+										<v-list-item-icon>
+											<v-icon v-if="(tema.aprobado === false)" color="error lighten-1">mdi-cancel</v-icon>
+											<v-icon v-else color="green lighten-1">mdi-checkbox-marked-circle</v-icon>
+										</v-list-item-icon>
 									</v-list-item>
 									<v-divider></v-divider>
 
 									<v-list-item @click="componente = 'Juez'">
 										<v-list-item-content>
-											<v-list-item-title>Actividad práctica</v-list-item-title>
+											<v-list-item-subtitle>Actividad práctica</v-list-item-subtitle>
 										</v-list-item-content>
 									</v-list-item>
-									<v-list-item @click="componente = 'VistaEvaluacion'">
-										<v-list-item-content>
-											<v-list-item-title>Quiz</v-list-item-title>
-										</v-list-item-content>
-									</v-list-item>
+
 								</v-list-item-group>
 							</v-navigation-drawer>
 						</v-card>
@@ -164,8 +208,8 @@
 
 		</v-col>
 
-		<v-col cols="3" sm="3" md="" lg="3" xl="3" class="pa-0">
-
+		<v-col v-else>
+			<restringido></restringido>
 		</v-col>
 	</v-row>
 

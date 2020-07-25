@@ -1,21 +1,12 @@
 <script>
 
-	// import HelloWorld from './components/HelloWorld';
 	import { misMixins } from '@/mixins/mixins.js'
 	//	import axios from 'axios'
 
-	import menuEstudiante from '@/components/views/Estudiante/menuEstudiante.vue'
-	import menuAdministrador from '@/components/views/administrador/menuAdministrador.vue'
 	// import Perfil from '@/components/views/editar_perfil.vue'
-	import menuDocente from '@/components/views/Docente/menuDocente.vue'
+
 	export default {
 		name: 'App',
-
-		components: {
-			menuEstudiante,
-			menuAdministrador,
-			menuDocente
-		},
 
 		data: () => ({
 			ventana: {
@@ -24,46 +15,40 @@
 			},
 			tamContenido: 0,
 			usuario: {
-				codigo: null,
-				tipo: null,
-				nombres: null
-			},
-			unidad: 'Polimorfismo'
+				id: '',
+				codigo: '',
+				tipo: '',
+				nombres: ''
+			}
 
 			//
 		}),
 		mixins: [misMixins],
 
 		methods: {
-			/*	buscarDatos() {
-					var token = String(localStorage.getItem('tokenUser'))
-					var id_ = this.obtenerDatos().id
-					// eslint-disable-next-line no-console
-					//console.log(`EL ID ES: ${id_}`);
+			getUnidad(array) {
+				for (var i = 0; i < array.length; i++) {
+					localStorage.setItem(`datos${array[i].componente}`, JSON.stringify(array[i]))
+				}
+			},
 
-					//	const host = 'http://localhost:3000'
-					//const baseURL = `/api/usuarios/me/${id_}`
-					const ruta = `/usuarios/me/${id_}`
-
-					this.axios({
-						method: 'get',
-						url: ruta, //host + baseURL, // + user,
-						headers: {
-							'content-type': 'application/json',
-							'x-access-token': token
-						}
+			datosUnidades() {
+				const ruta = '/unidadesTemas/obtener/unidades' //Obtengo los datos de la unidad
+				var self = this
+				this.axios
+					.get(ruta)
+					.then(response => {
+						this.getUnidad(response.data)
+						localStorage.setItem(`datosUnidades`, JSON.stringify(response.data))
 					})
-						.then(response => {
-							this.usuario = response.data
-							//	eslint-disable-next-line no-console
-							//		console.log(this.usuario);
-						})
-						.catch(e => {
-							this.error = `Error:  ${e}`
-						})
-				}, */
+					.catch(e => {
+						//	eslint-disable-next-line no-console
+						console.log(`Error:  ${e}`)
+					})
+			},
 			datosUsuario() {
-			//	var token = String(localStorage.getItem('tokenUser'))
+				//	var token = String(localStorage.getItem('tokenUser'))
+				this.usuario.id = this.obtenerDatos().id
 				this.usuario.codigo = this.obtenerDatos().codigo
 				this.usuario.tipo = this.obtenerDatos().tipo
 				this.usuario.nombres = this.obtenerDatos().nombres
@@ -72,22 +57,18 @@
 				this.ventana.ancho = window.innerWidth
 				this.ventana.alto = window.innerHeight
 			}
-			/*	tamanoVentana() {
-								window.addEventListener('resize', this.handleResize)
-								this.handleResize()
-							}*/
 		},
 		created() {
 			this.handleResize()
 			/*this.tamanoVentana()
-							this.tamContenido = (this.ventana.alto * 0.8)*/
+											this.tamContenido = (this.ventana.alto * 0.8)*/
 			if (this.$route.name != 'login' && this.$route.name != 'registro') {
 				this.datosUsuario()
 			}
+
+			this.datosUnidades()
 		},
-		/*	destroyed() {
-							window.removeEventListener('resize', this.handleResize)
-						},*/
+
 		mounted() {
 			var container_0 = document.getElementById('container_0')
 			container_0.style.maxHeight = this.ventana.alto + 'px'
@@ -99,11 +80,92 @@
 <template>
 
 	<v-app id="app">
-		<menuEstudiante v-if="usuario.tipo=='estudiante' && $route.name!='login' && $route.name!='registro'" :nombre="usuario.nombres"></menuEstudiante>
-		<menuAdministrador v-if="usuario.tipo=='administrador' && $route.name!='login' && $route.name!='registro'" :nombre="usuario.nombres"></menuAdministrador>
-		<menuDocente v-if="usuario.tipo=='docente' && $route.name!='login' && $route.name!='registro'" :nombre="usuario.nombres"></menuDocente>
 
-		<v-content>
+		<v-navigation-drawer color="white"
+		                     v-if="usuario.nombres!=='' && $route.name!=='login' && $route.name!=='registro'"
+		                     expand-on-hover
+		                     permanent
+		                     stateless
+		                     app>
+			<v-list dense>
+				<v-list-item two-line class="px-1">
+					<v-list-item-avatar class="px-1">
+						<v-avatar size="36" color="grey">
+							<span v-if="usuario.tipo === 'estudiante'" class="white--text  text-caption">E</span>
+							<span v-if="usuario.tipo === 'administrador'" class="white--text  text-caption">A</span>
+							<span v-if="usuario.tipo === 'docente'" class="white--text text-caption">D</span>
+						</v-avatar>
+						<span class="white--text headline">{{usuario.tipo}}</span>
+					</v-list-item-avatar>
+
+					<v-list-item-content>
+						<v-list-item-title class="text-uppercase text-truncate">{{usuario.nombres}}</v-list-item-title>
+						<v-list-item-subtitle class="text-uppercase text-truncate text-caption"><span>{{usuario.tipo}}</span></v-list-item-subtitle>
+
+					</v-list-item-content>
+				</v-list-item>
+
+				<v-divider></v-divider>
+				<v-list-item link v-if="usuario.tipo==='estudiante'" @click="($router.push({ name: 'unidades' }).catch(err => {}))">
+					<v-list-item-action>
+						<v-icon>mdi-home</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Inicio</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item link v-if="usuario.tipo==='docente'" @click="($router.push({ name: 'inicioDocente' }).catch(err => {}))">
+					<v-list-item-action>
+						<v-icon>mdi-home</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Inicio</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item link v-if="usuario.tipo==='administrador'" @click="($router.push({ name: 'inicioAdministrador' }).catch(err => {}))">
+					<v-list-item-action>
+						<v-icon>mdi-home</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Inicio</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item link @click="($router.push({ path: '/usuario/perfil' }).catch(err => {}))">
+					<v-list-item-action>
+						<v-icon>mdi-account</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Perfil</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item @click="">
+					<v-list-item-action>
+						<v-icon>mdi-ballot</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Encuesta</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item @click="">
+					<v-list-item-action>
+						<v-icon>mdi-file-tree</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Mapa del sitio</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item @click="cerrarSesion">
+					<v-list-item-action>
+						<v-icon>mdi-logout</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Cerrar Sesión</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+			</v-list>
+		</v-navigation-drawer>
+
+		<v-main>
 
 			<!-- Provides the application the proper gutter -->
 			<v-container id="container_0" fluid>
@@ -115,7 +177,7 @@
 				</transition>
 
 			</v-container>
-		</v-content>
+		</v-main>
 
 	</v-app>
 
@@ -123,14 +185,5 @@
 
 <style >
 
-	.navigation_d {
-		max-height: calc(100% - 64px);
-	}
-	#app {
-		/*height: 100vh;*/
-	}
-	#container_0 {
-		padding: 0;
-	}
 
 </style>

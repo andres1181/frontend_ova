@@ -15,19 +15,22 @@
 		components: {
 			Editor
 		},
-		data: () => ({
-			respuestaCorrecta: null,
-			respuestaUsuario: '',
-			info: null,
-			enunciado: '',
-			correcto: null,
-			mensaje: ''
-		}),
+		data() {
+			return {
+				editor1: '',
+				editor2: '',
+				respuestaCorrecta: null,
+				respuestaUsuario: '',
+				info: null,
+				correcto: null
+			}
+		},
 		mixins: [misMixins],
 		methods: {
 			asignarDatos() {
 				this.info = JSON.parse(this.datos)
-				this.enunciado = this.info.enunciado
+				this.editor1 = this.info.opciones[0].respuesta
+				this.editor2 = this.info.opciones[1].respuesta
 				this.shuffle(this.info.opciones)
 				/*asigno a la variable respuestaCorrecta, la opcion que es correcta en el json */
 				for (var i = 0; i < this.info.opciones.length; i++) {
@@ -38,7 +41,6 @@
 			},
 			enviarResultado() {
 				this.revisarRespuesta()
-				console.log('Resultado enviado')
 				this.$emit('click', { id: this.info._id, result: this.correcto })
 			},
 			revisarRespuesta() {
@@ -51,7 +53,6 @@
 		},
 		created() {
 			this.asignarDatos()
-			//this.items2 = this.shuffle(this.items)
 		}
 	}
 
@@ -65,18 +66,17 @@
 			<p>Elija la mejor solución para el siguiente problema:</p>
 		</v-card>
 		<v-card class="ma-3">
-			<Editor :codigo="info.opciones[0].respuesta" nombre="EditorAnalizar1"></Editor>
-			{{info.opciones[0].respuesta}}
+			<Editor :codigo="editor1" nombre="EditorAnalizar1"></Editor>
 			<v-card-actions class="pa-0">
 				<v-btn block x-large dark tile
-							 color="deep-purple accent-4"
-							 @click="(respuestaUsuario = `0`) && enviarResultado()">
+				       color="deep-purple accent-4"
+				       @click="(respuestaUsuario = `0`) && enviarResultado()">
 					Elegir
 				</v-btn>
 			</v-card-actions>
 		</v-card>
 		<v-card class="ma-3">
-			<Editor :codigo="info.opciones[1].respuesta" nombre="EditorAnalizar2"></Editor>
+			<Editor :codigo="editor2" nombre="EditorAnalizar2"></Editor>
 			<v-card-actions class="pa-0">
 				<v-btn block x-large dark tile
 				       color="deep-purple accent-4"

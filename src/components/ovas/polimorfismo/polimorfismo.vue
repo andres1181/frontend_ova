@@ -2,57 +2,117 @@
 
 	import { misMixins } from '@/mixins/mixins.js'
 
-	import Sobrecarga from '@/components/ovas/polimorfismo/sobrecarga.vue'
-	import FuncionesVirtuales from '@/components/ovas/polimorfismo/funcionesVirtuales.vue'
+	import sobrecarga from '@/components/ovas/polimorfismo/sobrecarga.vue'
+	import funcionesVirtuales from '@/components/ovas/polimorfismo/funcionesVirtuales.vue'
 	import IntroduccionP from '@/components/ovas/polimorfismo/introduccion.vue'
-	import Herencia from '@/components/ovas/polimorfismo/herencia.vue'
-	import Sobreescritura from '@/components/ovas/polimorfismo/sobrescritura.vue'
-	import VistaEvaluacion from '@/components/actividades/evaluacion/vistaEvaluacion.vue'
+	import herencia from '@/components/ovas/polimorfismo/herencia.vue'
+	import sobreescritura from '@/components/ovas/polimorfismo/sobrescritura.vue'
+	import restringido from '@/components/views/accesoRestringido.vue'
 	import Juez from '@/components/views/juez.vue'
-	//	import menuPolimorfismo from '@/components/ovas/polimorfismo/menuPolimorfismo.vue'
 	export default {
 		name: 'polimorfismo',
 		components: {
-			Sobrecarga,
-			FuncionesVirtuales,
-			Herencia,
-			Sobreescritura,
-			VistaEvaluacion,
+			sobrecarga,
+			funcionesVirtuales,
+			herencia,
+			sobreescritura,
+			restringido,
 			IntroduccionP,
 			Juez
-			//	menuPolimorfismo
 		},
 		data: () => ({
-			unidades: '',
+			datosUnidad: {},
+			listaActividades: {},
 			fixed: true,
-			color: 'orange',
-			usuario: [],
+			color: 'red',
 			componente: 'IntroduccionP',
 			dim: [],
 			temaActual: 0,
+			aprobado: false,
+			idAvance: '',
 			temas: [
-				{ titulo: 'Introducción', contenido: 'IntroduccionP', color: 'orange' },
-				//	{ titulo: 'Conceptos', contenido: 'Conceptos' },
-				{ titulo: 'Herencia', contenido: 'Herencia', color: 'purple' },
-				{ titulo: 'Funciones Virtuales', contenido: 'FuncionesVirtuales', color: 'pink' },
-				{ titulo: 'Sobrecarga', contenido: 'Sobrecarga', color: 'cyan' },
-				{ titulo: 'Sobrescritura', contenido: 'Sobreescritura', color: 'amber' }
+				{ titulo: 'Herencia', componente: 'herencia', aprobado: false, avance: '' },
+				{ titulo: 'Funciones Virtuales', componente: 'funcionesVirtuales', aprobado: false, avance: '' },
+				{ titulo: 'Sobrecarga', componente: 'sobrecarga', aprobado: false, avance: '' },
+				{ titulo: 'Sobrescritura', componente: 'sobreescritura', aprobado: false, avance: '' }
 			],
-			codigoRules: [v => (v && v.length == 7) || 'El código debe ser de 7 digitos'],
-			basicRules: [v => !!v || 'Campo requerido'],
-			emailRules: [v => !!v || 'El correo es requerido', v => /.+@.+\..+/.test(v) || 'El correo ingresado no es valido']
+
 		}),
 		mixins: [misMixins],
 
 		methods: {
-			scrollWin: function() {
-				window.scrollTo(0, 0)
+			obtenerAvances(id) {
+				const ruta = '/estudiante/listarAvances/tema/' + id
+
+				this.axios({
+					method: 'get',
+					url: ruta
+				})
+					.then(response => {
+						localStorage.setItem(`avances`, JSON.stringify(response.data))
+					})
+					.catch(e => {
+						this.isError = true
+						this.error = `${e}`
+					})
+			},
+
+			esAprobado() {
+				var avances = JSON.parse(localStorage.getItem(`avances`))
+				for (var i = 0; i < this.temas.length; i++) {
+					var encontrado = false
+					for (var j = 0; j < avances.length && encontrado === false; j++) {
+						if (avances[j].id_tema.componente === this.temas[i].componente) {
+							encontrado = true
+							this.temas[i].avance = avances[j]._id
+							if (avances[j].aprobado === true) {
+								this.temas[i].aprobado = true
+							} else {
+								this.temas[i].aprobado = false
+							}
+						}
+					}
+				}
+			},
+			actualizarTema(tema, i) {
+				this.temaActual = i
+				this.componente = tema.componente
+				this.color = 'red'
+				this.aprobado = tema.aprobado
+				this.idAvance = tema.avance
+			},
+			obtenerActividades(id_unidad) {
+				const ruta = '/actividades/obtenerPorUnidad/' + id_unidad //obtego las actividades que pertenecen a esa unidad
+				var self = this
+				this.axios({ method: 'get', url: ruta })
+					.then(response => {
+						//	eslint-disable-next-line no-console
+						//	console.log(response.data)
+						self.listaActividades = response.data
+
+						return true
+						//	eslint-disable-next-line no-console
+						//	console.log('Lista:')
+						//	eslint-disable-next-line no-console
+					})
+					.catch(e => {
+						//	eslint-disable-next-line no-console
+						console.log(`Error:  ${e}`)
+					})
 			}
 		},
 		created() {
 			this.dim = this.obtenerDimensiones()
-			this.unidades = this.listaUnidades()
-			//	this.buscarDatos()
+			this.datosUnidad = JSON.parse(localStorage.getItem(`datospolimorfismo`))
+			this.obtenerActividades(this.datosUnidad._id)
+			this.obtenerAvances(this.obtenerDatos().id)
+			this.esAprobado()
+		},
+		mounted: function() {
+			window.addEventListener('scroll', this.scrollListener)
+		},
+		beforeDestroy: function() {
+			window.removeEventListener('scroll', this.scrollListener)
 		}
 	}
 
@@ -61,13 +121,13 @@
 <template>
 
 	<v-row justify="center">
-		<v-col cols="12" class="pa-0">
-			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-3 mt-9 mx-7 rounded-lg">
+		<v-col cols="12" class="pa-0" v-if="this.obtenerDatos().tipo === 'estudiante'">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-2 mx-7 rounded-lg">
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
-						<v-card dark color="cyan" elevation="4" class="card_cabecera rounded-lg d-flex  align-center">
+						<v-card dark color="red" elevation="6" class="card_cabecera d-flex  align-center">
 							<v-card-title class="align-center">
-								<span class="headline font-weight-bold">Polimorfismo</span>
+								<span class="headline font-weight-bold">POLIMORFISMO</span>
 							</v-card-title>
 						</v-card>
 					</v-col>
@@ -78,41 +138,44 @@
 						<v-card :height="dim[0]-80"
 						        :fixed="fixed"
 						        flat
-						        class="overflow-hidden ">
+						        class="overflow-hidden elevation-0">
 
 							<v-app-bar dense absolute
+							           class="elevation-0"
 							           color="white"
 							           scroll-target="#scrolling-techniques-p">
-								<v-btn v-if="temaActual!== 0" icon
-								       color="cyan"
-								       @click="(componente = temas[temaActual - 1].contenido) && (color = temas[temaActual - 1].color) && (temaActual = temaActual - 1)">
-									<v-icon>mdi-arrow-left-bold</v-icon>
-								</v-btn>
+								<!-- <v-btn v-if="temaActual!== 0" icon
+										       color="amber"
+										       @click="(componente = temas[temaActual - 1].componente) && (color = 'red') && (temaActual = temaActual - 1)">
+											<v-icon>mdi-arrow-left-bold</v-icon>
+										</v-btn> -->
 
-								<v-spacer></v-spacer>
-								<v-toolbar-title v-if="(componente !== 'Juez') && (componente !== 'VistaEvaluacion')">{{temas[temaActual].titulo}}</v-toolbar-title>
+								<v-toolbar-title v-if="(componente !== 'Juez') && (componente !== 'IntroduccionP')"><span :class="`headline font-weight-light grey--text`">{{temas[temaActual].titulo}}</span></v-toolbar-title>
 
-								<v-toolbar-title v-if="(componente === 'Juez')">Actividad Práctica</v-toolbar-title>
-								<v-toolbar-title v-if="(componente === 'VistaEvaluacion')">Quiz</v-toolbar-title>
-								<v-spacer></v-spacer>
+								<v-toolbar-title v-if="(componente === 'Juez')"><span :class="`headline font-weight-light grey--text`">Actividad Práctica </span></v-toolbar-title>
+								<v-toolbar-title v-if="(componente === 'IntroduccionP')"><span :class="`headline font-weight-light grey--text`">Introducción</span></v-toolbar-title>
 
-								<v-btn v-if="temaActual!== 4" icon
-								       color="cyan"
-								       @click="(componente = temas[temaActual + 1].contenido) && (color = temas[temaActual + 1].color) && (temaActual = temaActual + 1)">
+								<!-- <v-btn v-if="temaActual!== 4" icon
+										       color="amber"
+										       @click="(componente = temas[temaActual + 1].componente) && (color = temas[temaActual + 1].color) && (temaActual = temaActual + 1)">
 
-									<v-icon>mdi-arrow-right-bold</v-icon>
-								</v-btn>
+											<v-icon>mdi-arrow-right-bold</v-icon>
+										</v-btn> -->
 							</v-app-bar>
 							<!-- <v-bottom-navigation height="40" scroll-target="#scrolling-techniques-p" absolute horizontal> -->
 
 							<!-- </v-bottom-navigation> -->
 							<v-sheet id="scrolling-techniques-p"
-							         class="mt-10 pa-2  overflow-y-auto"
+							         class="mt-12 pa-2  overflow-y-auto"
 							         max-height="calc(100% - 48px)">
-								<component :color="color" unidad="polimorfismo" :is="componente"></component>
-								<div class="">
+								<component :color="color"
+								           :listaPreguntas="listaActividades"
+								           :unidad="datosUnidad"
+								           :aprobado="aprobado"
+								           :avance="idAvance"
+								           nombre="juezPoli"
+								           :is="componente"></component>
 
-								</div>
 							</v-sheet>
 
 						</v-card>
@@ -124,33 +187,31 @@
 						        class="overflow-hidden ml-2">
 							<v-navigation-drawer right permanent absolute light>
 								<v-list-item-group shaped sub-group>
+
+									<v-list-item @click="componente = 'IntroduccionP'">
+										<v-list-item-content>
+											<v-list-item-subtitle>Introducción</v-list-item-subtitle>
+										</v-list-item-content>
+									</v-list-item>
 									<v-list-item v-for="(tema, i) in temas"
 									             :key="i"
-									             @click="(componente = tema.contenido) && (color = tema.color) && (temaActual = i)">
+									             @click="actualizarTema(tema, i)">
 										<v-list-item-content>
 											<v-list-item-subtitle>{{tema.titulo}}</v-list-item-subtitle>
 										</v-list-item-content>
+										<v-list-item-icon>
+											<v-icon v-if="(tema.aprobado === false)" color="error lighten-1">mdi-cancel</v-icon>
+											<v-icon v-else color="green lighten-1">mdi-checkbox-marked-circle</v-icon>
+										</v-list-item-icon>
 									</v-list-item>
 									<v-divider></v-divider>
 
 									<v-list-item @click="componente = 'Juez'">
 										<v-list-item-content>
-											<v-list-item-title>Actividad práctica</v-list-item-title>
+											<v-list-item-subtitle>Actividad práctica</v-list-item-subtitle>
 										</v-list-item-content>
 									</v-list-item>
-									<v-list-item @click="componente = 'VistaEvaluacion'">
-										<v-list-item-content>
-											<v-list-item-title>Quiz</v-list-item-title>
-										</v-list-item-content>
-									</v-list-item>
-									<!-- <template v-slot:append>
-																								 <div class="pa-2">
-																								 <v-btn outlined  depressed   block>Sopa de letras</v-btn>
-																							 </div>
-																							 <div class="pa-2">
-																								 <v-btn outlined dense  block @click="" > Evaluación</v-btn>
-																							 </div>
-																</template> -->
+
 								</v-list-item-group>
 							</v-navigation-drawer>
 						</v-card>
@@ -160,8 +221,8 @@
 
 		</v-col>
 
-		<v-col cols="3" sm="3" md="" lg="3" xl="3" class="pa-0">
-
+		<v-col v-else cols="12">
+			<restringido></restringido>
 		</v-col>
 	</v-row>
 
@@ -169,18 +230,6 @@
 
 <style>
 
-	#editar_perfil {
-		-webkit-border-radius: 12px;
-		-moz-border-radius: 12px;
-		border-radius: 12px;
-	}
-	.card_cabecera {
-		position: relative;
-		align-self: center;
-		min-height: 50px;
-		top: -20px;
-		z-index: 1;
-		color: '#4CBAC4';
-	}
+
 
 </style>

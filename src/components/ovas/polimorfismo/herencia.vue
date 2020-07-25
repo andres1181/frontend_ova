@@ -2,25 +2,50 @@
 
 	//import dedent from 'dedent'
 	//	import tooltip from '@/components/views/tooltip.vue
+
 	import editor from '@/components/views/editor.vue'
+	import quiz from '@/components/views/quiz.vue'
 	export default {
 		name: 'Herencia',
 		components: {
 			//	tooltip
+			quiz,
 			editor
 		},
 		props: {
 			color: {
 				type: String,
 				required: true
+			},
+			listaPreguntas: {
+				type: Array,
+				required: true
+			},
+			aprobado: {
+				type: Boolean,
+				required: true
+			},
+			avance: {
+				type: String,
+				required: true
 			}
 		},
-		data: () => ({
-			codigoEditor: [
-				'#include <iostream>\nusing namespace std;\n\n/* Con public */\nclass ClaseDerivada : public ClaseBase\n{ .... };\n\n/* Con private */\nclass ClaseDerivada : private ClaseBase\n{ .... };'
-			]
-		}),
-		methods: {}
+
+		data() {
+			return {
+				codigoEditor: [
+					'#include <iostream>\nusing namespace std;\n\n/* Con public */\nclass ClaseDerivada : public ClaseBase\n{ .... };\n\n/* Con private */\nclass ClaseDerivada : private ClaseBase\n{ .... };'
+				],
+				tema: 'herencia'
+			}
+		},
+		methods: {
+
+		},
+		created() {
+			console.log('Herencia Avance');
+			console.log(this.avance);
+		}
 	}
 
 </script>
@@ -30,12 +55,12 @@
 	<v-container fluid>
 		<v-timeline>
 			<v-timeline-item :color="color" small>
-				<template v-slot:opposite>
-										        <span
-										          :class="`headline font-weight-bold ${color}--text`"
+				 <template v-slot:opposite>
+														        <span
+														          :class="`headline font-weight-bold ${color}--text`"
 
-										        >Herencia</span>
-										      </template>
+														        >Herencia</span>
+														      </template>
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué es?</h2>
 					<div>
@@ -90,7 +115,7 @@
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">Jerarquia de clases</h2>
 					<div>
 						<span>Cada clase hija puede convertirse en una clase base y tener sus propias clases hijas.
-											</span>
+															</span>
 					</div>
 				</div>
 			</v-timeline-item>
@@ -120,6 +145,29 @@
 		        allowtransparency="true"
 		        allowfullscreen="true"
 		        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+
+		<div class=" ma-2" v-if="aprobado===false">
+			<v-row align="center" justify="center">
+				<v-col class="text-center" cols="12" sm="12">
+					<div>
+						<h2 :class="`headline font-weight-light mb-1 ${color}--text`">Quiz</h2>
+					</div>
+				</v-col>
+				<quiz :preguntas="listaPreguntas" :avance="avance"  :tema="tema"></quiz>
+			</v-row>
+		</div>
+
+		<div class=" ma-2" v-else>
+			<v-row align="center" justify="center">
+				<v-col class="text-center" cols="12" sm="12">
+					<v-alert type="success">
+      		Terminado !!!
+     			</v-alert>
+				</v-col>
+
+			</v-row>
+		</div>
+
 	</v-container>
 
 </template>

@@ -30,16 +30,16 @@
           <v-list-item-subtitle>Estudiante</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-      <!-- <v-list-group prepend-icon="mdi-school">
-          <template v-slot:activator>
-                         <v-list-item-title>Temas</v-list-item-title>
-              </template>
-
-          <menuPolimorfismo></menuPolimorfismo>
-
-        </v-list-group> -->
 
       <v-divider></v-divider>
+			<v-list-item @click="($router.push({ name: 'unidades' }).catch(err => {})) && (titulo='Unidades')">
+        <v-list-item-icon>
+          <v-icon>mdi-account</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>Unidades</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-list-item @click="($router.push({ path: '/usuario/perfil' }).catch(err => {})) && (titulo='Editar Perfil')">
         <v-list-item-icon>
           <v-icon>mdi-account</v-icon>

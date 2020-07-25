@@ -1,17 +1,39 @@
 <script>
 
+	import quiz from '@/components/views/quiz.vue'
 	export default {
 		name: 'FuncionesVirtuales',
-		components: {},
+		components: {
+			quiz
+		},
 		props: {
 			color: {
 				type: String,
 				required: true
+			},
+			listaPreguntas: {
+				type: Array,
+				required: true
+			},
+			aprobado: {
+				type: Boolean,
+				required: true
+			},
+			avance: {
+				type: String,
+				required: true
 			}
 		},
-		data: () => ({}),
+		data() {
+			return {
+				tema: 'funcionesVirtuales'
+			}
+		},
 		methods: {},
-		created() {}
+		created() {
+			console.log('FV Avance');
+			console.log(this.avance);
+		}
 	}
 
 </script>
@@ -22,11 +44,11 @@
 		<v-timeline>
 			<v-timeline-item :color="color" small>
 				<template v-slot:opposite>
-																	<span
-																		:class="`headline font-weight-bold ${color}--text`"
+																		<span
+																			:class="`headline font-weight-bold ${color}--text`"
 
-																	>Funciones Virtuales</span>
-																</template>
+																		>Funciones Virtuales</span>
+																	</template>
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué son?</h2>
 					<div>
@@ -73,6 +95,29 @@
 				</div>
 			</v-timeline-item>
 		</v-timeline>
+
+		<div class=" ma-2" v-if="aprobado===false">
+			<v-row align="center" justify="center">
+				<v-col class="text-center" cols="12" sm="12">
+					<div>
+						<h2 :class="`headline font-weight-light mb-1 ${color}--text`">Quiz</h2>
+					</div>
+				</v-col>
+				<quiz :preguntas="listaPreguntas" :avance="avance"  :tema="tema"></quiz>
+
+			</v-row>
+		</div>
+		<div class=" ma-2" v-else>
+			<v-row align="center" justify="center">
+				<v-col class="text-center" cols="12" sm="12">
+					<v-alert type="success">
+					Terminado !!!
+					</v-alert>
+				</v-col>
+
+			</v-row>
+		</div>
+
 	</v-container>
 
 </template>

@@ -10,21 +10,20 @@
 				required: true
 			}
 		},
-		components: {
-
+		data() {
+			return {
+				info: null,
+				correcto: false,
+				id: '',
+				enunciado: null,
+				respuestaUsuario: null,
+				respuestaCorrecta: '',
+				opcion0: '',
+				opcion1: '',
+				opcion2: '',
+				opcion3: ''
+			}
 		},
-		data: () => ({
-			info: null,
-			correcto: false,
-			id: '',
-			enunciado: null,
-			respuestaUsuario: null,
-			respuestaCorrecta: '',
-			opcion0: '',
-			opcion1: '',
-			opcion2: '',
-			opcion3: ''
-		}),
 		mixins: [misMixins],
 		methods: {
 			//https://es.stackoverflow.com/questions/308080/vue-retornar-informaci%C3%B3n-de-un-componente-hijo-al-padre-por-propiedades
@@ -42,12 +41,8 @@
 				for (var i = 0; i < this.info.opciones.length; i++) {
 					if (this.info.opciones[i].correcta === true) {
 						this.respuestaCorrecta = this.info.opciones[i].respuesta
-						console.log('Correcta Multiple: ');
-						console.log(this.respuestaCorrecta);
 					}
 				}
-				console.log('Enunciado: ');
-				console.log(this.enunciado);
 
 			},
 			revisarRespuesta() {
@@ -82,28 +77,28 @@
 		<v-row align="center" justify="center">
 			<v-col class="text-center" cols="12" sm="12">
 				<div class="mx-2">
-					<v-btn block x-large tile dark @click="(respuestaUsuario = opcion0) && enviarResultado()">
+					<v-btn block x-large color="blue-grey" dark @click="(respuestaUsuario = opcion0) && enviarResultado()">
 						{{opcion0}}
 					</v-btn>
 				</div>
 			</v-col>
 			<v-col class="text-center" cols="12" sm="12">
 				<div class="mx-2">
-					<v-btn block x-large tile dark @click="(respuestaUsuario = opcion1) && enviarResultado()">
+					<v-btn block x-large color="blue-grey" dark @click="(respuestaUsuario = opcion1) && enviarResultado()">
 						{{opcion1}}
 					</v-btn>
 				</div>
 			</v-col>
 			<v-col class="text-center" cols="12" sm="12">
 				<div class="mx-2">
-					<v-btn block x-large tile dark @click="(respuestaUsuario = opcion2) && enviarResultado()">
+					<v-btn block x-large color="blue-grey" dark @click="(respuestaUsuario = opcion2) && enviarResultado()">
 						{{opcion2}}
 					</v-btn>
 				</div>
 			</v-col>
 			<v-col class="text-center" cols="12" sm="12">
 				<div class="mx-2">
-					<v-btn block x-large tile dark @click="(respuestaUsuario = opcion3) && enviarResultado()">
+					<v-btn block x-large color="blue-grey" dark @click="(respuestaUsuario = opcion3) && enviarResultado()">
 						{{opcion3}}
 					</v-btn>
 				</div>
@@ -111,8 +106,8 @@
 		</v-row>
 
 		<!-- <v-btn x-large dark @click="enviarResultado">
-				Siguiente
-			</v-btn> -->
+					Siguiente
+				</v-btn> -->
 	</v-container>
 
 </template>

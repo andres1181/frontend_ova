@@ -8,43 +8,36 @@
 
 	export default {
 		name: 'Editor',
-    props: {
+		props: {
 			nombre: {
 				type: String,
-        required: true
+				required: true
 			},
-      codigo: {
-        type: String,
-        defalult: '#include <iostream>\nusing namespace std;',
-        required: true
-      }
-    },
-		data: () => ({
-			code: '',
-			editor: '',
-			text: ''
-		}),
-		computed: {
-			/*cod: function() {
-				return dedent(this.code)
-			}*/
+			codigo: {
+				type: String,
+				defalult: '#include <iostream>\nusing namespace std;',
+				required: true
+			}
 		},
-		methods: {
-		/* mostrar() {
-				this.text = dedent(this.editor.getValue())
-			}*/
+		data() {
+			return {
+				code: '',
+				editor: '',
+				text: ''
+			}
 		},
+
 		mounted() {
 			this.editor = Codemirror.fromTextArea(document.getElementById(this.nombre), {
 				mode: 'text/x-c++src',
 				theme: 'dracula',
 				lineNumbers: true,
-      	readOnly: 'nocursor'
+				readOnly: 'nocursor'
 			})
 		},
-    created(){
-      this.code = dedent(this.codigo)
-    }
+		created() {
+			this.code = dedent(this.codigo)
+		}
 	}
 
 </script>
@@ -53,13 +46,8 @@
 
 	<div class="">
 
-		<textarea v-model="code"  :id="nombre" diseable></textarea>
-		<!-- <div class="" height="300px">
-			<v-btn @click="mostrar()">Mostrar</v-btn>
-			<p>
-				{{text}}
-			</p>
-		</div> -->
+		<textarea v-model="code" :id="nombre" diseable></textarea>
+
 	</div>
 
 </template>

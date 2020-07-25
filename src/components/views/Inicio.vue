@@ -13,10 +13,7 @@
 			},
 
 			data: () => ({
-				color: '#4CBAC4',
-				color2: '#3cd3ad',
-				color3: '#737373',
-				formulario: 'Registro'
+			
 			})
 		}
 //mdi-account-details mdi-account

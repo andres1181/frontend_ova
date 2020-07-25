@@ -3,26 +3,40 @@
 	//import Editor from '@/components/views/editor.vue'
 	//import Compilador from '@/components/views/compilador.vue'
 	//import juez from '@/components/views/juez.vue'
-
+	import quiz from '@/components/views/quiz.vue'
 	export default {
 		name: 'Sobrecarga',
 		components: {
 			//	Editor,
 			//		Compilador,
-		//	juez
+			quiz
 		},
 		props: {
 			color: {
 				type: String,
 				required: true
+			},
+			listaPreguntas: {
+				type: Array,
+				required: true
+			},
+			aprobado: {
+				type: Boolean,
+				required: true
+			},
+			avance: {
+				type: String,
+				required: true
 			}
 		},
-		data: () => ({
-			hidden: false,
-
-			codigo:
-				'#include <iostream>\nusing namespace std; \n\nint main() {\nint x=10;\nint y=25;\nint z=x+y;\n\ncout<< "Sum of x+y = " << z;\n}'
-		}),
+		data() {
+			return {
+				hidden: false,
+				tema: 'sobrecarga',
+				codigo:
+					'#include <iostream>\nusing namespace std; \n\nint main() {\nint x=10;\nint y=25;\nint z=x+y;\n\ncout<< "Sum of x+y = " << z;\n}'
+			}
+		},
 		methods: {
 			// scrollWin: function() {
 			// 	window.scrollTo(0, 0)
@@ -45,9 +59,10 @@
 			// }
 		},
 		created() {
-		//	scrollWin: function() {
-	      window.scrollTo(0, 0)
-	    //},
+			console.log('Created Sobrecarga')
+			//	scrollWin: function() {
+			// window.scrollTo(0, 0)
+			//},
 		}
 	}
 
@@ -59,11 +74,11 @@
 		<v-timeline>
 			<v-timeline-item :color="color" small>
 				<template v-slot:opposite>
-																	<span
-																		:class="`headline font-weight-bold ${color}--text`"
+																		<span
+																			:class="`headline font-weight-bold ${color}--text`"
 
-																	>Sobrecarga</span>
-																</template>
+																		>Sobrecarga</span>
+																	</template>
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué es?</h2>
 					<div>
@@ -95,13 +110,35 @@
 			<v-timeline-item :color="color" small>
 
 				<div class="py-4">
-						<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Por qué usar sobrecarga?</h2>
+					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Por qué usar sobrecarga?</h2>
 					<div>
 						<span>Evita que utilicemos diferentes nombres para funciones que hacen lo mismo. El tiempo de ejecución usando no se incrementa al usar Sobrecarga. </span>
 					</div>
 				</div>
 			</v-timeline-item>
 		</v-timeline>
+
+		<div class=" ma-2" v-if="aprobado===false">
+			<v-row align="center" justify="center">
+				<v-col class="text-center" cols="12" sm="12">
+					<div>
+						<h2 :class="`headline font-weight-light mb-1 ${color}--text`">Quiz</h2>
+					</div>
+				</v-col>
+				<quiz :preguntas="listaPreguntas" :avance="avance" :tema="tema"></quiz>
+
+			</v-row>
+		</div>
+		<div class=" ma-2" v-else>
+			<v-row align="center" justify="center">
+				<v-col class="text-center" cols="12" sm="12">
+					<v-alert type="success">
+						Terminado !!!
+					</v-alert>
+				</v-col>
+
+			</v-row>
+		</div>
 	</v-container>
 
 </template>

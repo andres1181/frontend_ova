@@ -9,10 +9,14 @@ import 'codemirror/theme/dracula.css'
 		name: 'analizarProblema',
 		components: {},
 		props: {
-
+			temas: {
+				type: Array,
+				required: true
+			}
 		},
-		data: () => ({
-			unidades: '',
+		data() {
+	    return {
+			cargando: false,
 			unidad: '',
 			tema: '',
 			valid: true,
@@ -34,7 +38,7 @@ import 'codemirror/theme/dracula.css'
 			/*
 
 																	*/
-		}),
+		}},
 		mixins: [misMixins],
 		methods: {
 			mostrarAlert() {
@@ -46,6 +50,7 @@ import 'codemirror/theme/dracula.css'
 			},
 			guardar() {
 					if (this.$refs.form.validate()) {
+						this.cargando = true
 						this.opciones.push({
 							respuesta: this.editor1.getValue(),
 							correcta: true
@@ -58,8 +63,8 @@ import 'codemirror/theme/dracula.css'
 						var _data = {
 							enunciado: String(this.enunciado),
 							tipo: String(this.tipo),
-							unidad: String(this.unidad.componente),
-							tema: String(this.tema.componente),
+							id_tema: String(this.tema._id),
+							id_unidad: String(this.tema.id_unidad._id),
 							autor: String(id_),
 							opciones: this.opciones,
 							activo: true
@@ -89,6 +94,7 @@ import 'codemirror/theme/dracula.css'
 								// eslint-disable-next-line no-console
 								console.log(e.response)
 							})
+							.finally(() => (this.cargando = false))
 					}
 					//limpiar formlario
 
@@ -97,7 +103,6 @@ import 'codemirror/theme/dracula.css'
 		},
 
 		created() {
-			this.unidades = this.listaUnidades()
 		},
 		mounted() {
 			this.editor1 = Codemirror.fromTextArea(document.getElementById('editorCode1'), {
@@ -118,22 +123,22 @@ import 'codemirror/theme/dracula.css'
 <template>
 
 	<v-container fluid>
-		<v-form ref="form"
+		<v-form v-if="cargando===false" ref="form"
 		        v-model="valid"
 		        :lazy-validation="lazy">
 			<v-row>
 				<v-col cols="12" md="12">
-					<v-select v-model="unidad"
+					<!-- <v-select v-model="unidad"
 					          :items="unidades"
 					          :rules="campoRules"
 					          item-text="unidad"
 					          label="Seleccione una unidad tematica"
 					          return-object>
-					</v-select>
+					</v-select> -->
 					<v-select v-model="tema"
 					required  :rules="campoRules"
-					          :items="unidad.temas"
-					          item-text="tema"
+					          :items="temas"
+					          item-text="nombre"
 					          label="Seleccione el tema relacionado con la pregunta"
 					          return-object>
 					</v-select>
@@ -172,6 +177,17 @@ import 'codemirror/theme/dracula.css'
 			</v-row>
 
 		</v-form>
+		<div v-else>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+		</div>
 	</v-container>
 
 </template>

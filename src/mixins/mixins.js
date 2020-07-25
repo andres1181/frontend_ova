@@ -1,64 +1,12 @@
 import jwt_decode from 'jwt-decode';
 
 export const misMixins = {
+
   methods: {
 
-    // Crear actividades
 
-
-    listaUnidades: function() {
-      var unidades = []
-      unidades.push({
-        unidad: 'Polimorfismo',
-        componente: 'polimorfismo',
-        temas: [{
-            tema: 'Herencia',
-            componente: 'herencia',
-          },
-          {
-            tema: 'Funciones Virtuales',
-            componente: 'funcionesVirtuales',
-          },
-          {
-            tema: 'Sobrecarga',
-            componente: 'sobrecarga',
-          },
-
-          {
-            tema: 'Sobreescritura',
-            componente: 'sobreescritura',
-          }
-        ]
-      })
-      unidades.push({
-        unidad: 'Punteros y Referencias',
-        componente: 'punteros',
-        temas: [{
-            tema: 'Punteros',
-            componente: 'punteros'
-          },
-          {
-            tema: 'Referencias',
-            componente: 'referencias'
-          },
-          {
-            tema: 'Paso por referencia',
-            componente: 'pasoReferencia'
-          },
-          {
-            tema: 'Arreglos dinámicos',
-            componente: 'arreglos'
-          },
-          {
-            tema: 'Matrices dinámicos',
-            componente: 'matrices'
-          }
-        ]
-      })
-      return unidades
-    },
     obtenerDimensiones: function() {
-      var alto = window.innerHeight - 48 // 64 =  margin(*2)
+      var alto = window.innerHeight - (48) // 64 =  margin(*2)
       var ancho = window.innerWidth - (56 + 56) // 96 = (navigation) + margin(*2)
       var dimensiones = [alto, ancho]
 
@@ -91,8 +39,13 @@ export const misMixins = {
 
 
     cerrarSesion: function() {
-      localStorage.removeItem("tokenUser")
-      this.$router.push('/registro')
+  /*    localStorage.removeItem("tokenUser")
+      localStorage.removeItem("datosUnidades")
+      localStorage.removeItem("datospolimorfismo")
+      localStorage.removeItem("datospunterosCont")*/
+      localStorage.clear()
+      this.$router.push('/')
+      this.$router.go()
     },
     mostrarLogin: function() {
       this.$router.push('/login')

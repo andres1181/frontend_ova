@@ -9,10 +9,14 @@
 		name: 'analizar',
 		components: {},
 		props: {
-
+			temas: {
+		    type: Array,
+		    required: true
+		  }
 		},
-		data: () => ({
-			unidades: '',
+		data() {
+	    return {
+			cargando: false,
 			unidad: '',
 			tema: '',
 			valid: true,
@@ -33,7 +37,7 @@
 			/*
 
 																	*/
-		}),
+		}},
 		mixins: [misMixins],
 		methods: {
 			mostrarAlert() {
@@ -44,7 +48,9 @@
 				return exist
 			},
 			guardar() {
+
 					if (this.$refs.form.validate()) {
+						this.cargando = true
 						this.opciones.push({
 							respuesta: this.correcta,
 							correcta: true
@@ -60,8 +66,8 @@
 						var _data = {
 							enunciado: String(this.enunciado),
 							tipo: String(this.tipo),
-							unidad: String(this.unidad.componente),
-							tema: String(this.tema.componente),
+							id_tema: String(this.tema._id),
+							id_unidad: String(this.tema.id_unidad._id),
 							autor: String(id_),
 							opciones: this.opciones,
 							activo: true
@@ -89,8 +95,9 @@
 								// eslint-disable-next-line no-console
 								console.log(`Error:  ${e}`)
 								// eslint-disable-next-line no-console
-								console.log(e.response)
+								console.log(e)
 							})
+							.finally(() => (this.cargando = false))
 					}
 					//limpiar formlario
 
@@ -99,7 +106,7 @@
 		},
 
 		created() {
-			this.unidades = this.listaUnidades()
+
 		},
 		mounted() {
 			this.editor = Codemirror.fromTextArea(document.getElementById('editorParejas'), {
@@ -115,22 +122,22 @@
 <template>
 
 	<v-container fluid>
-		<v-form ref="form"
+		<v-form v-if="cargando===false" ref="form"
 		        v-model="valid"
 		        :lazy-validation="lazy">
 			<v-row>
 				<v-col cols="12" md="12">
-					<v-select v-model="unidad"
+					<!-- <v-select v-model="unidad"
 					          :items="unidades"
 					          :rules="campoRules"
 					          item-text="unidad"
 					          label="Seleccione una unidad tematica"
 					          return-object>
-					</v-select>
+					</v-select> -->
 					<v-select v-model="tema"
 					required  :rules="campoRules"
-					          :items="unidad.temas"
-					          item-text="tema"
+					          :items="temas"
+					          item-text="nombre"
 					          label="Seleccione el tema relacionado con la pregunta"
 					          return-object>
 					</v-select>
@@ -161,6 +168,17 @@
 			</v-row>
 
 		</v-form>
+		<div v-else>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+		</div>
 	</v-container>
 
 </template>

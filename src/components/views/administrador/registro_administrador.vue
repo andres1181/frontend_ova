@@ -5,6 +5,7 @@
 		name: 'Registro',
 
 		data: () => ({
+				keyGrupos: 0,
 			show1: false,
 			show2: false,
 			isError: false,
@@ -14,19 +15,20 @@
 			lazy: false,
 			grupos: {},
 			dim: [],
+			_data: '',
 			usuario: {
 				email: '',
 				codigo: '',
 				nombres: '',
 				contrasena: '',
 				contrasena2: '',
-				tipoUsuario: 'estudiante',
+				tipoUsuario: '',
 				grupo: ''
 			},
 
 			contrasenaRules: {
 				required: value => !!value || 'Requerido.',
-				min: v => v.length >= 7 || 'La contraseña debe tener minimo 7 caracteres'
+				min: v => v.length >= 8 || 'La contraseña debe tener minimo 8 caracteres'
 			},
 			codigoRules: [v => (v && v.length == 7) || 'El código debe ser de 7 digitos'],
 			grupoRules: [v => (v && v.length == 6) || 'El código del grupo debe tener 6 digitos'],
@@ -45,7 +47,7 @@
 				this.usuario.contrasena = String(this.usuario.contrasena)
 				this.usuario.codigo = String(this.usuario.codigo)
 				this.usuario.grupo = String(this.usuario.grupo)
-				//	this.usuario.tipoUsuario = String(this.usuario.tipoUsuario)
+				this.usuario.tipoUsuario = String(this.usuario.tipoUsuario)
 			},
 			compararPassword(p1, p2) {
 				let verificar = false
@@ -60,57 +62,8 @@
 			},
 
 			login() {
-				this.$router.push('/login')
+				this.$router.push('/')
 			},
-
-			registrarAvance(id) {
-				const ruta = '/estudiante/avanceTema/crear'
-				//	eslint-disable-next-line no-console
-				console.log('ID')
-				//	eslint-disable-next-line no-console
-				var temas = JSON.parse(localStorage.getItem(`temas`))
-				console.log(id)
-				for (var i = 0; i < temas.length; i++) {
-					this.axios({
-						method: 'post',
-						url: ruta, // + user,
-						data: {
-							id_tema: String(temas[i]._id),
-							id_estudiante: String(id),
-							aprobado: false
-						}
-					})
-						.then(response => {
-							//	eslint-disable-next-line no-console
-							console.log('Avance Tema')
-							//	eslint-disable-next-line no-console
-							console.log(response.data)
-						})
-						.catch(e => {
-							this.isError = true
-							this.error = `${e}`
-							console.log(e.response)
-						})
-				}
-			},
-			buscarTemas: function() {
-				const ruta = '/unidadesTemas/obtener/temas'
-
-				this.axios({
-					method: 'get',
-					url: ruta
-				})
-					.then(response => {
-						localStorage.setItem(`temas`, JSON.stringify(response.data))
-						//	this.temas = response.data
-					})
-					.catch(e => {
-						this.isError = true
-						this.error = `${e}`
-						console.log(`Error:  ${e.response}`)
-					})
-			},
-
 			obtenerGrupos() {
 				const ruta = `/grupos/obtener/grupos`
 
@@ -141,44 +94,105 @@
 				}
 				return id
 			},
+			registrarAvance(id) {
+				const ruta = '/estudiante/avanceTema/crear'
+				//	eslint-disable-next-line no-console
+				console.log('ID')
+				//	eslint-disable-next-line no-console
+				var temas = JSON.parse(localStorage.getItem(`temas`))
+				console.log(id)
+				for (var i = 0; i < temas.length; i++) {
+					this.axios({
+						method: 'post',
+						url: ruta, // + user,
+						data: {
+							id_tema: String(temas[i]._id),
+							id_estudiante: String(id),
+							aprobado: false
+						}
+					})
+						.then(response => {
+							//	eslint-disable-next-line no-console
+							console.log('Avance Tema')
+							//	eslint-disable-next-line no-console
+							console.log(response.data)
+						})
+						.catch(e => {
+							this.isError = true
+							this.error = `${e}`
+						})
+				}
+			},
+			buscarTemas: function() {
+				const ruta = '/unidadesTemas/obtener/temas'
+
+				this.axios({
+					method: 'get',
+					url: ruta
+				})
+					.then(response => {
+						localStorage.setItem(`temas`, JSON.stringify(response.data))
+						//	this.temas = response.data
+					})
+					.catch(e => {
+						this.isError = true
+						this.error = `${e}`
+					})
+			},
+
 			onSubmit() {
-				console.log(this.usuario.grupo)
-				//this.validate()
 				if (this.$refs.form.validate()) {
 					this.cargando = true
 					this.convertirString()
 
 					const ruta = '/usuarios/'
-
-					this.axios({
-						method: 'post',
-						url: ruta, // + user,
-						data: {
+					if (this.usuario.tipoUsuario === 'estudiante') {
+						//console.log(grupo)
+						this._data = {
+							nombres: this.usuario.nombres,
+							email: this.usuario.email,
+							contrasena: this.usuario.contrasena,
+							codigo: this.usuario.codigo,
+							id_grupo: this.seleccionarIdGrupo(this.usuario.grupo),
+							tipo: this.usuario.tipoUsuario,
+							activo: true
+						}
+					} else if (this.usuario.tipoUsuario === 'docente') {
+						this._data = {
 							nombres: this.usuario.nombres,
 							email: this.usuario.email,
 							contrasena: this.usuario.contrasena,
 							codigo: this.usuario.codigo,
 							tipo: this.usuario.tipoUsuario,
-							id_grupo: this.seleccionarIdGrupo(this.usuario.grupo),
 							activo: true
 						}
+					}
+
+					this.axios({
+						method: 'post',
+						url: ruta, // + user,
+						data: this._data
 					})
 						.then(response => {
-							console.log(response)
+							this.keyGrupos += 1
+							this.$refs.form.reset()
+							if (response.data.usuario.tipo === 'estudiante') {
+								this.registrarAvance(response.data.usuario._id)
+								localStorage.removeItem('_grupos')
+							}
 
-							//	eslint-disable-next-line no-console
-							//console.log(response.data.usuario)
-
-							this.registrarAvance(response.data.usuario._id)
-							localStorage.removeItem('_grupos')
-							this.$router.push('/')
 						})
 						.catch(e => {
 							// eslint-disable-next-line no-console
+							console.log(e)
 							this.isError = true
 							this.error = `${e}`
 						})
 						.finally(() => (this.cargando = false))
+				} else {
+					// eslint-disable-next-line no-console
+					this.isError = true
+					this.error = 'Error al validar los datos'
 				}
 			}
 		},
@@ -201,7 +215,7 @@
 						<v-card dark color="red" elevation="6" class="card_cabecera d-flex  align-center">
 							<v-card-title class="align-center">
 
-								<span class="headline font-weight-bold">REGISTRO ESTUDIANTE</span>
+								<span class="headline font-weight-bold">REGISTRO USUARIOS</span>
 							</v-card-title>
 						</v-card>
 					</v-col>
@@ -211,7 +225,8 @@
 				        class="ma-1"
 				        v-model="valid"
 				        :lazy-validation="lazy"
-				        v-if="cargando === false">
+				        v-if="cargando === false" :key="keyGrupos">
+
 					<v-row justify="center">
 						<v-col cols="6">
 							<v-text-field v-model="usuario.nombres" label="Nombre" required :rules="basicRules" prepend-inner-icon="mdi-account">
@@ -223,11 +238,19 @@
 
 						</v-col>
 					</v-row>
-					<v-row justify="center">
+					<v-row justify="start">
+						<v-col cols="6">
+							<v-radio-group v-model="usuario.tipoUsuario" :rules="radioRules" row required>
+								<v-radio label="Docente" value="docente"></v-radio>
+								<v-radio label="Estudiante" value="estudiante"></v-radio>
+							</v-radio-group>
+						</v-col>
+					</v-row>
+					<v-row justify="start">
 						<v-col cols="6">
 							<v-text-field v-model="usuario.email" label="Correo" required :rules="emailRules" prepend-inner-icon="mdi-email"></v-text-field>
 						</v-col>
-						<v-col cols="6">
+						<v-col cols="6" v-if="usuario.tipoUsuario==='estudiante'">
 							<v-text-field v-model="usuario.grupo"
 							              label="Código grupo"
 							              required
@@ -236,6 +259,7 @@
 						</v-col>
 					</v-row>
 					<v-row justify="center">
+
 						<v-col cols="6">
 							<v-text-field v-model="usuario.contrasena"
 							              :type="show1 ? 'text' : 'password'"
@@ -299,7 +323,9 @@
 				                   height="70%"
 				                   width="80%"
 				                   max-width="80%"
-				                   type="card"></v-skeleton-loader>
+				                   type="card">
+
+				</v-skeleton-loader>
 			</v-card>
 		</v-col>
 	</v-row>

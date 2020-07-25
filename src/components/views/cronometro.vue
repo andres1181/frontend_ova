@@ -16,14 +16,7 @@
 			cronometro: '',
 			t_agotado: false
 		}),
-		watch: {
-			/*agotado: function(){
-	        var i = true
-	        this.$emit('tiempoAgotado', i)
-	        // eslint-disable-next-line no-console
-	        console.log(i)
-	      }*/
-		},
+
 		methods: {
 			iniciarCronometro() {
 				var contador_m = 0
@@ -44,9 +37,6 @@
 						}
 
 						if (contador_m === this.duraccion) {
-							// eslint-disable-next-line no-console
-							console.log(contador_m)
-							//this.agotado
 							this.$emit('tiempoAgotado', true)
 						}
 					}
@@ -58,8 +48,7 @@
 
 					contador_s = contador_s + 1
 				}, 1000)
-			},
-			deternerCronometro() {}
+			}
 		},
 		mounted() {
 			if (this.iniciar) {

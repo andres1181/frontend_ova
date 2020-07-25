@@ -3,12 +3,17 @@
 	import { misMixins } from '@/mixins/mixins.js'
 	export default {
 		name: 'ordenar',
-		props: {},
-		data: () => ({
-			unidades: '',
+		props: {
+			temas: {
+				type: Array,
+				required: true
+			}
+		},
+		data() {
+	    return {
+			cargando: false,
 			unidad: '',
 			tema: '',
-			temas: '',
 			valid: true,
 			lazy: false,
 			numItems: 3,
@@ -19,18 +24,15 @@
 			numeros: [3, 4, 5, 6, 7, 8],
 			tipo: 'ordenar',
 			opciones: []
-			/*
 
-			    															*/
-		}),
+
+		}
+		},
 		computed: {
 
 		},
 		mixins: [misMixins],
 		methods: {
-			listaTemas() {
-				return this.unidad.temas
-			},
 
 			crearItems() {
 				for (var i = 0; i < this.numItems; i++) {
@@ -44,12 +46,13 @@
 			},
 			guardar() {
 				if (this.$refs.form.validate()) {
+					this.cargando = true
 					var id_ = this.obtenerDatos().id
 					var _data = {
 						enunciado: String(this.enunciado),
 						tipo: String(this.tipo),
-						unidad: String(this.unidad.componente),
-						tema: String(this.tema.componente),
+						id_tema: String(this.tema._id),
+						id_unidad: String(this.tema.id_unidad._id),
 						autor: String(id_),
 						opciones: this.opciones,
 						activo: true
@@ -77,10 +80,11 @@
 						})
 						.catch(e => {
 							// eslint-disable-next-line no-console
-							console.log(`Error en el servidor:  ${e}`)
+							console.log(` ${e}`)
 							// eslint-disable-next-line no-console
-							console.log(e.response)
+							console.log(e)
 						})
+						.finally(() => (this.cargando = false))
 
 				}
 
@@ -89,7 +93,6 @@
 		},
 
 		created() {
-			this.unidades = this.listaUnidades()
 		}
 	}
 
@@ -98,20 +101,20 @@
 <template>
 
 	<v-container fluid>
-		<v-form ref="form" v-model="valid" :lazy-validation="lazy">
-			{{unidad}}
-			<v-select v-model="unidad"
+		<v-form v-if="cargando===false" ref="form" v-model="valid" :lazy-validation="lazy">
+
+			<!-- <v-select v-model="unidad"
 			          :items="unidades"
 			          :rules="campoRules"
 			          required
 			          item-text="unidad"
 			          label="Seleccione una unidad tematica de la pregunta"
 			          return-object>
-			</v-select>
+			</v-select> -->
 			<v-select v-model="tema" required
 			          :rules="campoRules"
-			          :items="unidad.temas"
-			          item-text="tema"
+			          :items="temas"
+			          item-text="nombre"
 			          label="Seleccione el tema relacionado con la pregunta"
 			          return-object>
 			</v-select>
@@ -137,15 +140,7 @@
 					            required></v-textarea>
 				</v-col>
 			</v-row>
-			{{mostrarItems}}
 			<v-row>
-				<!--	<v-text-field  type="number" v-model="numItems" :rules="campoRules" placeholder="Número de Items" solo></v-text-field>
-													:disabled="!(numItems>0)" -->
-				<!-- <v-btn color="success"
-									       class="mr-4"
-									       @click="crearItems">
-										Añadir
-									</v-btn> -->
 			</v-row>
 			<v-row>
 				<v-btn v-if="mostrarItems" block :disabled="!valid" color="success" class="mr-4" @click="guardar">
@@ -153,6 +148,17 @@
 				</v-btn>
 			</v-row>
 		</v-form>
+		<div v-else>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+		</div>
 	</v-container>
 
 </template>

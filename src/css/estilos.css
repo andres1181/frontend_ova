@@ -6,6 +6,9 @@ html {
 .body {
   background: #ECEFF1;
 }
+.bar-border{
+  border-bottom-color: rgba(0,0,0,.12)!important;
+}
 .font-dosis{
   font-family: 'Dosis';
 }
@@ -128,9 +131,9 @@ padding-right: 58px;
  .card_cabecera{
  	position: relative;
   justify-content: center !important;
-  height: 50px;
+  height: 60px;
  	min-height: 50px;
- 	top: -15px;
+ 	top: -20px;
  	z-index: 1;
  }
 .contenido {
