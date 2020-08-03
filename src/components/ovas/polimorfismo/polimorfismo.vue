@@ -33,8 +33,9 @@
 			temas: [
 				{ titulo: 'Herencia', componente: 'herencia', aprobado: false, avance: '' },
 				{ titulo: 'Funciones Virtuales', componente: 'funcionesVirtuales', aprobado: false, avance: '' },
-				{ titulo: 'Sobrecarga', componente: 'sobrecarga', aprobado: false, avance: '' },
-				{ titulo: 'Sobrescritura', componente: 'sobreescritura', aprobado: false, avance: '' }
+				{ titulo: 'Sobreescritura', componente: 'sobreescritura', aprobado: false, avance: '' },
+				{ titulo: 'Sobrecarga', componente: 'sobrecarga', aprobado: false, avance: '' }
+
 			],
 
 		}),
@@ -122,7 +123,7 @@
 
 	<v-row justify="center">
 		<v-col cols="12" class="pa-0" v-if="this.obtenerDatos().tipo === 'estudiante'">
-			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-2 mx-7 rounded-lg">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-6 mx-7 rounded-lg">
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
 						<v-card dark color="red" elevation="6" class="card_cabecera d-flex  align-center">
@@ -173,7 +174,6 @@
 								           :unidad="datosUnidad"
 								           :aprobado="aprobado"
 								           :avance="idAvance"
-								           nombre="juezPoli"
 								           :is="componente"></component>
 
 							</v-sheet>

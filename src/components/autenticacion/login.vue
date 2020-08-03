@@ -66,10 +66,7 @@
 					this.axios
 						.post(ruta, this.user)
 						.then(response => {
-							if (response.status == '400' || response.status == '401' || response.status == '404') {
-								this.isError = true
-								this.error = 'Datos incorrectos'
-							} else {
+
 								var token = response.data.token
 								localStorage.setItem('tokenUser', token)
 								var tipo = this.obtenerDatos().tipo
@@ -87,7 +84,7 @@
 								}
 								//this.$emit('datos')
 								//this.$router.go()
-							}
+							
 						})
 						.catch(e => {
 							this.isError = true

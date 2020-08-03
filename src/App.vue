@@ -18,7 +18,8 @@
 				id: '',
 				codigo: '',
 				tipo: '',
-				nombres: ''
+				nombres: '',
+				grupo: ''
 			}
 
 			//
@@ -52,6 +53,7 @@
 				this.usuario.codigo = this.obtenerDatos().codigo
 				this.usuario.tipo = this.obtenerDatos().tipo
 				this.usuario.nombres = this.obtenerDatos().nombres
+				this.usuario.grupo = this.obtenerDatos().grupo
 			},
 			handleResize() {
 				this.ventana.ancho = window.innerWidth
@@ -101,6 +103,7 @@
 					<v-list-item-content>
 						<v-list-item-title class="text-uppercase text-truncate">{{usuario.nombres}}</v-list-item-title>
 						<v-list-item-subtitle class="text-uppercase text-truncate text-caption"><span>{{usuario.tipo}}</span></v-list-item-subtitle>
+					 <v-list-item-subtitle v-if="usuario.tipo === 'estudiante'" class="text-uppercase text-truncate text-caption"><span>Grupo: </span><span>{{this.usuario.grupo.codigo}}</span></v-list-item-subtitle>
 
 					</v-list-item-content>
 				</v-list-item>
@@ -138,22 +141,7 @@
 						<v-list-item-title>Perfil</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
-				<v-list-item @click="">
-					<v-list-item-action>
-						<v-icon>mdi-ballot</v-icon>
-					</v-list-item-action>
-					<v-list-item-content>
-						<v-list-item-title>Encuesta</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-				<v-list-item @click="">
-					<v-list-item-action>
-						<v-icon>mdi-file-tree</v-icon>
-					</v-list-item-action>
-					<v-list-item-content>
-						<v-list-item-title>Mapa del sitio</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
+
 				<v-list-item @click="cerrarSesion">
 					<v-list-item-action>
 						<v-icon>mdi-logout</v-icon>

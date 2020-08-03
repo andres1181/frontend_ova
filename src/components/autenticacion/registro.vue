@@ -144,8 +144,9 @@
 			onSubmit() {
 				console.log(this.usuario.grupo)
 				//this.validate()
+				this.cargando = true
 				if (this.$refs.form.validate()) {
-					this.cargando = true
+
 					this.convertirString()
 
 					const ruta = '/usuarios/'
@@ -156,7 +157,7 @@
 						data: {
 							nombres: this.usuario.nombres,
 							email: this.usuario.email,
-							contrasena: this.usuario.contrasena,
+							contrasena: this.usuario.codigo,//this.usuario.contrasena,
 							codigo: this.usuario.codigo,
 							tipo: this.usuario.tipoUsuario,
 							id_grupo: this.seleccionarIdGrupo(this.usuario.grupo),
@@ -235,7 +236,7 @@
 							              prepend-inner-icon="mdi-numeric"></v-text-field>
 						</v-col>
 					</v-row>
-					<v-row justify="center">
+					<!-- <v-row justify="center">
 						<v-col cols="6">
 							<v-text-field v-model="usuario.contrasena"
 							              :type="show1 ? 'text' : 'password'"
@@ -270,7 +271,7 @@
 						<v-alert dense type="warning">
 							Las contraseñas <strong> NO </strong> coinciden!
 						</v-alert>
-					</div>
+					</div> -->
 					<div v-show='isError'>
 						<v-alert dense type="error">
 							<span>{{error}}</span>

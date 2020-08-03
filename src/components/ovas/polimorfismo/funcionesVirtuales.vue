@@ -83,19 +83,23 @@
 			<v-timeline-item :color="color" small>
 				<div class="py-4">
 					<div>
-						<span>--EJEMPLO---</span>
-					</div>
-				</div>
-			</v-timeline-item>
-			<v-timeline-item :color="color" small>
-				<div class="py-4">
-					<div>
 						<span>Cuando una función virtual es redefinida en una clase derivada no es necesario definirla nuevamente como Virtual.</span>
 					</div>
 				</div>
 			</v-timeline-item>
 		</v-timeline>
 
+		<h2 :class="`headline font-weight-light mb-4 ${color}--text`">Ejemplo:</h2><br>
+		<v-expansion-panels>
+			<v-expansion-panel>
+				<v-expansion-panel-header><span>Código fuente</span> <template v-slot:actions>
+											<v-icon color="red">$expand</v-icon>
+										</template></v-expansion-panel-header>
+				<v-expansion-panel-content>
+					<iframe height="400px" width="100%" src="https://repl.it/@ANDRESFELIPEF31/Funciones-vituales?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+				</v-expansion-panel-content>
+			</v-expansion-panel>
+		</v-expansion-panels>
 		<div class=" ma-2" v-if="aprobado===false">
 			<v-row align="center" justify="center">
 				<v-col class="text-center" cols="12" sm="12">

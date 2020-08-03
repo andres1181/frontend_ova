@@ -20,7 +20,7 @@
 				editor1: '',
 				editor2: '',
 				respuestaCorrecta: null,
-				respuestaUsuario: '',
+				respuestaUsuario: null,
 				info: null,
 				correcto: null
 			}
@@ -29,12 +29,15 @@
 		methods: {
 			asignarDatos() {
 				this.info = JSON.parse(this.datos)
+				this.shuffle(this.info.opciones)
 				this.editor1 = this.info.opciones[0].respuesta
 				this.editor2 = this.info.opciones[1].respuesta
-				this.shuffle(this.info.opciones)
+				console.log({ opcionesO: this.info.opciones[0].respuesta, opciones1: this.info.opciones[1].respuesta })
+				console.log({ opcionesO: this.info.opciones[0].correcta, opciones1: this.info.opciones[1].correcta })
+
 				/*asigno a la variable respuestaCorrecta, la opcion que es correcta en el json */
-				for (var i = 0; i < this.info.opciones.length; i++) {
-					if (this.info.opciones[i].correcta) {
+				for (var i = 0; i < this.info.opciones.length && this.respuestaCorrecta !== null; i++) {
+					if (this.info.opciones[i].correcta === true) {
 						this.respuestaCorrecta = `${i}`
 					}
 				}
@@ -44,6 +47,7 @@
 				this.$emit('click', { id: this.info._id, result: this.correcto })
 			},
 			revisarRespuesta() {
+				console.log({ Usuario: this.respuestaUsuario, correcta: this.respuestaCorrecta })
 				if (this.respuestaUsuario === this.respuestaCorrecta) {
 					this.correcto = true
 				} else {
@@ -69,7 +73,7 @@
 			<Editor :codigo="editor1" nombre="EditorAnalizar1"></Editor>
 			<v-card-actions class="pa-0">
 				<v-btn block x-large dark tile
-				       color="deep-purple accent-4"
+				       color="red"
 				       @click="(respuestaUsuario = `0`) && enviarResultado()">
 					Elegir
 				</v-btn>
@@ -79,7 +83,7 @@
 			<Editor :codigo="editor2" nombre="EditorAnalizar2"></Editor>
 			<v-card-actions class="pa-0">
 				<v-btn block x-large dark tile
-				       color="deep-purple accent-4"
+				       color="red"
 				       @click="(respuestaUsuario = `1`) && enviarResultado()">
 					Elegir
 				</v-btn>

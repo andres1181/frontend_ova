@@ -64,6 +64,32 @@
 						</v-card>
 					</v-col>
 				</v-row>
+				<v-row justify="center">
+					<v-col cols="12" class="pa-2">
+						<v-card outlined @click="$router.push({ name: 'crearJuez' }).catch(err => {})">
+							<v-card-title class="headline">
+								<v-icon large left>
+									mdi-chart-tree
+								</v-icon size="62"><span class="title font-weight-light">Crear Actividad Reto</span>
+								<v-spacer></v-spacer>
+								<v-icon class="mr-1">mdi-arrow-right</v-icon>
+							</v-card-title>
+						</v-card>
+					</v-col>
+				</v-row>
+				<v-row justify="center">
+					<v-col cols="12" class="pa-2">
+						<v-card outlined @click="$router.push({ name: 'preguntas' }).catch(err => {})">
+							<v-card-title class="headline">
+								<v-icon large left>
+									mdi-file-document-edit
+								</v-icon size="62"><span class="title font-weight-light">Crear Preguntas</span>
+								<v-spacer></v-spacer>
+								<v-icon class="mr-1">mdi-arrow-right</v-icon>
+							</v-card-title>
+						</v-card>
+					</v-col>
+				</v-row>
 			</v-card>
 		</v-col>
 		<v-col v-else cols="12">

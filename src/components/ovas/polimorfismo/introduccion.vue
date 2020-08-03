@@ -39,7 +39,7 @@
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">Objetivo</h2>
 					<div>
-						<span>Esta unidad tiene como objetivo <span class="font-italic"> &lt;&lt;Comprender el concepto de polimorfismo y su uso en la construcción de algoritmos&gt;&gt;.</span> </span>
+						<span>Esta unidad tiene como objetivo <span class="font-italic">"Comprender el concepto de polimorfismo y su uso en la construcción de algoritmos".</span> </span>
 					</div>
 				</div>
 			</v-timeline-item>
@@ -88,8 +88,7 @@
 						<ul>
 							<li>Los enlaces a la explicación de cada uno de estos conceptos</li>
 							<li>La actividad práctica de la unidad utilizando un Juez Online. </li>
-							<li>Una sopa de letras con palabras relacionada con la unidad</li>
-							<li>El Quiz de la unidad</li>
+							<li>Al finalizar cada tema hay un pequeño quiz. Puedes visualizar si ya lo has aprobado en el menú.</li>
 						</ul>
 					</div>
 

@@ -13,6 +13,7 @@ import InicioDocente from '@/components/views/Docente/menuDocente.vue'
 
 import Polimorfismo from '@/components/ovas/polimorfismo/polimorfismo.vue'
 import MenuUnidades from '@/components/ovas/menuUnidades.vue'
+import CrearJuez from '@/components/views/administrador/crearJuez.vue'
 import MenuAdministrador from '@/components/views/administrador/menuAdministrador.vue'
 import CrearUnidades from '@/components/views/administrador/crearUnidades.vue'
 import RegistroAdministrador from '@/components/views/administrador/registro_administrador.vue'
@@ -50,7 +51,11 @@ export default new Router({
       component: CrearUnidades,
       name: 'crearUnidades',
     },
-
+    {
+      path: '/usuario/administrador/crearjuez', // /:id',
+      component: CrearJuez,
+      name: 'crearJuez',
+    },
     {
       path: '/estudiante/unidades',
       component: MenuUnidades,

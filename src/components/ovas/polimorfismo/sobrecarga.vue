@@ -36,33 +36,6 @@
 				codigo:
 					'#include <iostream>\nusing namespace std; \n\nint main() {\nint x=10;\nint y=25;\nint z=x+y;\n\ncout<< "Sum of x+y = " << z;\n}'
 			}
-		},
-		methods: {
-			// scrollWin: function() {
-			// 	window.scrollTo(0, 0)
-			// },
-			// siguientePagina: function() {
-			// 	if (this.page === this.numPaginas) {
-			// 		this.page = this.numPaginas
-			// 	} else {
-			// 		this.page = this.page + 1
-			// 	}
-			// 	this.scrollWin()
-			// },
-			// anteriorPagina: function() {
-			// 	if (this.page === 1) {
-			// 		this.page = 1
-			// 	} else {
-			// 		this.page = this.page - 1
-			// 	}
-			// 	this.scrollWin()
-			// }
-		},
-		created() {
-			console.log('Created Sobrecarga')
-			//	scrollWin: function() {
-			// window.scrollTo(0, 0)
-			//},
 		}
 	}
 
@@ -74,11 +47,11 @@
 		<v-timeline>
 			<v-timeline-item :color="color" small>
 				<template v-slot:opposite>
-																		<span
-																			:class="`headline font-weight-bold ${color}--text`"
+																			<span
+																				:class="`headline font-weight-bold ${color}--text`"
 
-																		>Sobrecarga</span>
-																	</template>
+																			>Sobrecarga</span>
+																		</template>
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué es?</h2>
 					<div>
@@ -117,7 +90,32 @@
 				</div>
 			</v-timeline-item>
 		</v-timeline>
+		<h2 :class="`headline font-weight-light mb-4 ${color}--text`">Ejemplo:</h2>
+		<span>Queremos construir un programa que retorne información de un vendedor sobrecargando una función.</span>
 
+		<iframe width="100%"
+		        height="400"
+		        src="https://www.youtube-nocookie.com/embed/7gj1T_iCCIA"
+		        frameborder="0"
+		        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+		        allowfullscreen></iframe>
+		<v-expansion-panels>
+			<v-expansion-panel>
+				<v-expansion-panel-header><span>Código fuente</span> <template v-slot:actions>
+										<v-icon color="red">$expand</v-icon>
+									</template></v-expansion-panel-header>
+				<v-expansion-panel-content>
+					<iframe height="400px"
+					        width="100%"
+					        src="https://repl.it/@ANDRESFELIPEF31/Sobrecarga-Vendedor?lite=true"
+					        scrolling="no"
+					        frameborder="no"
+					        allowtransparency="true"
+					        allowfullscreen="true"
+					        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+				</v-expansion-panel-content>
+			</v-expansion-panel>
+		</v-expansion-panels>
 		<div class=" ma-2" v-if="aprobado===false">
 			<v-row align="center" justify="center">
 				<v-col class="text-center" cols="12" sm="12">

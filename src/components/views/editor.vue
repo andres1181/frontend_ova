@@ -19,24 +19,33 @@
 				required: true
 			}
 		},
+
 		data() {
 			return {
-				code: '',
+				//code: '',
 				editor: '',
-				text: ''
+			//	text: ''
 			}
 		},
+		methods: {
+			iniciarEditor(){
+				this.editor = Codemirror.fromTextArea(document.getElementById(this.nombre), {
+					mode: 'text/x-c++src',
+					theme: 'dracula',
+					lineNumbers: true,
+					readOnly: 'nocursor'
+				})
 
+				this.editor.setValue(dedent(this.codigo))
+				setTimeout(()=>{ this.editor.refresh()}, 1)
+			}
+		},
 		mounted() {
-			this.editor = Codemirror.fromTextArea(document.getElementById(this.nombre), {
-				mode: 'text/x-c++src',
-				theme: 'dracula',
-				lineNumbers: true,
-				readOnly: 'nocursor'
-			})
+		this.iniciarEditor()
+
 		},
 		created() {
-			this.code = dedent(this.codigo)
+		//	this.code =
 		}
 	}
 
@@ -46,7 +55,7 @@
 
 	<div class="">
 
-		<textarea v-model="code" :id="nombre" diseable></textarea>
+		<textarea :id="nombre" diseable></textarea>
 
 	</div>
 

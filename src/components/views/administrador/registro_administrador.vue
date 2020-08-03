@@ -97,10 +97,10 @@
 			registrarAvance(id) {
 				const ruta = '/estudiante/avanceTema/crear'
 				//	eslint-disable-next-line no-console
-				console.log('ID')
+				//console.log('ID')
 				//	eslint-disable-next-line no-console
 				var temas = JSON.parse(localStorage.getItem(`temas`))
-				console.log(id)
+			//	console.log(id)
 				for (var i = 0; i < temas.length; i++) {
 					this.axios({
 						method: 'post',
@@ -113,9 +113,9 @@
 					})
 						.then(response => {
 							//	eslint-disable-next-line no-console
-							console.log('Avance Tema')
+					//		console.log('Avance Tema')
 							//	eslint-disable-next-line no-console
-							console.log(response.data)
+					//		console.log(response.data)
 						})
 						.catch(e => {
 							this.isError = true
@@ -141,8 +141,9 @@
 			},
 
 			onSubmit() {
-				if (this.$refs.form.validate()) {
 					this.cargando = true
+				if (this.$refs.form.validate()) {
+
 					this.convertirString()
 
 					const ruta = '/usuarios/'
@@ -175,16 +176,17 @@
 					})
 						.then(response => {
 							this.keyGrupos += 1
-							this.$refs.form.reset()
+							//this.$refs.form.reset()
 							if (response.data.usuario.tipo === 'estudiante') {
 								this.registrarAvance(response.data.usuario._id)
 								localStorage.removeItem('_grupos')
 							}
-
+							this.keyGrupos += 1
+							//this.$router.go()
 						})
 						.catch(e => {
 							// eslint-disable-next-line no-console
-							console.log(e)
+						//	console.log(e)
 							this.isError = true
 							this.error = `${e}`
 						})

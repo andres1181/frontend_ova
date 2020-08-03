@@ -1,5 +1,6 @@
 <script>
 
+	import { misMixins } from '@/mixins/mixins.js'
 	import dedent from 'dedent'
 	import Codemirror from 'codemirror/lib/codemirror.js'
 	import 'codemirror/lib/codemirror.css'
@@ -12,21 +13,19 @@
 		// Para el juez:
 		//
 		props: {
-			nombre: {
-				type: String,
-				required: true
-			},
+			/*	nombre: {
+									type: String,
+									required: true
+								},*/
 			unidad: {
 				type: Object,
 				required: true
-			},
-			codigo: {
-				type: String,
-				//	require: true,
-				defalult: '#include <iostream>\nusing namespace std;'
 			}
 		},
+		mixins: [misMixins],
 		data: () => ({
+			cargando: false,
+			cargando2: false,
 			code: '',
 			editor: '',
 			resultado: '',
@@ -34,6 +33,7 @@
 			resultadoObtenido: '',
 			salida: '',
 			//salidaEsperada: '',
+			juez_: {},
 			correcta: null,
 			datos: {
 				script: '',
@@ -43,7 +43,6 @@
 				clientSecret: ''
 			}
 		}),
-		watch: {},
 		methods: {
 			//salida esperada y salida obtenida de la api
 			comparar(a, b) {
@@ -56,6 +55,7 @@
 				return correcto
 			},
 			compilar() {
+				this.cargando = true
 				this.datos.script = dedent(this.editor.getValue())
 				this.datos.lenguaje = 'cpp'
 				this.datos.versionIndex = '0'
@@ -84,31 +84,57 @@
 					}
 				})
 					.then(response => {
-						console.log(response.data)
+						//console.log(response.data)
 						this.salidaObtenida = dedent(response.data.output)
 						this.correcta = this.comparar(this.salidaObtenida, this.salida)
 						this.resultadoObtenido = this.resultado.getValue()
 						this.resultado.setValue(this.salidaObtenida)
+						//	setTimeout(()=>{                     this.basketAddSuccess = false;                 }, 2000);
+						setTimeout(() => {
+							this.resultado.refresh()
+						}, 1)
 
 						/*		if (response.status == '200' || response.status == '201') {
-								// eslint-disable-next-line no-console
+														// eslint-disable-next-line no-console
 
-							}
-							if (response.status == '400' || response.status == '401' || response.status == '404') {
-								// eslint-disable-next-line no-console
-								console.log('Error: ' + response)
-							}*/
+													}
+													if (response.status == '400' || response.status == '401' || response.status == '404') {
+														// eslint-disable-next-line no-console
+														console.log('Error: ' + response)
+													}*/
 					})
 					.catch(e => {
 						// eslint-disable-next-line no-console
 						console.log(` ${e}`)
 						// eslint-disable-next-line no-console
-						console.log(e.response)
+						console.log(e)
 					})
+					.finally(() => (this.cargando = false))
+			},
+			elegirJuez(lista) {
+				this.shuffle(lista)
+				this.juez_ = lista[0]
+				this.salida = this.juez_.respuesta
+			},
+			obtenerJueces(id_unidad) {
+				//obtengo una lista de actividades juez
+				this.cargando = true
+				const ruta = '/actividades/obtener/juez/' + id_unidad
+				var self = this
+				this.axios({ method: 'get', url: ruta })
+					.then(response => {
+						self.elegirJuez(response.data) // selecciono una actividad
+
+						return true
+					})
+					.catch(e => {
+						console.log(`Error:  ${e}`)
+					})
+					.finally(() => (this.cargando = false))
 			}
 		},
 		mounted() {
-			this.editor = Codemirror.fromTextArea(document.getElementById(this.nombre), {
+			this.editor = Codemirror.fromTextArea(document.getElementById('juezEdi'), {
 				mode: 'text/x-c++src',
 				theme: 'dracula',
 				lineNumbers: true
@@ -122,7 +148,8 @@
 			})
 		},
 		created() {
-			this.code = this.codigo
+			console.log(this.unidad)
+			this.obtenerJueces(this.unidad._id)
 		}
 	}
 
@@ -130,69 +157,104 @@
 
 <template>
 
-	<v-card class="elevation-0 my-10">
-		<v-card outlined class="my-2">
-			<v-card-subtitle>Descripción:</v-card-subtitle>
-			<v-card-text>
-				<span>En la siguiente actividad utilizando los conceptos de la unidad deberás plantear una solución escrita en C++ al problema dado. Ten en cuenta que la salida de tu programa debe ser IGUAL a la salida esperada. Recuerda las limitaciones del Compilador.</span>
-			</v-card-text>
+	<div>
+		<v-card v-show="cargando===false" class="elevation-0 my-10">
+			<v-card outlined class="my-2">
+				<v-card-subtitle>Descripción:</v-card-subtitle>
+				<v-card-text>
+					<span>En la siguiente actividad utilizando los conceptos de la unidad deberás plantear una solución escrita en C++ al problema dado. Ten en cuenta que la salida de tu programa debe ser IGUAL a la salida esperada. Recuerda las limitaciones del Compilador.</span>
+				</v-card-text>
+
+			</v-card>
+
+			<v-card outlined class="my-2">
+				<v-card-subtitle>Problema:</v-card-subtitle>
+				<v-card-text>{{juez_.enunciado}}</v-card-text>
+			</v-card>
+			<v-card outlined class="my-2">
+				<v-card-subtitle>Salida esperada:</v-card-subtitle>
+				<v-card-text> {{salida}} </v-card-text>
+			</v-card>
+			<v-alert v-model="alert"
+							 class="my-2"
+							 color="amber"
+							 type="warning"
+							 border="top"
+							 elevation="1"
+							 colored-border>
+				<strong>Limitaciones: </strong> El compilador esta en una versión Beta, no cuenta con consola, por lo tanto NO es posible utilizar 'cin' para recibir
+				datos. Los saltos de linea se deben hacer con 'endl' de std.
+			</v-alert>
+			<v-card outlined class="my-2">
+
+				<v-card-subtitle>Editor:
+					<!-- <v-btn class="my-2 " outlined color="warning" @click="compilar()">
+												<v-icon>mdi-arrow-right-bold</v-icon> Ejecutar
+											</v-btn> -->
+
+				</v-card-subtitle>
+				<textarea class="pa-2" rows="20" cols="80" id="juezEdi"></textarea>
+
+				<v-btn block x-large tile color="red" dark @click="compilar()">
+					Ejecutar
+					<v-icon>mdi-arrow-right-bold</v-icon>
+				</v-btn>
+
+			</v-card>
+			<v-alert class="my-3" dense outlined
+			         type="error"
+			         v-show="correcta===false">
+				<strong>Incorrecto.</strong> Revise su código.
+			</v-alert>
+			<v-alert class="my-3" dense text
+			         type="success"
+			         v-show="correcta===true">
+				<strong>¡Correcto!</strong>
+			</v-alert>
+			<v-card class="my-2 px-4 overflow-y-auto">
+				<!-- <v-card-title class="headline">Resultado:</v-card-title> -->
+
+				<v-card-subtitle>Resultado:</v-card-subtitle>
+
+				<textarea id="vistaResultado" rows="8" cols="80"></textarea>
+			</v-card>
+
 		</v-card>
-		<v-card outlined class="my-2">
-			<v-card-subtitle>Problema:</v-card-subtitle>
-			<v-card-text>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-				Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-				irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-				non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</v-card-text>
-		</v-card>
-		<v-card outlined class="my-2">
-			<v-card-subtitle>Salida esperada:</v-card-subtitle>
-			<v-card-text> {{salida}} </v-card-text>
-		</v-card>
-		<v-card outlined class="my-2">
-			<v-card-subtitle>Editor:
-				<!-- <v-btn class="my-2 " outlined color="warning" @click="compilar()">
-						<v-icon>mdi-arrow-right-bold</v-icon> Ejecutar
-					</v-btn> -->
+		<div v-show="cargando===true">
+			<v-skeleton-loader height="94" type="list-item-two-line">
 
-			</v-card-subtitle>
-			<textarea class="pa-2" v-model="code" rows="20" cols="80" :id="nombre" disabled></textarea>
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
 
-			<v-btn block x-large tile color="amber" @click="compilar()">
-				Ejecutar
-				<v-icon>mdi-arrow-right-bold</v-icon>
-			</v-btn>
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
 
-		</v-card>
-		<v-alert class="my-3" dense outlined
-		         type="error"
-		         v-show="correcta===false">
-			<strong>Incorrecto.</strong> Revise su código.
-		</v-alert>
-		<v-alert class="my-3" dense text
-		         type="success"
-		         v-show="correcta===true">
-			<strong>¡Correcto!</strong>
-		</v-alert>
-		<v-card class="my-2 px-4 overflow-y-auto">
-			<!-- <v-card-title class="headline">Resultado:</v-card-title> -->
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
 
-			<v-card-subtitle>Resultado:</v-card-subtitle>
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
 
-			<textarea id="vistaResultado" rows="8" cols="80"></textarea>
-		</v-card>
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
 
-	</v-card>
+			</v-skeleton-loader>
+			<v-skeleton-loader height="94" type="list-item-two-line">
+
+			</v-skeleton-loader>
+
+		</div>
+	</div>
 
 </template>
 
 <style>
 
 	/* #resultado {
-			text-align: left;
-			height: 120px;
-			background-color: black;
-			color: gray;
-		} */
+									text-align: left;
+									height: 120px;
+									background-color: black;
+									color: gray;
+								} */
 
 </style>

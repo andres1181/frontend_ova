@@ -49,7 +49,7 @@
 					</div>
 				</div>
 			</v-timeline-item>
-			
+
 
 			<v-timeline-item :color="color" small>
 				<div class="py-4">
@@ -106,8 +106,7 @@
 						<ul>
 							<li>Los enlaces a cada uno de estos conceptos relacionados con punteros</li>
 							<li>La actividad práctica de la unidad utilizando un Juez Online. </li>
-							<li>Una sopa de letras con palabras relacionadas con la unidad</li>
-							<li>El Quiz de la unidad</li>
+							<li>Al finalizar cada tema hay un pequeño quiz. Puedes visualizar si ya lo has aprobado en el menú.</li>
 						</ul>
 					</div>
 

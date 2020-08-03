@@ -39,12 +39,10 @@
 				tema: 'herencia'
 			}
 		},
-		methods: {
-
-		},
+		methods: {},
 		created() {
-			console.log('Herencia Avance');
-			console.log(this.avance);
+			// console.log('Herencia Avance');
+			// console.log(this.avance);
 		}
 	}
 
@@ -55,12 +53,12 @@
 	<v-container fluid>
 		<v-timeline>
 			<v-timeline-item :color="color" small>
-				 <template v-slot:opposite>
-														        <span
-														          :class="`headline font-weight-bold ${color}--text`"
+				<template v-slot:opposite>
+																		        <span
+																		          :class="`headline font-weight-bold ${color}--text`"
 
-														        >Herencia</span>
-														      </template>
+																		        >Herencia</span>
+																		      </template>
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">¿Qué es?</h2>
 					<div>
@@ -86,7 +84,12 @@
 					</div>
 				</div>
 			</v-timeline-item>
+		</v-timeline>
+		<v-timeline :reverse="true">
 			<v-timeline-item :color="color" small>
+				<template v-slot:opposite>
+								<v-card class="mx-auto pa-3" outlined><v-list-item-title class="grey--text">class ClaseDerivada : public ClaseBase</v-list-item-title></v-card>
+				</template>
 				<div class="py-4">
 					<h2 :class="`font-weight-light mb-4 ${color}--text`">Herencia publica</h2>
 					<div>
@@ -94,15 +97,24 @@
 					</div>
 				</div>
 			</v-timeline-item>
+
 			<v-timeline-item :color="color" small>
-				<div class="py-4">
-					<h2 :class="`font-weight-light mb-4 ${color}--text`">Herencia privada</h2>
-					<div>
-						<span>Si la clase derivada se declara como private, los miembros publicos y protegidos que hereda de la clase base pasan a ser privados en la clase hija.</span>
-					</div>
+				<template v-slot:opposite>
+						<div class="py-4">
+							<v-card class="mx-auto pa-3" outlined><v-list-item-title class="grey--text">class ClaseDerivada : private ClaseBase</v-list-item-title></v-card>
+						</div>
+					</template>
+
+				<h2 :class="`font-weight-light mb-4 ${color}--text`">Herencia privada</h2>
+				<div>
+					<span>Si la clase derivada se declara como private, los miembros publicos y protegidos que hereda de la clase base pasan a ser privados en la clase hija.</span>
 				</div>
+
 			</v-timeline-item>
 			<v-timeline-item :color="color" small>
+				<template v-slot:opposite>
+								<v-card  class="mx-auto pa-3" outlined><v-list-item-title class="grey--text">class ClaseDerivada : protected ClaseBase</v-list-item-title></v-card>
+				</template>
 				<div class="py-4">
 					<h2 :class="`font-weight-light mb-4 ${color}--text`">Herencia protegida</h2>
 					<div>
@@ -110,12 +122,14 @@
 					</div>
 				</div>
 			</v-timeline-item>
+		</v-timeline>
+		<v-timeline>
 			<v-timeline-item :color="color" small>
 				<div class="py-4">
 					<h2 :class="`headline font-weight-light mb-4 ${color}--text`">Jerarquia de clases</h2>
 					<div>
 						<span>Cada clase hija puede convertirse en una clase base y tener sus propias clases hijas.
-															</span>
+																			</span>
 					</div>
 				</div>
 			</v-timeline-item>
@@ -130,39 +144,36 @@
 
 		</v-timeline>
 		<h2 :class="`headline font-weight-light mb-4 ${color}--text`">Ejemplo:</h2>
-		<span>Queremos construir un programa que retorne información de profesores y estudiantes. Ambos tienen información en común: Edad, Nombre, Teléfono, etc.</span>
-		<br> <span>También, tienen información única:</span>
-		<ul>
-			<li>Para el estudiante: Número de créditos, Promedio semestral.</li>
-			<li>Para el profesor: Salario, Horas de trabajo.</li>
-		</ul>
-		<!-- <editor nombre="ejemploHerencia" :codigo="codigoEditor[1]"></editor> -->
-		<iframe height="500px"
-		        width="100%"
-		        src="https://repl.it/@ANDRESFELIPEF31/Profesor?lite=true"
-		        scrolling="no"
-		        frameborder="no"
-		        allowtransparency="true"
-		        allowfullscreen="true"
-		        sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+		<span>Queremos construir un programa que retorne información de un profesor utilizando herencia.</span>
+		<iframe width="100%" height="400" src="https://www.youtube-nocookie.com/embed/k_wagqvbRJQ" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		<v-expansion-panels>
+			<v-expansion-panel>
+				<v-expansion-panel-header><span>Código fuente</span> <template v-slot:actions>
+			            <v-icon color="red">$expand</v-icon>
+			          </template></v-expansion-panel-header>
+				<v-expansion-panel-content>
+					<iframe height="400px" width="100%" src="https://repl.it/@ANDRESFELIPEF31/Herencia?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+				</v-expansion-panel-content>
+			</v-expansion-panel>
+		</v-expansion-panels>
 
-		<div class=" ma-2" v-if="aprobado===false">
+		<div v-if="aprobado===false" class=" ma-2">
 			<v-row align="center" justify="center">
 				<v-col class="text-center" cols="12" sm="12">
 					<div>
 						<h2 :class="`headline font-weight-light mb-1 ${color}--text`">Quiz</h2>
 					</div>
 				</v-col>
-				<quiz :preguntas="listaPreguntas" :avance="avance"  :tema="tema"></quiz>
+				<quiz :preguntas="listaPreguntas" :avance="avance" :tema="tema"></quiz>
 			</v-row>
 		</div>
 
-		<div class=" ma-2" v-else>
+		<div v-else class=" ma-2">
 			<v-row align="center" justify="center">
 				<v-col class="text-center" cols="12" sm="12">
 					<v-alert type="success">
-      		Terminado !!!
-     			</v-alert>
+						Quiz aprobado !!!
+					</v-alert>
 				</v-col>
 
 			</v-row>

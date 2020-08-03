@@ -75,7 +75,7 @@
 		<br>
 		<Editor :codigo="this.info.enunciado" nombre="EditorOpcionAnalizaCodigo"></Editor>
 
-		<span>La salida del programa es:</span>
+		<span>Elija a que tema pertenece el código o cuál es la salida correcta:</span>
 		<v-row align="center" justify="center">
 			<v-col class="text-center" cols="12" sm="12">
 				<div class="mx-2">

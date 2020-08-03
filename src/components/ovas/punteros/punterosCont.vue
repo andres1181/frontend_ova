@@ -122,12 +122,12 @@
 
 	<v-row justify="center">
 		<v-col v-if="this.obtenerDatos().tipo === 'estudiante'" cols="12" class="pa-0">
-			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-9 mx-7 rounded-lg">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-7 mx-7 rounded-lg">
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
 						<v-card dark color="red" elevation="5" class="card_cabecera rounded-lg d-flex  align-center">
 							<v-card-title class="align-center">
-								<span class="headline font-weight-bold">Punteros y Referencias</span>
+								<span class="headline font-weight-bold">PUNTEROS Y REFERENCIAS</span>
 							</v-card-title>
 						</v-card>
 					</v-col>
@@ -162,7 +162,7 @@
 								           :unidad="datosUnidad"
 								           :aprobado="aprobado"
 								           :avance="idAvance"
-								           nombre="juezUni"
+
 								           :is="componente"></component>
 							</v-sheet>
 

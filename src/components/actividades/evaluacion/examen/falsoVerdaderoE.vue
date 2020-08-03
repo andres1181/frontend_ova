@@ -53,7 +53,6 @@
 	<v-container fluid>
 
 		<v-card outlined class="pa-2 ma-2">
-			<span>Diga si la siguiente afirmación es verdadera o falsa:</span> <br>
 			<span>{{enunciado}}</span>
 		</v-card>
 		<v-row align="center" justify="center">
