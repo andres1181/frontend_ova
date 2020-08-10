@@ -1,29 +1,7 @@
 # frontend_ova
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Frontend Trabajo de Grado: 
+USO DE OBJETOS VIRTUALES DE APRENDIZAJE COMO HERRAMIENTAS
+DE APOYO PARA LA ENSEÑANZA DEL CURSO ‘INTRODUCCIÓN A LA
+PROGRAMACIÓN ORIENTADA A OBJETOS’ EN LA UNIVERSIDAD DEL
+VALLE SEDE TULUÁ
