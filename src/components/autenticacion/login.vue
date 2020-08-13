@@ -84,11 +84,11 @@
 								}
 								//this.$emit('datos')
 								//this.$router.go()
-							
+
 						})
 						.catch(e => {
 							this.isError = true
-							this.error = `${e}`
+							this.error = `${e.response.data}`
 							// eslint-disable-next-line no-console
 							console.log(e.response)
 						})

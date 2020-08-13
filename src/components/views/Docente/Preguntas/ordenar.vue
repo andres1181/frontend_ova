@@ -23,7 +23,9 @@
 			enunciado: null,
 			numeros: [3, 4, 5, 6, 7, 8],
 			tipo: 'ordenar',
-			opciones: []
+			opciones: [],
+			error: false,
+			mensaje: ''
 
 
 		}
@@ -79,6 +81,8 @@
 
 						})
 						.catch(e => {
+							this.error = true
+	            this.mensaje = `${e.response.data}`
 							// eslint-disable-next-line no-console
 							console.log(` ${e}`)
 							// eslint-disable-next-line no-console
@@ -101,16 +105,20 @@
 <template>
 
 	<v-container fluid>
-		<v-form v-if="cargando===false" ref="form" v-model="valid" :lazy-validation="lazy">
+		<v-row>
+			<v-col cols="12" md="12">
+				<v-card outlined class="overline pa-3">
+					<v-card-title>
+						Descripción:
+						</v-card-title>
+					<v-card-text>
+						<span>En el siguiente formulario deberá crear una pregunta del tipo 'Ordenar'. 	Se muestra al estudiante una lista desordenada, este debe ordenarla mediante el mecanismo de arrastrar y soltar.</span>
+					</v-card-text>
+				</v-card>
+			</v-col>
+		</v-row>
 
-			<!-- <v-select v-model="unidad"
-			          :items="unidades"
-			          :rules="campoRules"
-			          required
-			          item-text="unidad"
-			          label="Seleccione una unidad tematica de la pregunta"
-			          return-object>
-			</v-select> -->
+		<v-form v-if="cargando===false" ref="form" v-model="valid" :lazy-validation="lazy">
 			<v-select v-model="tema" required
 			          :rules="campoRules"
 			          :items="temas"
@@ -143,6 +151,9 @@
 			<v-row>
 			</v-row>
 			<v-row>
+				<v-alert v-if="error === true" type="error">
+		      {{mensaje}}
+		    </v-alert>
 				<v-btn v-if="mostrarItems" block :disabled="!valid" color="success" class="mr-4" @click="guardar">
 					Guardar
 				</v-btn>

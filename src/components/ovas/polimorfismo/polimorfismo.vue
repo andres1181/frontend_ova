@@ -208,7 +208,7 @@
 
 									<v-list-item @click="componente = 'Juez'">
 										<v-list-item-content>
-											<v-list-item-subtitle>Actividad práctica</v-list-item-subtitle>
+											<v-list-item-subtitle>Reto</v-list-item-subtitle>
 										</v-list-item-content>
 									</v-list-item>
 

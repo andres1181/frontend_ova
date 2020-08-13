@@ -16,7 +16,6 @@ export default {
       unidad: '',
       tema: '',
       select: null,
-      error: null,
       valid: true,
       lazy: false,
       campoRules: [v => !!v || 'Campo requerido'],
@@ -32,7 +31,9 @@ export default {
       enunciado: '',
       tipo: 'falsoVerdadero',
       respuesta: '',
-			opciones: []
+			opciones: [],
+      error: false,
+			mensaje: ''
     }
   },
   mixins: [misMixins],
@@ -74,11 +75,9 @@ export default {
           })
           .catch(e => {
             // eslint-disable-next-line no-console
-            this.error = e
+            this.error = true
+            this.mensaje = `${e.response.data}`
             this.opciones = []
-            console.log(`Error en el servidor:  ${e}`)
-            // eslint-disable-next-line no-console
-            console.log(e.response)
           })
           .finally(() => (this.cargando = false))
       }
@@ -95,6 +94,18 @@ export default {
 
 <template>
 <v-container fluid>
+  <v-row>
+    <v-col cols="12" md="12">
+      <v-card outlined class="overline pa-3">
+        <v-card-title>
+          Descripción:
+          </v-card-title>
+        <v-card-text>
+          <span>En el siguiente formulario deberá crear una pregunta del tipo 'Falso/Verdadero'. Se presenta al estudiante un postulado, este debe decidir si el postulado es falso o verdadero.</span>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
   <v-form v-if="cargando===false" ref="form" v-model="valid" :lazy-validation="lazy">
     <!-- <v-select v-model="unidad" :items="unidades" item-text="unidad" :rules="campoRules" label="Seleccione una unidad tematica" return-object>
     </v-select> -->
@@ -106,13 +117,13 @@ export default {
       <v-radio label="Verdadero" value="true"></v-radio>
       <v-radio label="Falso" value="false"></v-radio>
     </v-radio-group>
-
+    <v-alert v-if="error === true" type="error">
+      {{mensaje}}
+    </v-alert>
     <v-btn block :disabled="!valid" color="success" class="mr-4" x-large @click="guardar">
       Guardar
     </v-btn>
-    <v-alert v-if="error!==null" dense text type="error">
-      <strong>Error: </strong> {{error}}
-    </v-alert>
+
   </v-form>
 
   <div v-else>

@@ -52,25 +52,25 @@ export default new Router({
       name: 'crearUnidades',
     },
     {
-      path: '/usuario/administrador/crearjuez', // /:id',
+      path: '/usuario/crearjuez', // /:id',
       component: CrearJuez,
       name: 'crearJuez',
     },
     {
-      path: '/estudiante/unidades',
+      path: '/usuario/estudiante/unidades',
       component: MenuUnidades,
       name: 'unidades'
 
     },
     {
-      path: '/estudiante/unidades/punteros',
+      path: '/usuario/estudiante/unidades/punteros',
       component: Punteros,
       name: 'punteros'
 
     },
     // inicio Rutas polimorfismo -----------------------------
     {
-      path: '/estudiante/unidades/polimorfismo',
+      path: '/usuario/estudiante/unidades/polimorfismo',
       component: Polimorfismo,
       name: 'polimorfismo'
     },
@@ -79,29 +79,13 @@ export default new Router({
     // inicio Rutas Estilo -----------------------------
 
     {
-      path: '/editarPerfil',
-      component: Perfil,
-      name: 'perfl'
-    },
-    {
-      path: '/ayuda',
-      component: Ayuda,
-      name: 'ayuda'
-
-    },
-    {
-      path: '/encuesta',
-      component: Encuesta,
-      name: 'encuesta'
-    },
-    {
       path: '/mapa_del_sitio',
       component: Encuesta,
       name: 'mapa'
     },
 
     {
-      path: '/docente/crear_preguntas',
+      path: '/usuario/docente/crear_preguntas',
       component: Preguntas,
       name: 'preguntas',
       meta: {
@@ -109,15 +93,20 @@ export default new Router({
       }
     },
     {
-      path: '/crear_grupo',
+      path: '/usuario/docente/crear_grupo',
       component: Grupo,
       name: 'crearGrupo',
 
     },
     {
-      path: '/registro',
+      path: '/usuario/registro',
       name: 'registro',
       component: Registro
+    },
+    {
+      path: '/encuesta',
+      name: 'encuesta',
+      component: Encuesta
     },
 
     {

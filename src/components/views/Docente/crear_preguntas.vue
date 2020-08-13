@@ -6,7 +6,7 @@
 	import ordenar from '@/components/views/Docente/Preguntas/ordenar.vue'
 	import analizar from '@/components/views/Docente/Preguntas/analizar.vue'
 	import analizarProblema from '@/components/views/Docente/Preguntas/analizarProblemaC.vue'
-		import restringido from '@/components/views/accesoRestringido.vue'
+	import restringido from '@/components/views/accesoRestringido.vue'
 	// TODO: falta importar analizar codigo y evaluacion
 	export default {
 		name: 'Crear',
@@ -23,6 +23,7 @@
 			creada: false,
 			cargando: false,
 			temas: null,
+			dim: [],
 			select: { text: '', componente: '' },
 			items: [
 				{ text: 'Opción Multiple', componente: 'crearOpcionMultiple' },
@@ -46,9 +47,8 @@
 						//	eslint-disable-next-line no-console
 						//	console.log(response.data)
 						this.temas = response.data
-						console.log('Temas:');
-						console.log(this.temas);
-
+						console.log('Temas:')
+						console.log(this.temas)
 					})
 					.catch(e => {
 						//	eslint-disable-next-line no-console
@@ -71,9 +71,9 @@
 
 <template>
 
-	<v-row justify="center" >
+	<v-row justify="center">
 		<v-col v-if="this.obtenerDatos().tipo === 'docente'" cols="12" class="pa-0">
-			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-7 mt-9 mx-7 rounded-lg">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-3 mt-4 mx-2 rounded-lg">
 
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
@@ -145,8 +145,8 @@
 			</v-card>
 		</v-col>
 		<v-col v-else>
-		<restringido></restringido>
-			</v-col>
+			<restringido></restringido>
+		</v-col>
 	</v-row>
 
 </template>

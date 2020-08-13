@@ -1,260 +1,343 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RegistroUsuario renders correctly 1`] = `
-<form
-  class="v-form"
-  id="formRegistro"
-  novalidate="novalidate"
+exports[`registro Se renderiza correctamente 1`] = `
+<div
+  class="row justify-center"
 >
   <div
-    class="v-input theme--light v-text-field"
+    class="pa-0 col col-8"
   >
     <div
-      class="v-input__control"
+      class="px-10 pb-10 mb-1 mt-6 mx-7 rounded-lg v-card v-sheet theme--light"
     >
       <div
-        class="v-input__slot"
+        class="row justify-center"
       >
         <div
-          class="v-text-field__slot"
-        >
-          <input
-            id="nomUsuario"
-            type="text"
-          />
-        </div>
-      </div>
-      <div
-        class="v-text-field__details"
-      >
-        <div
-          class="v-messages theme--light"
-        >
-          <transition-group-stub
-            class="v-messages__wrapper"
-            name="message-transition"
-            tag="div"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-   
-  <div
-    class="v-input theme--light v-text-field"
-  >
-    <div
-      class="v-input__control"
-    >
-      <div
-        class="v-input__slot"
-      >
-        <div
-          class="v-text-field__slot"
-        >
-          <input
-            id="codUsuario"
-            type="text"
-          />
-        </div>
-      </div>
-      <div
-        class="v-text-field__details"
-      >
-        <div
-          class="v-messages theme--light"
-        >
-          <transition-group-stub
-            class="v-messages__wrapper"
-            name="message-transition"
-            tag="div"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-   
-  <div
-    class="v-input theme--light v-text-field"
-  >
-    <div
-      class="v-input__control"
-    >
-      <div
-        class="v-input__slot"
-      >
-        <div
-          class="v-text-field__slot"
-        >
-          <input
-            id="emailUsuario"
-            type="text"
-          />
-        </div>
-      </div>
-      <div
-        class="v-text-field__details"
-      >
-        <div
-          class="v-messages theme--light"
-        >
-          <transition-group-stub
-            class="v-messages__wrapper"
-            name="message-transition"
-            tag="div"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-   
-  <div
-    class="v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--column"
-  >
-    <div
-      class="v-input__control"
-    >
-      <div
-        class="v-input__slot"
-        style="height: auto;"
-      >
-        <div
-          aria-labelledby="tipoUsuario"
-          class="v-input--radio-group__input"
-          id="tipoUsuario"
-          role="radiogroup"
+          class="pa-0 col col-10"
         >
           <div
-            class="v-radio theme--light"
+            class="card_cabecera d-flex  align-center v-card v-sheet theme--dark elevation-6 red"
           >
             <div
-              class="v-input--selection-controls__input"
+              class="v-card__title align-center"
             >
-              <i
-                aria-hidden="true"
-                class="v-icon notranslate material-icons theme--light"
+              <span
+                class="headline font-weight-bold"
               >
-                $radioOff
-              </i>
-              <input
-                aria-checked="false"
-                id="radioDocente"
-                name="radio-37"
-                role="radio"
-                type="radio"
-                value=""
-              />
+                REGISTRO ESTUDIANTE
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      <form
+        class="v-form ma-1"
+        id="formRegistro"
+        novalidate="novalidate"
+      >
+        <div
+          class="row justify-center"
+        >
+          <div
+            class="col col-6"
+          >
+            <div
+              class="v-input theme--light v-text-field"
+            >
               <div
-                class="v-input--selection-controls__ripple"
-              />
+                class="v-input__control"
+              >
+                <div
+                  class="v-input__slot"
+                >
+                  <div
+                    class="v-input__prepend-inner"
+                  >
+                    <div
+                      class="v-input__icon v-input__icon--prepend-inner"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="v-icon notranslate mdi mdi-account theme--light"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="v-text-field__slot"
+                  >
+                    <label
+                      class="v-label theme--light"
+                      for="nomUsuario"
+                      style="right: 0px; position: absolute;"
+                    >
+                      Nombre
+                    </label>
+                    <input
+                      id="nomUsuario"
+                      required="required"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="v-text-field__details"
+                >
+                  <div
+                    class="v-messages theme--light"
+                  >
+                    <transition-group-stub
+                      class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
            
           <div
-            class="v-radio theme--light"
+            class="col col-6"
           >
             <div
-              class="v-input--selection-controls__input"
+              class="v-input theme--light v-text-field"
             >
-              <i
-                aria-hidden="true"
-                class="v-icon notranslate material-icons theme--light"
-              >
-                $radioOff
-              </i>
-              <input
-                aria-checked="false"
-                id="radioEstudiante"
-                name="radio-37"
-                role="radio"
-                type="radio"
-                value=""
-              />
               <div
-                class="v-input--selection-controls__ripple"
-              />
+                class="v-input__control"
+              >
+                <div
+                  class="v-input__slot"
+                >
+                  <div
+                    class="v-input__prepend-inner"
+                  >
+                    <div
+                      class="v-input__icon v-input__icon--prepend-inner"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="v-icon notranslate mdi mdi-numeric theme--light"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="v-text-field__slot"
+                  >
+                    <label
+                      class="v-label theme--light"
+                      for="codUsuario"
+                      style="right: 0px; position: absolute;"
+                    >
+                      Código
+                    </label>
+                    <input
+                      id="codUsuario"
+                      required="required"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="v-text-field__details"
+                >
+                  <div
+                    class="v-messages theme--light"
+                  >
+                    <transition-group-stub
+                      class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="v-messages theme--light"
-      >
-        <transition-group-stub
-          class="v-messages__wrapper"
-          name="message-transition"
-          tag="div"
-        />
-      </div>
+         
+        <div
+          class="row justify-center"
+        >
+          <div
+            class="col col-6"
+          >
+            <div
+              class="v-input theme--light v-text-field"
+            >
+              <div
+                class="v-input__control"
+              >
+                <div
+                  class="v-input__slot"
+                >
+                  <div
+                    class="v-input__prepend-inner"
+                  >
+                    <div
+                      class="v-input__icon v-input__icon--prepend-inner"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="v-icon notranslate mdi mdi-email theme--light"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="v-text-field__slot"
+                  >
+                    <label
+                      class="v-label theme--light"
+                      for="emailUsuario"
+                      style="right: 0px; position: absolute;"
+                    >
+                      Correo
+                    </label>
+                    <input
+                      id="emailUsuario"
+                      required="required"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="v-text-field__details"
+                >
+                  <div
+                    class="v-messages theme--light"
+                  >
+                    <transition-group-stub
+                      class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="col col-6"
+          >
+            <div
+              class="v-input theme--light v-text-field"
+            >
+              <div
+                class="v-input__control"
+              >
+                <div
+                  class="v-input__slot"
+                >
+                  <div
+                    class="v-input__prepend-inner"
+                  >
+                    <div
+                      class="v-input__icon v-input__icon--prepend-inner"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="v-icon notranslate mdi mdi-numeric theme--light"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="v-text-field__slot"
+                  >
+                    <label
+                      class="v-label theme--light"
+                      for="input-17"
+                      style="right: 0px; position: absolute;"
+                    >
+                      Código grupo
+                    </label>
+                    <input
+                      id="input-17"
+                      required="required"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="v-text-field__details"
+                >
+                  <div
+                    class="v-messages theme--light"
+                  >
+                    <transition-group-stub
+                      class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+        <div
+          style="display: none;"
+        >
+          <div
+            class="v-alert v-sheet theme--dark v-alert--dense error"
+            role="alert"
+          >
+            <div
+              class="v-alert__wrapper"
+            >
+              <i
+                aria-hidden="true"
+                class="v-icon notranslate v-alert__icon material-icons theme--dark"
+              >
+                $error
+              </i>
+              <div
+                class="v-alert__content"
+              >
+                <span>
+                  
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+        <div
+          class="row justify-center"
+        >
+          <button
+            class="ma-2 v-btn v-btn--block v-btn--contained theme--dark v-size--x-large blue-grey"
+            type="button"
+          >
+            <span
+              class="v-btn__content"
+            >
+              Registrar
+
+					
+            </span>
+          </button>
+        </div>
+         
+        <div
+          class="row justify-center"
+        >
+          <button
+            class="ma-2 v-btn v-btn--block v-btn--depressed v-btn--flat v-btn--outlined theme--dark v-size--x-large blue-grey--text"
+            type="button"
+          >
+            <span
+              class="v-btn__content"
+            >
+              LOGIN
+					
+            </span>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-   
-  <div
-    class="v-input theme--light v-text-field"
-  >
-    <div
-      class="v-input__control"
-    >
-      <div
-        class="v-input__slot"
-      >
-        <div
-          class="v-text-field__slot"
-        >
-          <input
-            id="contrasena"
-            type="text"
-          />
-        </div>
-      </div>
-      <div
-        class="v-text-field__details"
-      >
-        <div
-          class="v-messages theme--light"
-        >
-          <transition-group-stub
-            class="v-messages__wrapper"
-            name="message-transition"
-            tag="div"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-   
-  <div
-    class="v-input theme--light v-text-field"
-  >
-    <div
-      class="v-input__control"
-    >
-      <div
-        class="v-input__slot"
-      >
-        <div
-          class="v-text-field__slot"
-        >
-          <input
-            id="repertirContrasena"
-            type="text"
-          />
-        </div>
-      </div>
-      <div
-        class="v-text-field__details"
-      >
-        <div
-          class="v-messages theme--light"
-        >
-          <transition-group-stub
-            class="v-messages__wrapper"
-            name="message-transition"
-            tag="div"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
+</div>
 `;

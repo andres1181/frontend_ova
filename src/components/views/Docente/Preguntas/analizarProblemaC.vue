@@ -34,7 +34,9 @@ import 'codemirror/theme/dracula.css'
 			tipo: 'analizarProblema',
 			//nuevaOpcionC: '',
 			editor1: '',
-			editor2: ''
+			editor2: '',
+			error: false,
+			mensaje: ''
 			/*
 
 																	*/
@@ -89,6 +91,8 @@ import 'codemirror/theme/dracula.css'
 								this.$emit('creada', {creada: true, select: { text: '', componente: '' }})
 							})
 							.catch(e => {
+								this.error = true
+								this.mensaje = `${e.response.data}`
 								// eslint-disable-next-line no-console
 								console.log(`Error en el servidor:  ${e}`)
 								// eslint-disable-next-line no-console
@@ -123,6 +127,18 @@ import 'codemirror/theme/dracula.css'
 <template>
 
 	<v-container fluid>
+		<v-row>
+			<v-col cols="12" md="12">
+				<v-card outlined class="overline pa-3">
+					<v-card-title>
+						Descripción:
+						</v-card-title>
+					<v-card-text>
+						<span>En el siguiente formulario deberá crear una pregunta del tipo 'Elegir Código'. Se plantea al estudiante un pequeño problema para luego elegir el codigo que considere resuelve mejor el problema.</span>
+					</v-card-text>
+				</v-card>
+			</v-col>
+		</v-row>
 		<v-form v-if="cargando===false" ref="form"
 		        v-model="valid"
 		        :lazy-validation="lazy">
@@ -168,6 +184,9 @@ import 'codemirror/theme/dracula.css'
 				</v-col>
 			</v-row>
 			<v-row>
+				<v-alert v-if="error === true" type="error">
+					{{mensaje}}
+				</v-alert>
 				<v-btn block x-large :disabled="!valid"
 				       color="success"
 				       class="mr-4"

@@ -84,7 +84,7 @@
 							<v-card-title class="headline">
 								<v-icon large left>
 									mdi-chart-tree
-								</v-icon size="62"><span class="title font-weight-light">Crear Actividad Reto</span>
+								</v-icon size="62"><span class="title font-weight-light">Crear Reto</span>
 								<v-spacer></v-spacer>
 								<v-icon class="mr-1">mdi-arrow-right</v-icon>
 							</v-card-title>

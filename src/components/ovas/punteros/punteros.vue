@@ -112,36 +112,6 @@
 
 			</v-timeline-item>
 
-			<!-- <v-timeline-item :color="color" small>
-
-					<div class="py-4">
-						<div>
-							<span>Cuando se declara una función virtual, esta permanecerá como una Función virtual en todas las capas de la jerarquía de clases.</span>
-						</div>
-					</div>
-				</v-timeline-item>
-				<v-timeline-item :color="color" small>
-
-					<div class="py-4">
-						<div>
-							<span>La declaración de una función como virtual, permite que si una función es invocada a través de puntero a la clase Base o de un puntero a la clase Derivada, siempre se llama la función definida en la clase derivada.</span>
-						</div>
-					</div>
-				</v-timeline-item>
-				<v-timeline-item :color="color" small>
-					<div class="py-4">
-						<div>
-
-						</div>
-					</div>
-				</v-timeline-item>
-				<v-timeline-item :color="color" small>
-					<div class="py-4">
-						<div>
-							<span>Cuando una función virtual es redefinida en una clase derivada no es necesario definirla nuevamente como Virtual.</span>
-						</div>
-					</div>
-				</v-timeline-item> -->
 		</v-timeline>
 		<h2 :class="`headline font-weight-light mb-4 ${color}--text`">Ejemplo:</h2>
 		<span>Queremos construir un programa que retorne si un número es primo o no utilizando punteros.</span>

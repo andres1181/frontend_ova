@@ -133,7 +133,7 @@
 						<v-list-item-title>Inicio</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
-				<v-list-item link @click="($router.push({ path: '/usuario/perfil' }).catch(err => {}))">
+				<v-list-item link @click="($router.push({ name: 'perfil' }).catch(err => {}))">
 					<v-list-item-action>
 						<v-icon>mdi-account</v-icon>
 					</v-list-item-action>
@@ -141,7 +141,14 @@
 						<v-list-item-title>Perfil</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
-
+				<v-list-item link @click="($router.push({ name: 'encuesta' }).catch(err => {}))">
+					<v-list-item-action>
+						<v-icon>mdi-clipboard-list</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Encuesta</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
 				<v-list-item @click="cerrarSesion">
 					<v-list-item-action>
 						<v-icon>mdi-logout</v-icon>

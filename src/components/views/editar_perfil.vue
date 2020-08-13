@@ -108,7 +108,7 @@
 
 	<v-row justify="center">
 		<v-col cols="8" class="pa-0">
-			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-5 mx-8 mt-10 mb-5 rounded-xl">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-7 mx-7 rounded-xl">
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
 						<v-card dark color="red" elevation="4" class="card_cabecera  d-flex  align-center">

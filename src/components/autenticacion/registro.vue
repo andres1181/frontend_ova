@@ -1,9 +1,7 @@
 <script>
-
 	import { misMixins } from '@/mixins/mixins.js'
 	export default {
 		name: 'Registro',
-
 		data: () => ({
 			show1: false,
 			show2: false,
@@ -23,7 +21,6 @@
 				tipoUsuario: 'estudiante',
 				grupo: ''
 			},
-
 			contrasenaRules: {
 				required: value => !!value || 'Requerido.',
 				min: v => v.length >= 7 || 'La contraseña debe tener minimo 7 caracteres'
@@ -58,11 +55,9 @@
 				}
 				return verificar
 			},
-
 			login() {
 				this.$router.push('/login')
 			},
-
 			registrarAvance(id) {
 				const ruta = '/estudiante/avanceTema/crear'
 				//	eslint-disable-next-line no-console
@@ -95,7 +90,6 @@
 			},
 			buscarTemas: function() {
 				const ruta = '/unidadesTemas/obtener/temas'
-
 				this.axios({
 					method: 'get',
 					url: ruta
@@ -110,10 +104,8 @@
 						console.log(`Error:  ${e.response}`)
 					})
 			},
-
 			obtenerGrupos() {
 				const ruta = `/grupos/obtener/grupos`
-
 				this.axios({
 					method: 'get',
 					url: ruta
@@ -146,11 +138,8 @@
 				//this.validate()
 				this.cargando = true
 				if (this.$refs.form.validate()) {
-
 					this.convertirString()
-
 					const ruta = '/usuarios/'
-
 					this.axios({
 						method: 'post',
 						url: ruta, // + user,
@@ -166,10 +155,8 @@
 					})
 						.then(response => {
 							console.log(response)
-
 							//	eslint-disable-next-line no-console
 							//console.log(response.data.usuario)
-
 							this.registrarAvance(response.data.usuario._id)
 							localStorage.removeItem('_grupos')
 							this.$router.push('/')
@@ -177,7 +164,7 @@
 						.catch(e => {
 							// eslint-disable-next-line no-console
 							this.isError = true
-							this.error = `${e}`
+							this.error = `${e.response.data}`
 						})
 						.finally(() => (this.cargando = false))
 				}
@@ -189,7 +176,6 @@
 			this.obtenerGrupos()
 		}
 	}
-
 </script>
 
 <template>
@@ -308,7 +294,4 @@
 </template>
 
 <style>
-
-
-
 </style>

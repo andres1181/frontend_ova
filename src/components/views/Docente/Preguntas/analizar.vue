@@ -32,11 +32,9 @@
 			opciones: [],
 			tipo: 'analizarCodigo',
 			//nuevaOpcionC: '',
-			editor: ''
-
-			/*
-
-																	*/
+			editor: '',
+			error: false,
+			mensaje: ''
 		}},
 		mixins: [misMixins],
 		methods: {
@@ -92,6 +90,8 @@
 								this.$emit('creada', {creada: true, select: { text: '', componente: '' }})
 							})
 							.catch(e => {
+								this.error = true
+								this.mensaje = `${e.response.data}`
 								// eslint-disable-next-line no-console
 								console.log(`Error:  ${e}`)
 								// eslint-disable-next-line no-console
@@ -122,6 +122,18 @@
 <template>
 
 	<v-container fluid>
+		<v-row>
+			<v-col cols="12" md="12">
+				<v-card outlined class="overline pa-3">
+					<v-card-title>
+						Descripción:
+						</v-card-title>
+					<v-card-text>
+						<span>En el siguiente formulario deberá crear una pregunta del tipo 'analizar código'. Se presenta al estudiante un código que deberá analizar, luego este debe elegir en una lista, la salida que considere arroja ese código o el tema al que pertenece el código mostrado.</span>
+					</v-card-text>
+				</v-card>
+			</v-col>
+		</v-row>
 		<v-form v-if="cargando===false" ref="form"
 		        v-model="valid"
 		        :lazy-validation="lazy">
@@ -159,6 +171,9 @@
 				<v-text-field v-model="opcionesIncorrectas[1]" :rules="campoRules" label="Añadir una salida INCORRECTA"></v-text-field>
 			</v-row>
 			<v-row>
+				<v-alert v-if="error === true" type="error">
+					{{mensaje}}
+				</v-alert>
 				<v-btn block x-large :disabled="!valid"
 				       color="success"
 				       class="mr-4"

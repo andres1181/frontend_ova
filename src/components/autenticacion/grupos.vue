@@ -164,7 +164,7 @@
 
 	<v-row justify="center">
 		<v-col cols="12" class="pa-0">
-			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-5 mt-9 mx-7 rounded-lg">
+			<v-card elevation="2" :width="dim[1]" :height="dim[0]" class="pb-4 px-4 mb-1 mt-5 mx-5 rounded-lg">
 				<v-row justify="center">
 					<v-col class="pa-0 " cols="11">
 						<v-card dark color="red" elevation="4" class="card_cabecera rounded-lg d-flex  align-center">
